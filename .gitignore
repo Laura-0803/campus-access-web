@@ -1,0 +1,21 @@
+# Credentials, local recovery data, and restored copies
+**/.env
+**/.env.*
+!**/.env.example
+.private-backups/
+.p1-local/
+**/server/data/db.json
+**/server/data/seed.js
+**/src/data/mock.js
+docs.zip
+# Dependencies/build products
+**/node_modules/
+**/dist/
+**/target/
+**/*.log
+**/__pycache__/
+# Local IDE / assistant state
+.idea/
+**/.idea/
+.agents/
+.codex/
