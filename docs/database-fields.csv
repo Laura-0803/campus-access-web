@@ -1,0 +1,169 @@
+﻿table,column,definition,json_mapping_candidate,owner
+roles,role_key,VARCHAR(32) NOT NULL PRIMARY KEY,role(字典键),user-service
+roles,label,VARCHAR(64) NOT NULL,label,user-service
+role_profiles,role_key,VARCHAR(32) NOT NULL PRIMARY KEY,role(字典键),user-service
+role_profiles,person_id,VARCHAR(64),personId,user-service
+role_profiles,name,VARCHAR(128),name,user-service
+role_profiles,title,VARCHAR(255),title,user-service
+role_profiles,role_value,VARCHAR(32),role,user-service
+role_profiles,type,VARCHAR(64),type,user-service
+role_profiles,avatar,VARCHAR(512),avatar,user-service
+role_profiles,status,VARCHAR(64),status,user-service
+users,id,VARCHAR(64) NOT NULL PRIMARY KEY,id,user-service
+users,username,VARCHAR(128) NOT NULL UNIQUE,username,user-service
+users,account_type,VARCHAR(64),accountType,user-service
+users,password,VARCHAR(255) NOT NULL,password,user-service
+users,role,VARCHAR(32) NOT NULL,role,user-service
+users,person_id,VARCHAR(64),personId,user-service
+users,status,VARCHAR(64),status,user-service
+users,sort_order,INT NOT NULL DEFAULT 0,sortOrder,user-service
+people,id,VARCHAR(64) NOT NULL PRIMARY KEY,id,user-service
+people,name,VARCHAR(128) NOT NULL,name,user-service
+people,type,VARCHAR(64),type,user-service
+people,code,VARCHAR(128),code,user-service
+people,id_number,VARCHAR(64),idNumber,user-service
+people,role,VARCHAR(32),role,user-service
+people,college,VARCHAR(128),college,user-service
+people,class_name,VARCHAR(128),className,user-service
+people,phone,VARCHAR(32),phone,user-service
+people,face_status,VARCHAR(64),faceStatus,user-service
+people,status,VARCHAR(64),status,user-service
+people,department,VARCHAR(128),department,user-service
+people,position,VARCHAR(128),position,user-service
+people,host,VARCHAR(128),host,user-service
+people,company,VARCHAR(255),company,user-service
+people,graduation_year,VARCHAR(32),graduationYear,user-service
+people,major,VARCHAR(255),major,user-service
+people,gate,VARCHAR(128),gate,user-service
+people,sort_order,INT NOT NULL DEFAULT 0,sortOrder,user-service
+access_records,id,VARCHAR(64) NOT NULL PRIMARY KEY,id,access-service
+access_records,time,VARCHAR(64),time,access-service
+access_records,name,VARCHAR(128),name,access-service
+access_records,person_id,VARCHAR(64),personId,access-service
+access_records,type,VARCHAR(64),type,access-service
+access_records,method,VARCHAR(128),method,access-service
+access_records,gate,VARCHAR(128),gate,access-service
+access_records,status,VARCHAR(64),status,access-service
+access_records,sort_order,INT NOT NULL DEFAULT 0,sortOrder,access-service
+appointments,id,VARCHAR(64) NOT NULL PRIMARY KEY,id,appointment-service
+appointments,visitor,VARCHAR(128),visitor,appointment-service
+appointments,visitor_id,VARCHAR(64),visitorId,appointment-service
+appointments,visitor_phone,VARCHAR(32),visitorPhone,appointment-service
+appointments,id_number,VARCHAR(64),idNumber,appointment-service
+appointments,host,VARCHAR(128),host,appointment-service
+appointments,host_id,VARCHAR(64),hostId,appointment-service
+appointments,time,VARCHAR(64),time,appointment-service
+appointments,visit_start,VARCHAR(64),visitStart,appointment-service
+appointments,visit_end,VARCHAR(64),visitEnd,appointment-service
+appointments,reason,TEXT,reason,appointment-service
+appointments,status,VARCHAR(64),status,appointment-service
+appointments,created_at,VARCHAR(64),createdAt,appointment-service
+appointments,reviewed_at,VARCHAR(64),reviewedAt,appointment-service
+appointments,reviewer,VARCHAR(128),reviewer,appointment-service
+appointments,review_comment,TEXT,reviewComment,appointment-service
+appointments,sort_order,INT NOT NULL DEFAULT 0,sortOrder,appointment-service
+exceptions,id,VARCHAR(64) NOT NULL PRIMARY KEY,id,exception-service
+exceptions,time,VARCHAR(64),time,exception-service
+exceptions,person,VARCHAR(128),person,exception-service
+exceptions,person_type,VARCHAR(64),personType,exception-service
+exceptions,gate,VARCHAR(128),gate,exception-service
+exceptions,method,VARCHAR(128),method,exception-service
+exceptions,type,VARCHAR(128),type,exception-service
+exceptions,reason,TEXT,reason,exception-service
+exceptions,risk,VARCHAR(64),risk,exception-service
+exceptions,status,VARCHAR(64),status,exception-service
+exceptions,suggestion,TEXT,suggestion,exception-service
+exceptions,handler,VARCHAR(128),handler,exception-service
+exceptions,handled_at,VARCHAR(64),handledAt,exception-service
+exceptions,note,TEXT,note,exception-service
+exceptions,actions,TEXT,actions,exception-service
+exceptions,sort_order,INT NOT NULL DEFAULT 0,sortOrder,exception-service
+devices,id,VARCHAR(64) NOT NULL PRIMARY KEY,id,access-service
+devices,name,VARCHAR(128),name,access-service
+devices,type,VARCHAR(64),type,access-service
+devices,gate,VARCHAR(128),gate,access-service
+devices,status,VARCHAR(64),status,access-service
+devices,sort_order,INT NOT NULL DEFAULT 0,sortOrder,access-service
+vehicles,id,VARCHAR(64) NOT NULL PRIMARY KEY,id,user-service
+vehicles,owner_id,VARCHAR(64),ownerId,user-service
+vehicles,owner_name,VARCHAR(128),ownerName,user-service
+vehicles,plate_no,VARCHAR(64),plateNo,user-service
+vehicles,status,VARCHAR(64),status,user-service
+vehicles,last_access,VARCHAR(64),lastAccess,user-service
+vehicles,sort_order,INT NOT NULL DEFAULT 0,sortOrder,user-service
+faces,id,VARCHAR(64) NOT NULL PRIMARY KEY,id,user-service
+faces,person_id,VARCHAR(64),personId,user-service
+faces,person_name,VARCHAR(128),personName,user-service
+faces,status,VARCHAR(64),status,user-service
+faces,file_name,VARCHAR(255),fileName,user-service
+faces,image_url,LONGTEXT,imageUrl,user-service
+faces,slot_key,VARCHAR(32),slot,user-service
+faces,label,VARCHAR(128),label,user-service
+faces,updated_at,VARCHAR(64),updatedAt,user-service
+faces,sort_order,INT NOT NULL DEFAULT 0,sortOrder,user-service
+qr_codes,id,VARCHAR(64) NOT NULL PRIMARY KEY,id,access-service
+qr_codes,token,VARCHAR(191) NOT NULL UNIQUE,token,access-service
+qr_codes,type,VARCHAR(32),type,access-service
+qr_codes,owner_name,VARCHAR(128),ownerName,access-service
+qr_codes,owner_id,VARCHAR(64),ownerId,access-service
+qr_codes,visitor_id,VARCHAR(64),visitorId,access-service
+qr_codes,appointment_id,VARCHAR(64),appointmentId,access-service
+qr_codes,valid_from,VARCHAR(64),validFrom,access-service
+qr_codes,valid_to,VARCHAR(64),validTo,access-service
+qr_codes,status,VARCHAR(64),status,access-service
+qr_codes,max_uses,INT NOT NULL DEFAULT 1,maxUses,access-service
+qr_codes,used_count,INT NOT NULL DEFAULT 0,usedCount,access-service
+qr_codes,sort_order,INT NOT NULL DEFAULT 0,sortOrder,access-service
+settings,id,VARCHAR(32) NOT NULL PRIMARY KEY,id,access-service
+settings,gate_open_time,VARCHAR(32),gateOpenTime,access-service
+settings,gate_close_time,VARCHAR(32),gateCloseTime,access-service
+settings,visitor_qr_minutes,INT,visitorQrMinutes,access-service
+settings,alumni_qr_minutes,INT,alumniQrMinutes,access-service
+settings,face_threshold,"DECIMAL(5,2)",faceThreshold,access-service
+settings,high_risk_auto_block,TINYINT(1),highRiskAutoBlock,access-service
+gates,id,VARCHAR(64) NOT NULL PRIMARY KEY,id,access-service
+gates,name,VARCHAR(128),name,access-service
+gates,campus,VARCHAR(128),campus,access-service
+gates,location,VARCHAR(255),location,access-service
+gates,open_time,VARCHAR(64),openTime,access-service
+gates,status,VARCHAR(64),status,access-service
+gates,sort_order,INT NOT NULL DEFAULT 0,sortOrder,access-service
+access_rules,id,VARCHAR(64) NOT NULL PRIMARY KEY,id,access-service
+access_rules,role,VARCHAR(32),role,access-service
+access_rules,methods,TEXT,methods,access-service
+access_rules,allowed_time,VARCHAR(128),allowedTime,access-service
+access_rules,gates,TEXT,gates,access-service
+access_rules,max_uses,VARCHAR(64),maxUses,access-service
+access_rules,status,VARCHAR(64),status,access-service
+access_rules,sort_order,INT NOT NULL DEFAULT 0,sortOrder,access-service
+blacklist,id,VARCHAR(64) NOT NULL PRIMARY KEY,id,exception-service
+blacklist,name,VARCHAR(128),name,exception-service
+blacklist,type,VARCHAR(128),type,exception-service
+blacklist,credential_no,VARCHAR(128),credentialNo,exception-service
+blacklist,reason,TEXT,reason,exception-service
+blacklist,status,VARCHAR(64),status,exception-service
+blacklist,created_at,VARCHAR(64),createdAt,exception-service
+blacklist,removed_at,VARCHAR(64),removedAt,exception-service
+blacklist,removed_reason,TEXT,removedReason,exception-service
+blacklist,removed_by,VARCHAR(128),removedBy,exception-service
+blacklist,sort_order,INT NOT NULL DEFAULT 0,sortOrder,exception-service
+logs,id,VARCHAR(64) NOT NULL PRIMARY KEY,id,user-service
+logs,time,VARCHAR(64),time,user-service
+logs,actor,VARCHAR(128),actor,user-service
+logs,role,VARCHAR(64),role,user-service
+logs,action,VARCHAR(255),action,user-service
+logs,target,VARCHAR(255),target,user-service
+logs,result,VARCHAR(64),result,user-service
+logs,sort_order,INT NOT NULL DEFAULT 0,sortOrder,user-service
+messages,id,VARCHAR(64) NOT NULL PRIMARY KEY,id,user-service
+messages,title,VARCHAR(255),title,user-service
+messages,content,TEXT,content,user-service
+messages,target_role,VARCHAR(255),targetRole,user-service
+messages,read_flag,TINYINT(1),read,user-service
+messages,created_at,VARCHAR(64),createdAt,user-service
+messages,sort_order,INT NOT NULL DEFAULT 0,sortOrder,user-service
+sessions,token,VARCHAR(128) NOT NULL PRIMARY KEY,token,user-service
+sessions,user_id,VARCHAR(64) NOT NULL,userId,user-service
+sessions,role,VARCHAR(32),role,user-service
+sessions,created_at,VARCHAR(64),createdAt,user-service
+sessions,expires_at,VARCHAR(64),expiresAt,user-service

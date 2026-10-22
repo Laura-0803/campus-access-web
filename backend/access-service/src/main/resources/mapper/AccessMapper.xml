@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="edu.hfut.access.dao.AccessMapper">
+<select id="list" resultType="map"><choose>
+<when test="table == 'qr_codes'">SELECT `id` AS `id`,`token` AS `token`,`type` AS `type`,`owner_name` AS `ownerName`,`owner_id` AS `ownerId`,`visitor_id` AS `visitorId`,`appointment_id` AS `appointmentId`,`valid_from` AS `validFrom`,`valid_to` AS `validTo`,`status` AS `status` FROM qr_codes ORDER BY sort_order,id</when>
+<when test="table == 'access_records'">SELECT `id` AS `id`,`time` AS `time`,`name` AS `name`,`person_id` AS `personId`,`type` AS `type`,`method` AS `method`,`gate` AS `gate`,`status` AS `status` FROM access_records ORDER BY sort_order,id</when>
+<when test="table == 'devices'">SELECT `id` AS `id`,`name` AS `name`,`type` AS `type`,`gate` AS `gate`,`status` AS `status` FROM devices ORDER BY sort_order,id</when>
+<when test="table == 'gates'">SELECT `id` AS `id`,`name` AS `name`,`campus` AS `campus`,`location` AS `location`,`open_time` AS `openTime`,`status` AS `status` FROM gates ORDER BY sort_order,id</when>
+<when test="table == 'access_rules'">SELECT `id` AS `id`,`role` AS `role`,`methods` AS `methods`,`allowed_time` AS `allowedTime`,`gates` AS `gates`,`status` AS `status` FROM access_rules ORDER BY sort_order,id</when>
+<when test="table == 'settings'">SELECT `id` AS `id`,`gate_open_time` AS `gateOpenTime`,`gate_close_time` AS `gateCloseTime`,`visitor_qr_minutes` AS `visitorQrMinutes`,`alumni_qr_minutes` AS `alumniQrMinutes`,`face_threshold` AS `faceThreshold`,`high_risk_auto_block` AS `highRiskAutoBlock` FROM settings WHERE id='main'</when>
+<otherwise>SELECT NULL WHERE FALSE</otherwise></choose></select>
+<insert id="insert"><choose>
+<when test="table == 'qr_codes'">INSERT INTO qr_codes(`id`,`token`,`type`,`owner_name`,`owner_id`,`visitor_id`,`appointment_id`,`valid_from`,`valid_to`,`status`,sort_order) VALUES(#{row.id},#{row.token},#{row.type},#{row.ownerName},#{row.ownerId},#{row.visitorId},#{row.appointmentId},#{row.validFrom},#{row.validTo},#{row.status},-CAST(UNIX_TIMESTAMP(CURRENT_TIMESTAMP(3))*1000 AS SIGNED))</when>
+<when test="table == 'access_records'">INSERT INTO access_records(`id`,`time`,`name`,`person_id`,`type`,`method`,`gate`,`status`,sort_order) VALUES(#{row.id},#{row.time},#{row.name},#{row.personId},#{row.type},#{row.method},#{row.gate},#{row.status},-CAST(UNIX_TIMESTAMP(CURRENT_TIMESTAMP(3))*1000 AS SIGNED))</when>
+<when test="table == 'devices'">INSERT INTO devices(`id`,`name`,`type`,`gate`,`status`,sort_order) VALUES(#{row.id},#{row.name},#{row.type},#{row.gate},#{row.status},-CAST(UNIX_TIMESTAMP(CURRENT_TIMESTAMP(3))*1000 AS SIGNED))</when>
+<when test="table == 'gates'">INSERT INTO gates(`id`,`name`,`campus`,`location`,`open_time`,`status`,sort_order) VALUES(#{row.id},#{row.name},#{row.campus},#{row.location},#{row.openTime},#{row.status},-CAST(UNIX_TIMESTAMP(CURRENT_TIMESTAMP(3))*1000 AS SIGNED))</when>
+<when test="table == 'access_rules'">INSERT INTO access_rules(`id`,`role`,`methods`,`allowed_time`,`gates`,`status`,sort_order) VALUES(#{row.id},#{row.role},#{row.methods},#{row.allowedTime},#{row.gates},#{row.status},-CAST(UNIX_TIMESTAMP(CURRENT_TIMESTAMP(3))*1000 AS SIGNED))</when>
+<when test="table == 'settings'">INSERT INTO settings(`id`,`gate_open_time`,`gate_close_time`,`visitor_qr_minutes`,`alumni_qr_minutes`,`face_threshold`,`high_risk_auto_block`) VALUES(#{row.id},#{row.gateOpenTime},#{row.gateCloseTime},#{row.visitorQrMinutes},#{row.alumniQrMinutes},#{row.faceThreshold},#{row.highRiskAutoBlock})</when>
+</choose></insert>
+<update id="update"><choose>
+<when test="table == 'qr_codes'">UPDATE qr_codes SET `token`=#{row.token},`type`=#{row.type},`owner_name`=#{row.ownerName},`owner_id`=#{row.ownerId},`visitor_id`=#{row.visitorId},`appointment_id`=#{row.appointmentId},`valid_from`=#{row.validFrom},`valid_to`=#{row.validTo},`status`=#{row.status} WHERE id=#{row.id}</when>
+<when test="table == 'access_records'">UPDATE access_records SET `time`=#{row.time},`name`=#{row.name},`person_id`=#{row.personId},`type`=#{row.type},`method`=#{row.method},`gate`=#{row.gate},`status`=#{row.status} WHERE id=#{row.id}</when>
+<when test="table == 'devices'">UPDATE devices SET `name`=#{row.name},`type`=#{row.type},`gate`=#{row.gate},`status`=#{row.status} WHERE id=#{row.id}</when>
+<when test="table == 'gates'">UPDATE gates SET `name`=#{row.name},`campus`=#{row.campus},`location`=#{row.location},`open_time`=#{row.openTime},`status`=#{row.status} WHERE id=#{row.id}</when>
+<when test="table == 'access_rules'">UPDATE access_rules SET `role`=#{row.role},`methods`=#{row.methods},`allowed_time`=#{row.allowedTime},`gates`=#{row.gates},`status`=#{row.status} WHERE id=#{row.id}</when>
+<when test="table == 'settings'">UPDATE settings SET `gate_open_time`=#{row.gateOpenTime},`gate_close_time`=#{row.gateCloseTime},`visitor_qr_minutes`=#{row.visitorQrMinutes},`alumni_qr_minutes`=#{row.alumniQrMinutes},`face_threshold`=#{row.faceThreshold},`high_risk_auto_block`=#{row.highRiskAutoBlock} WHERE id=#{row.id}</when>
+</choose></update>
+<delete id="delete"><choose>
+<when test="table == 'qr_codes'">DELETE FROM qr_codes WHERE id=#{row.id}</when>
+<when test="table == 'access_records'">DELETE FROM access_records WHERE id=#{row.id}</when>
+<when test="table == 'devices'">DELETE FROM devices WHERE id=#{row.id}</when>
+<when test="table == 'gates'">DELETE FROM gates WHERE id=#{row.id}</when>
+<when test="table == 'access_rules'">DELETE FROM access_rules WHERE id=#{row.id}</when>
+<when test="table == 'settings'">DELETE FROM settings WHERE id=#{row.id}</when>
+</choose></delete>
+<select id="lock" resultType="map">SELECT id FROM qr_codes WHERE id=#{id} FOR UPDATE</select>
+<select id="request" resultType="map">SELECT request_digest,response_json FROM access_requests WHERE request_id=#{id} FOR UPDATE</select>
+<insert id="reserveRequest">INSERT INTO access_requests(request_id,request_digest) VALUES(#{id},#{digest}) ON DUPLICATE KEY UPDATE request_id=request_id</insert>
+<update id="completeRequest">UPDATE access_requests SET response_json=#{response} WHERE request_id=#{id}</update>
+<insert id="event">INSERT INTO access_outbox(event_id,kind,payload,state,attempts) VALUES(#{id},#{kind},#{payload},'PENDING',0)</insert>
+</mapper>

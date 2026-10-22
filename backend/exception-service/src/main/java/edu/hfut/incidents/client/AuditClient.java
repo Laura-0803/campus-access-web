@@ -1,0 +1,2 @@
+package edu.hfut.incidents.client;import java.util.*;import org.springframework.cloud.openfeign.FeignClient;import org.springframework.web.bind.annotation.*;
+@FeignClient(name="user-service",contextId="exceptionAudits",configuration=DirectoryFeignConfig.class)public interface AuditClient{@PostMapping("/internal/exception-audits")Map<String,Object>accept(@RequestHeader("X-Campus-Internal")String key,@RequestBody Map<String,Object>b);}

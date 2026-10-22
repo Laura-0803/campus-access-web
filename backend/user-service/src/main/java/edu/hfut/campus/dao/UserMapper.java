@@ -1,0 +1,33 @@
+package edu.hfut.campus.dao;
+import java.util.*;
+import org.apache.ibatis.annotations.Param;
+import edu.hfut.campus.entity.*;
+public interface UserMapper  {
+  UserEntity account(String name);
+  UserEntity user(String id);
+  List<UserEntity> users();
+  PersonEntity person(String id);
+  List<PersonEntity> people();
+  List<RoleEntity> roles();
+  List<RoleProfileEntity> profiles();
+  List<Map<String,Object>> faces();
+  List<Map<String,Object>> vehicles();
+  List<Map<String,Object>> messages();
+  List<Map<String,Object>> logs();
+  SessionEntity session(String token);
+  int insertSession(Map<String,Object> s);
+  int deleteSession(String token);
+  int deleteUserSessions(String id);
+  int password(@Param("id")String id,@Param("hash")String hash);
+  int insertUser(UserEntity u);
+  int insertPerson(PersonEntity p);
+  int audit(Map<String,Object> a);
+  VerificationCodeEntity code(@Param("purpose")String purpose,@Param("phone")String phone);
+  int saveCode(Map<String,Object> c);
+  int deleteCode(@Param("purpose")String purpose,@Param("phone")String phone);
+  int codeAttempt(@Param("purpose")String purpose,@Param("phone")String phone);
+  int updateContact(PersonEntity p);
+  List<PersonEntity> searchPeople(Map<String,String> query);
+  UserEntity lockUser(String id);
+  PersonEntity lockPerson(String id);
+}

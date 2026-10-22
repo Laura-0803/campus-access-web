@@ -1,0 +1,2 @@
+package edu.hfut.incidents.client;import java.util.*;import org.springframework.stereotype.Component;import feign.hystrix.FallbackFactory;import edu.hfut.incidents.dto.Context;
+@Component public class DirectoryFallback implements FallbackFactory<DirectoryClient>{public DirectoryClient create(Throwable t){return new DirectoryClient(){public Context resolve(String k,String token,Map<String,Object>b){Context c=new Context();c.unavailable=true;return c;}public List<Map<String,Object>>people(String k){return null;}};}}

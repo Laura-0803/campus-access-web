@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="edu.hfut.incidents.dao.IncidentMapper">
+<sql id="incident">id,time,person,person_type,gate,method,type,reason,risk,status,suggestion,handler,handled_at,note,actions</sql>
+<sql id="black">id,name,type,credential_no,reason,status,created_at,removed_at,removed_reason,removed_by</sql>
+<select id="exceptions" resultType="map">SELECT <include refid="incident"/> FROM exceptions ORDER BY sort_order,id</select>
+<select id="incident" resultType="map">SELECT <include refid="incident"/> FROM exceptions WHERE id=#{id}</select>
+<select id="lockIncident" resultType="map">SELECT <include refid="incident"/> FROM exceptions WHERE id=#{id} FOR UPDATE</select>
+<select id="blacklist" resultType="map">SELECT <include refid="black"/> FROM blacklist ORDER BY sort_order,id</select>
+<select id="black" resultType="map">SELECT <include refid="black"/> FROM blacklist WHERE id=#{id}</select>
+<select id="lockBlacklist" resultType="string">SELECT id FROM incident_locks WHERE id='blacklist' FOR UPDATE</select>
+<insert id="insertBlack">INSERT INTO blacklist(id,name,type,credential_no,reason,status,created_at,sort_order) SELECT #{id},#{name},#{type},#{credentialNo},#{reason},#{status},#{createdAt},COALESCE(MIN(sort_order),0)-1 FROM blacklist</insert>
+<update id="updateBlack">UPDATE blacklist SET status=#{status},reason=#{reason},removed_at=#{removedAt},removed_reason=#{removedReason},removed_by=#{removedBy} WHERE id=#{id}</update>
+<update id="updateIncident">UPDATE exceptions SET status=#{status},handler=#{handler},handled_at=#{handledAt},note=#{note},actions=#{actions} WHERE id=#{id}</update>
+<insert id="insertIncident">INSERT INTO exceptions(id,time,person,person_type,gate,method,type,reason,risk,status,suggestion,actions,sort_order) SELECT #{id},#{time},#{person},#{personType},#{gate},#{method},#{type},#{reason},#{risk},#{status},#{suggestion},#{actions},COALESCE(MIN(sort_order),0)-1 FROM exceptions</insert>
+<select id="inbox" resultType="map">SELECT event_id,payload_digest,exception_id FROM incident_inbox WHERE event_id=#{id}</select>
+<insert id="insertInbox">INSERT INTO incident_inbox(event_id,payload_digest,exception_id,received_at) VALUES(#{id},#{digest},#{exceptionId},#{time})</insert>
+<insert id="outbox">INSERT INTO incident_outbox(event_id,payload) VALUES(#{id},#{payload})</insert>
+<select id="due" resultType="map">SELECT event_id,payload FROM incident_outbox WHERE state='PENDING' AND next_retry_at&lt;UNIX_TIMESTAMP(CURRENT_TIMESTAMP(3))*1000 LIMIT 20</select>
+<update id="claim">UPDATE incident_outbox SET next_retry_at=UNIX_TIMESTAMP(CURRENT_TIMESTAMP(3))*1000+5000 WHERE event_id=#{id} AND state='PENDING' AND next_retry_at&lt;UNIX_TIMESTAMP(CURRENT_TIMESTAMP(3))*1000</update>
+<update id="delivered">UPDATE incident_outbox SET state='DELIVERED' WHERE event_id=#{id}</update>
+<update id="failed">UPDATE incident_outbox SET attempts=attempts+1,next_retry_at=UNIX_TIMESTAMP(CURRENT_TIMESTAMP(3))*1000+1000 WHERE event_id=#{id}</update>
+<select id="request" resultType="map">SELECT payload_digest,response FROM incident_requests WHERE request_id=#{id}</select>
+<insert id="insertRequest">INSERT INTO incident_requests(request_id,payload_digest,response) VALUES(#{id},#{digest},#{response})</insert>
+<update id="fault">UPDATE incident_faults SET remaining=remaining-1 WHERE name=#{name} AND remaining&gt;0</update>
+</mapper>

@@ -1,0 +1,2 @@
+package edu.hfut.access.client;import java.util.*;import org.springframework.stereotype.Component;import feign.hystrix.FallbackFactory;
+@Component public class AppointmentFallback implements FallbackFactory<AppointmentClient>{public AppointmentClient create(Throwable t){return new AppointmentClient(){public Map<String,Object>one(String k,String id){return Collections.singletonMap("unavailable",true);}public Map<String,Object>decision(String k,String id){return Collections.singletonMap("unavailable",true);}};}}

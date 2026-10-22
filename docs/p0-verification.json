@@ -1,0 +1,48 @@
+{
+  "routes": 68,
+  "uniqueRoutes": 68,
+  "frontendMethods": 62,
+  "designTables": 18,
+  "designColumns": 168,
+  "actualTables": 19,
+  "actualColumns": 174,
+  "missingColumns": [],
+  "extraColumns": [
+    [
+      "app_state",
+      "data"
+    ],
+    [
+      "app_state",
+      "id"
+    ],
+    [
+      "app_state",
+      "updated_at"
+    ],
+    [
+      "devices",
+      "last_sync"
+    ],
+    [
+      "devices",
+      "sync"
+    ],
+    [
+      "faces",
+      "sync_status"
+    ]
+  ],
+  "unchangedSourceFiles": 62,
+  "changedSourceFiles": [],
+  "roles": [
+    "admin",
+    "alumni",
+    "guard",
+    "student",
+    "teacher",
+    "visitor"
+  ],
+  "allRowsUnmigrated": true,
+  "backupZipIntegrity": true
+}

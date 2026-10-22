@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="edu.hfut.appointment.dao.AppointmentMapper">
+ <sql id="columns">id,visitor,visitor_id,visitor_phone,id_number,host,host_id,time,visit_start,visit_end,reason,status,created_at,reviewed_at,reviewer,review_comment,version</sql>
+ <select id="lock" resultType="edu.hfut.appointment.entity.Appointment">SELECT <include refid="columns"/> FROM appointments WHERE BINARY id=BINARY #{id} FOR UPDATE</select>
+ <insert id="insert">INSERT INTO appointments(id,visitor,visitor_id,visitor_phone,id_number,host,host_id,time,visit_start,visit_end,reason,status,created_at,version,sort_order) VALUES(#{id},#{visitor},#{visitorId},#{visitorPhone},#{idNumber},#{host},#{hostId},#{time},#{visitStart},#{visitEnd},#{reason},#{status},#{createdAt},0,-CAST(UNIX_TIMESTAMP(CURRENT_TIMESTAMP(3))*1000 AS SIGNED))</insert>
+ <update id="transition">UPDATE appointments SET status=#{a.status},reviewed_at=#{a.reviewedAt},reviewer=#{a.reviewer},review_comment=#{a.reviewComment},version=version+1 WHERE id=#{a.id} AND version=#{a.version} AND BINARY status=BINARY #{before}</update>
+ <insert id="insertHistory">INSERT INTO appointment_review_history(event_id,appointment_id,action,before_status,after_status,decision_version,actor_id,actor_name,actor_role,comment,occurred_at) VALUES(#{eventId},#{appointmentId},#{action},#{beforeStatus},#{afterStatus},#{version},#{actorId},#{actor},#{role},#{comment},#{occurredAt})</insert>
+ <insert id="insertOutbox">INSERT INTO appointment_outbox(event_id,appointment_id,payload,state,attempts) VALUES(#{eventId},#{appointmentId},#{payload},'PENDING',0)</insert>
+ <select id="one" resultType="edu.hfut.appointment.entity.Appointment">SELECT <include refid="columns"/> FROM appointments WHERE BINARY id=BINARY #{id}</select>
+ <select id="list" resultType="edu.hfut.appointment.entity.Appointment">SELECT <include refid="columns"/> FROM appointments <where>
+  <if test="status != null and status != ''">BINARY status=BINARY #{status}</if>
+  <if test="host != null and host != ''">AND INSTR(BINARY host,BINARY #{host})>0</if>
+  <if test="visitor != null and visitor != ''">AND INSTR(BINARY visitor,BINARY #{visitor})>0</if>
+  <if test="hostId != null and hostId != ''">AND BINARY host_id=BINARY #{hostId}</if>
+  <choose><when test="visitorId != null and visitorId != ''">AND ((visitor_id IS NOT NULL AND visitor_id != '' AND BINARY visitor_id=BINARY #{visitorId}) OR ((visitor_id IS NULL OR visitor_id='') AND (<choose><when test="scopePhone != null">BINARY visitor_phone=BINARY #{scopePhone}</when><otherwise>FALSE</otherwise></choose> OR <choose><when test="scopeName != null">BINARY visitor=BINARY #{scopeName}</when><otherwise>FALSE</otherwise></choose>)))</when>
+  <otherwise><if test="visitorPhone != null and visitorPhone != ''">AND BINARY visitor_phone=BINARY #{visitorPhone}</if></otherwise></choose>
+ </where> ORDER BY sort_order,id</select>
+</mapper>

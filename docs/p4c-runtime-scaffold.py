@@ -1,0 +1,10 @@
+from pathlib import Path
+R=Path(__file__).resolve().parents[1]
+p=R/'docs/p4c-runtime.py';t=(R/'docs/p4-runtime.py').read_text(encoding='utf-8').replace('.p4-local','.p4c-local').replace('docs/p4-evidence','docs/p4c-evidence').replace('backend/p4-legacy-adapter','backend/p4c-legacy-adapter')
+t=t.replace('19841,15173','19841,19851,19853,15173').replace("'--p4.internal.enabled=true'])","'--p4.internal.enabled=true','--p4c.internal.enabled=true'])")
+t=t.replace("env.pop('DEBUG',None)","env.update({'P4C_MODE':'true','P4C_EXCEPTION_SERVICE':'exception-service','P4C_FAULT_INJECTION':'true','P4C_DB_URL':f\"jdbc:mysql://127.0.0.1:{cfg['port']}/{cfg['exceptionDatabase']}?useSSL=false&serverTimezone=Asia/Shanghai&characterEncoding=UTF-8\",'P4C_DB_USER':cfg['exceptionUser'],'P4C_DB_PASSWORD':cfg['exceptionPassword']})\nenv.pop('DEBUG',None)")
+t=t.replace(" elif name=='adapter':", " elif name in ['exception1','exception2']:launch(name,[java,'-Xmx224m','-jar',jar('exception-service'),'--server.port='+str(19851 if name=='exception1' else 19853),'--p4c.disposition.enabled='+str(cfg.get('dispositionEnabled',False)).lower()])\n elif name=='adapter':")
+t=t.replace("launch('adapter',['node'", "for name,port in [('exception1',19851),('exception2',19853)]:launch(name,[java,'-Xmx224m','-jar',jar('exception-service'),'--server.port='+str(port),'--p4c.disposition.enabled='+str(cfg.get('dispositionEnabled',False)).lower()])\nlaunch('adapter',['node'")
+p.write_text(t,encoding='utf-8')
+p=R/'docs/p4c-http.mjs';t=(R/'docs/p4-http.mjs').read_text(encoding='utf-8').replace('.p4-local','.p4c-local').replace('docs/p4-evidence','docs/p4c-evidence').replace('docs/p4-runtime.py','docs/p4c-runtime.py');t=t.replace("export async function suite", "export async function incidentDb(){return mysql.createConnection({host:config.host,port:config.port,user:config.exceptionUser,password:config.exceptionPassword,database:config.exceptionDatabase});}\nexport async function suite");p.write_text(t,encoding='utf-8')
+print('P4-C private launcher and HTTP test helper created')

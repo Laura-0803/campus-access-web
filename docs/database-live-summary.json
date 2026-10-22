@@ -1,0 +1,1783 @@
+{
+  "date": "2026-10-19",
+  "syntax": [
+    {
+      "file": "postcss.config.js",
+      "status": "pass"
+    },
+    {
+      "file": "scripts/apply-gate-fixes.js",
+      "status": "pass"
+    },
+    {
+      "file": "scripts/dev-full.js",
+      "status": "pass"
+    },
+    {
+      "file": "scripts/init-db.js",
+      "status": "pass"
+    },
+    {
+      "file": "scripts/inspect-db.js",
+      "status": "pass"
+    },
+    {
+      "file": "scripts/sql-fix-gates.js",
+      "status": "pass"
+    },
+    {
+      "file": "server/data/seed.js",
+      "status": "pass"
+    },
+    {
+      "file": "server/index.js",
+      "status": "pass"
+    },
+    {
+      "file": "server/lib/accessPolicy.js",
+      "status": "pass"
+    },
+    {
+      "file": "server/lib/accessRecordView.js",
+      "status": "pass"
+    },
+    {
+      "file": "server/lib/blacklist.js",
+      "status": "pass"
+    },
+    {
+      "file": "server/lib/env.js",
+      "status": "pass"
+    },
+    {
+      "file": "server/lib/exceptionAgent.js",
+      "status": "pass"
+    },
+    {
+      "file": "server/lib/http.js",
+      "status": "pass"
+    },
+    {
+      "file": "server/lib/messageTargets.js",
+      "status": "pass"
+    },
+    {
+      "file": "server/lib/passwords.js",
+      "status": "pass"
+    },
+    {
+      "file": "server/lib/qrPayload.js",
+      "status": "pass"
+    },
+    {
+      "file": "server/lib/store.js",
+      "status": "pass"
+    },
+    {
+      "file": "server/lib/time.js",
+      "status": "pass"
+    },
+    {
+      "file": "server/lib/validators.js",
+      "status": "pass"
+    },
+    {
+      "file": "server/middleware/auth.js",
+      "status": "pass"
+    },
+    {
+      "file": "server/routes/accessRecords.js",
+      "status": "pass"
+    },
+    {
+      "file": "server/routes/admin.js",
+      "status": "pass"
+    },
+    {
+      "file": "server/routes/appointments.js",
+      "status": "pass"
+    },
+    {
+      "file": "server/routes/auth.js",
+      "status": "pass"
+    },
+    {
+      "file": "server/routes/credentials.js",
+      "status": "pass"
+    },
+    {
+      "file": "server/routes/dashboard.js",
+      "status": "pass"
+    },
+    {
+      "file": "server/routes/devices.js",
+      "status": "pass"
+    },
+    {
+      "file": "server/routes/exceptions.js",
+      "status": "pass"
+    },
+    {
+      "file": "server/routes/profiles.js",
+      "status": "pass"
+    },
+    {
+      "file": "server/routes/reports.js",
+      "status": "pass"
+    },
+    {
+      "file": "server/routes/settings.js",
+      "status": "pass"
+    },
+    {
+      "file": "src/api/client.js",
+      "status": "pass"
+    },
+    {
+      "file": "src/api/useApiData.js",
+      "status": "pass"
+    },
+    {
+      "file": "src/App.jsx",
+      "status": "pass"
+    },
+    {
+      "file": "src/components/charts/AccessTrendChart.jsx",
+      "status": "pass"
+    },
+    {
+      "file": "src/components/charts/RiskDonutChart.jsx",
+      "status": "pass"
+    },
+    {
+      "file": "src/components/flow/AccessFlow.jsx",
+      "status": "pass"
+    },
+    {
+      "file": "src/components/layout/AnnouncementBar.jsx",
+      "status": "pass"
+    },
+    {
+      "file": "src/components/layout/AppShell.jsx",
+      "status": "pass"
+    },
+    {
+      "file": "src/components/layout/IconRail.jsx",
+      "status": "pass"
+    },
+    {
+      "file": "src/components/layout/SideBar.jsx",
+      "status": "pass"
+    },
+    {
+      "file": "src/components/layout/TopBar.jsx",
+      "status": "pass"
+    },
+    {
+      "file": "src/components/ui/Badge.jsx",
+      "status": "pass"
+    },
+    {
+      "file": "src/components/ui/DataTable.jsx",
+      "status": "pass"
+    },
+    {
+      "file": "src/components/ui/Panel.jsx",
+      "status": "pass"
+    },
+    {
+      "file": "src/components/ui/QRCodeMock.jsx",
+      "status": "pass"
+    },
+    {
+      "file": "src/components/ui/StatCard.jsx",
+      "status": "pass"
+    },
+    {
+      "file": "src/config/roles.js",
+      "status": "pass"
+    },
+    {
+      "file": "src/data/mock.js",
+      "status": "pass"
+    },
+    {
+      "file": "src/main.jsx",
+      "status": "pass"
+    },
+    {
+      "file": "src/pages/AdminDashboard.jsx",
+      "status": "pass"
+    },
+    {
+      "file": "src/pages/FeaturePages.jsx",
+      "status": "pass"
+    },
+    {
+      "file": "src/pages/LoginPage.jsx",
+      "status": "pass"
+    },
+    {
+      "file": "src/pages/RoleDashboard.jsx",
+      "status": "pass"
+    },
+    {
+      "file": "tailwind.config.js",
+      "status": "pass"
+    },
+    {
+      "file": "vite.config.js",
+      "status": "pass"
+    }
+  ],
+  "database": {
+    "status": "pass-read-only",
+    "tables": [
+      {
+        "table": "access_records",
+        "rows": 50
+      },
+      {
+        "table": "access_rules",
+        "rows": 11
+      },
+      {
+        "table": "app_state",
+        "rows": 1
+      },
+      {
+        "table": "appointments",
+        "rows": 27
+      },
+      {
+        "table": "blacklist",
+        "rows": 12
+      },
+      {
+        "table": "devices",
+        "rows": 9
+      },
+      {
+        "table": "exceptions",
+        "rows": 21
+      },
+      {
+        "table": "faces",
+        "rows": 13
+      },
+      {
+        "table": "gates",
+        "rows": 4
+      },
+      {
+        "table": "logs",
+        "rows": 286
+      },
+      {
+        "table": "messages",
+        "rows": 22
+      },
+      {
+        "table": "people",
+        "rows": 25
+      },
+      {
+        "table": "qr_codes",
+        "rows": 31
+      },
+      {
+        "table": "role_profiles",
+        "rows": 6
+      },
+      {
+        "table": "roles",
+        "rows": 6
+      },
+      {
+        "table": "sessions",
+        "rows": 1
+      },
+      {
+        "table": "settings",
+        "rows": 1
+      },
+      {
+        "table": "users",
+        "rows": 24
+      },
+      {
+        "table": "vehicles",
+        "rows": 12
+      }
+    ],
+    "columns": [
+      {
+        "TABLE_NAME": "access_records",
+        "COLUMN_NAME": "id",
+        "COLUMN_TYPE": "varchar(64)",
+        "IS_NULLABLE": "NO",
+        "COLUMN_DEFAULT": null,
+        "COLUMN_KEY": "PRI"
+      },
+      {
+        "TABLE_NAME": "access_records",
+        "COLUMN_NAME": "time",
+        "COLUMN_TYPE": "varchar(64)",
+        "IS_NULLABLE": "YES",
+        "COLUMN_DEFAULT": null,
+        "COLUMN_KEY": ""
+      },
+      {
+        "TABLE_NAME": "access_records",
+        "COLUMN_NAME": "name",
+        "COLUMN_TYPE": "varchar(128)",
+        "IS_NULLABLE": "YES",
+        "COLUMN_DEFAULT": null,
+        "COLUMN_KEY": ""
+      },
+      {
+        "TABLE_NAME": "access_records",
+        "COLUMN_NAME": "person_id",
+        "COLUMN_TYPE": "varchar(64)",
+        "IS_NULLABLE": "YES",
+        "COLUMN_DEFAULT": null,
+        "COLUMN_KEY": "MUL"
+      },
+      {
+        "TABLE_NAME": "access_records",
+        "COLUMN_NAME": "type",
+        "COLUMN_TYPE": "varchar(64)",
+        "IS_NULLABLE": "YES",
+        "COLUMN_DEFAULT": null,
+        "COLUMN_KEY": ""
+      },
+      {
+        "TABLE_NAME": "access_records",
+        "COLUMN_NAME": "method",
+        "COLUMN_TYPE": "varchar(128)",
+        "IS_NULLABLE": "YES",
+        "COLUMN_DEFAULT": null,
+        "COLUMN_KEY": ""
+      },
+      {
+        "TABLE_NAME": "access_records",
+        "COLUMN_NAME": "gate",
+        "COLUMN_TYPE": "varchar(128)",
+        "IS_NULLABLE": "YES",
+        "COLUMN_DEFAULT": null,
+        "COLUMN_KEY": ""
+      },
+      {
+        "TABLE_NAME": "access_records",
+        "COLUMN_NAME": "status",
+        "COLUMN_TYPE": "varchar(64)",
+        "IS_NULLABLE": "YES",
+        "COLUMN_DEFAULT": null,
+        "COLUMN_KEY": ""
+      },
+      {
+        "TABLE_NAME": "access_records",
+        "COLUMN_NAME": "sort_order",
+        "COLUMN_TYPE": "int",
+        "IS_NULLABLE": "NO",
+        "COLUMN_DEFAULT": "0",
+        "COLUMN_KEY": ""
+      },
+      {
+        "TABLE_NAME": "access_rules",
+        "COLUMN_NAME": "id",
+        "COLUMN_TYPE": "varchar(64)",
+        "IS_NULLABLE": "NO",
+        "COLUMN_DEFAULT": null,
+        "COLUMN_KEY": "PRI"
+      },
+      {
+        "TABLE_NAME": "access_rules",
+        "COLUMN_NAME": "role",
+        "COLUMN_TYPE": "varchar(32)",
+        "IS_NULLABLE": "YES",
+        "COLUMN_DEFAULT": null,
+        "COLUMN_KEY": ""
+      },
+      {
+        "TABLE_NAME": "access_rules",
+        "COLUMN_NAME": "methods",
+        "COLUMN_TYPE": "json",
+        "IS_NULLABLE": "YES",
+        "COLUMN_DEFAULT": null,
+        "COLUMN_KEY": ""
+      },
+      {
+        "TABLE_NAME": "access_rules",
+        "COLUMN_NAME": "allowed_time",
+        "COLUMN_TYPE": "varchar(128)",
+        "IS_NULLABLE": "YES",
+        "COLUMN_DEFAULT": null,
+        "COLUMN_KEY": ""
+      },
+      {
+        "TABLE_NAME": "access_rules",
+        "COLUMN_NAME": "gates",
+        "COLUMN_TYPE": "json",
+        "IS_NULLABLE": "YES",
+        "COLUMN_DEFAULT": null,
+        "COLUMN_KEY": ""
+      },
+      {
+        "TABLE_NAME": "access_rules",
+        "COLUMN_NAME": "max_uses",
+        "COLUMN_TYPE": "varchar(64)",
+        "IS_NULLABLE": "YES",
+        "COLUMN_DEFAULT": null,
+        "COLUMN_KEY": ""
+      },
+      {
+        "TABLE_NAME": "access_rules",
+        "COLUMN_NAME": "status",
+        "COLUMN_TYPE": "varchar(64)",
+        "IS_NULLABLE": "YES",
+        "COLUMN_DEFAULT": null,
+        "COLUMN_KEY": ""
+      },
+      {
+        "TABLE_NAME": "access_rules",
+        "COLUMN_NAME": "sort_order",
+        "COLUMN_TYPE": "int",
+        "IS_NULLABLE": "NO",
+        "COLUMN_DEFAULT": "0",
+        "COLUMN_KEY": ""
+      },
+      {
+        "TABLE_NAME": "app_state",
+        "COLUMN_NAME": "id",
+        "COLUMN_TYPE": "varchar(64)",
+        "IS_NULLABLE": "NO",
+        "COLUMN_DEFAULT": null,
+        "COLUMN_KEY": "PRI"
+      },
+      {
+        "TABLE_NAME": "app_state",
+        "COLUMN_NAME": "data",
+        "COLUMN_TYPE": "json",
+        "IS_NULLABLE": "NO",
+        "COLUMN_DEFAULT": null,
+        "COLUMN_KEY": ""
+      },
+      {
+        "TABLE_NAME": "app_state",
+        "COLUMN_NAME": "updated_at",
+        "COLUMN_TYPE": "timestamp",
+        "IS_NULLABLE": "NO",
+        "COLUMN_DEFAULT": "CURRENT_TIMESTAMP",
+        "COLUMN_KEY": ""
+      },
+      {
+        "TABLE_NAME": "appointments",
+        "COLUMN_NAME": "id",
+        "COLUMN_TYPE": "varchar(64)",
+        "IS_NULLABLE": "NO",
+        "COLUMN_DEFAULT": null,
+        "COLUMN_KEY": "PRI"
+      },
+      {
+        "TABLE_NAME": "appointments",
+        "COLUMN_NAME": "visitor",
+        "COLUMN_TYPE": "varchar(128)",
+        "IS_NULLABLE": "YES",
+        "COLUMN_DEFAULT": null,
+        "COLUMN_KEY": ""
+      },
+      {
+        "TABLE_NAME": "appointments",
+        "COLUMN_NAME": "visitor_id",
+        "COLUMN_TYPE": "varchar(64)",
+        "IS_NULLABLE": "YES",
+        "COLUMN_DEFAULT": null,
+        "COLUMN_KEY": "MUL"
+      },
+      {
+        "TABLE_NAME": "appointments",
+        "COLUMN_NAME": "visitor_phone",
+        "COLUMN_TYPE": "varchar(32)",
+        "IS_NULLABLE": "YES",
+        "COLUMN_DEFAULT": null,
+        "COLUMN_KEY": ""
+      },
+      {
+        "TABLE_NAME": "appointments",
+        "COLUMN_NAME": "id_number",
+        "COLUMN_TYPE": "varchar(64)",
+        "IS_NULLABLE": "YES",
+        "COLUMN_DEFAULT": null,
+        "COLUMN_KEY": ""
+      },
+      {
+        "TABLE_NAME": "appointments",
+        "COLUMN_NAME": "host",
+        "COLUMN_TYPE": "varchar(128)",
+        "IS_NULLABLE": "YES",
+        "COLUMN_DEFAULT": null,
+        "COLUMN_KEY": ""
+      },
+      {
+        "TABLE_NAME": "appointments",
+        "COLUMN_NAME": "host_id",
+        "COLUMN_TYPE": "varchar(64)",
+        "IS_NULLABLE": "YES",
+        "COLUMN_DEFAULT": null,
+        "COLUMN_KEY": "MUL"
+      },
+      {
+        "TABLE_NAME": "appointments",
+        "COLUMN_NAME": "time",
+        "COLUMN_TYPE": "varchar(64)",
+        "IS_NULLABLE": "YES",
+        "COLUMN_DEFAULT": null,
+        "COLUMN_KEY": ""
+      },
+      {
+        "TABLE_NAME": "appointments",
+        "COLUMN_NAME": "visit_start",
+        "COLUMN_TYPE": "varchar(64)",
+        "IS_NULLABLE": "YES",
+        "COLUMN_DEFAULT": null,
+        "COLUMN_KEY": ""
+      },
+      {
+        "TABLE_NAME": "appointments",
+        "COLUMN_NAME": "visit_end",
+        "COLUMN_TYPE": "varchar(64)",
+        "IS_NULLABLE": "YES",
+        "COLUMN_DEFAULT": null,
+        "COLUMN_KEY": ""
+      },
+      {
+        "TABLE_NAME": "appointments",
+        "COLUMN_NAME": "reason",
+        "COLUMN_TYPE": "text",
+        "IS_NULLABLE": "YES",
+        "COLUMN_DEFAULT": null,
+        "COLUMN_KEY": ""
+      },
+      {
+        "TABLE_NAME": "appointments",
+        "COLUMN_NAME": "status",
+        "COLUMN_TYPE": "varchar(64)",
+        "IS_NULLABLE": "YES",
+        "COLUMN_DEFAULT": null,
+        "COLUMN_KEY": ""
+      },
+      {
+        "TABLE_NAME": "appointments",
+        "COLUMN_NAME": "created_at",
+        "COLUMN_TYPE": "varchar(64)",
+        "IS_NULLABLE": "YES",
+        "COLUMN_DEFAULT": null,
+        "COLUMN_KEY": ""
+      },
+      {
+        "TABLE_NAME": "appointments",
+        "COLUMN_NAME": "reviewed_at",
+        "COLUMN_TYPE": "varchar(64)",
+        "IS_NULLABLE": "YES",
+        "COLUMN_DEFAULT": null,
+        "COLUMN_KEY": ""
+      },
+      {
+        "TABLE_NAME": "appointments",
+        "COLUMN_NAME": "reviewer",
+        "COLUMN_TYPE": "varchar(128)",
+        "IS_NULLABLE": "YES",
+        "COLUMN_DEFAULT": null,
+        "COLUMN_KEY": ""
+      },
+      {
+        "TABLE_NAME": "appointments",
+        "COLUMN_NAME": "review_comment",
+        "COLUMN_TYPE": "text",
+        "IS_NULLABLE": "YES",
+        "COLUMN_DEFAULT": null,
+        "COLUMN_KEY": ""
+      },
+      {
+        "TABLE_NAME": "appointments",
+        "COLUMN_NAME": "sort_order",
+        "COLUMN_TYPE": "int",
+        "IS_NULLABLE": "NO",
+        "COLUMN_DEFAULT": "0",
+        "COLUMN_KEY": ""
+      },
+      {
+        "TABLE_NAME": "blacklist",
+        "COLUMN_NAME": "id",
+        "COLUMN_TYPE": "varchar(64)",
+        "IS_NULLABLE": "NO",
+        "COLUMN_DEFAULT": null,
+        "COLUMN_KEY": "PRI"
+      },
+      {
+        "TABLE_NAME": "blacklist",
+        "COLUMN_NAME": "name",
+        "COLUMN_TYPE": "varchar(128)",
+        "IS_NULLABLE": "YES",
+        "COLUMN_DEFAULT": null,
+        "COLUMN_KEY": ""
+      },
+      {
+        "TABLE_NAME": "blacklist",
+        "COLUMN_NAME": "type",
+        "COLUMN_TYPE": "varchar(128)",
+        "IS_NULLABLE": "YES",
+        "COLUMN_DEFAULT": null,
+        "COLUMN_KEY": ""
+      },
+      {
+        "TABLE_NAME": "blacklist",
+        "COLUMN_NAME": "credential_no",
+        "COLUMN_TYPE": "varchar(128)",
+        "IS_NULLABLE": "YES",
+        "COLUMN_DEFAULT": null,
+        "COLUMN_KEY": ""
+      },
+      {
+        "TABLE_NAME": "blacklist",
+        "COLUMN_NAME": "reason",
+        "COLUMN_TYPE": "text",
+        "IS_NULLABLE": "YES",
+        "COLUMN_DEFAULT": null,
+        "COLUMN_KEY": ""
+      },
+      {
+        "TABLE_NAME": "blacklist",
+        "COLUMN_NAME": "status",
+        "COLUMN_TYPE": "varchar(64)",
+        "IS_NULLABLE": "YES",
+        "COLUMN_DEFAULT": null,
+        "COLUMN_KEY": ""
+      },
+      {
+        "TABLE_NAME": "blacklist",
+        "COLUMN_NAME": "created_at",
+        "COLUMN_TYPE": "varchar(64)",
+        "IS_NULLABLE": "YES",
+        "COLUMN_DEFAULT": null,
+        "COLUMN_KEY": ""
+      },
+      {
+        "TABLE_NAME": "blacklist",
+        "COLUMN_NAME": "sort_order",
+        "COLUMN_TYPE": "int",
+        "IS_NULLABLE": "NO",
+        "COLUMN_DEFAULT": "0",
+        "COLUMN_KEY": ""
+      },
+      {
+        "TABLE_NAME": "blacklist",
+        "COLUMN_NAME": "removed_at",
+        "COLUMN_TYPE": "varchar(64)",
+        "IS_NULLABLE": "YES",
+        "COLUMN_DEFAULT": null,
+        "COLUMN_KEY": ""
+      },
+      {
+        "TABLE_NAME": "blacklist",
+        "COLUMN_NAME": "removed_reason",
+        "COLUMN_TYPE": "text",
+        "IS_NULLABLE": "YES",
+        "COLUMN_DEFAULT": null,
+        "COLUMN_KEY": ""
+      },
+      {
+        "TABLE_NAME": "blacklist",
+        "COLUMN_NAME": "removed_by",
+        "COLUMN_TYPE": "varchar(128)",
+        "IS_NULLABLE": "YES",
+        "COLUMN_DEFAULT": null,
+        "COLUMN_KEY": ""
+      },
+      {
+        "TABLE_NAME": "devices",
+        "COLUMN_NAME": "id",
+        "COLUMN_TYPE": "varchar(64)",
+        "IS_NULLABLE": "NO",
+        "COLUMN_DEFAULT": null,
+        "COLUMN_KEY": "PRI"
+      },
+      {
+        "TABLE_NAME": "devices",
+        "COLUMN_NAME": "name",
+        "COLUMN_TYPE": "varchar(128)",
+        "IS_NULLABLE": "YES",
+        "COLUMN_DEFAULT": null,
+        "COLUMN_KEY": ""
+      },
+      {
+        "TABLE_NAME": "devices",
+        "COLUMN_NAME": "type",
+        "COLUMN_TYPE": "varchar(64)",
+        "IS_NULLABLE": "YES",
+        "COLUMN_DEFAULT": null,
+        "COLUMN_KEY": ""
+      },
+      {
+        "TABLE_NAME": "devices",
+        "COLUMN_NAME": "gate",
+        "COLUMN_TYPE": "varchar(128)",
+        "IS_NULLABLE": "YES",
+        "COLUMN_DEFAULT": null,
+        "COLUMN_KEY": ""
+      },
+      {
+        "TABLE_NAME": "devices",
+        "COLUMN_NAME": "status",
+        "COLUMN_TYPE": "varchar(64)",
+        "IS_NULLABLE": "YES",
+        "COLUMN_DEFAULT": null,
+        "COLUMN_KEY": ""
+      },
+      {
+        "TABLE_NAME": "devices",
+        "COLUMN_NAME": "sync",
+        "COLUMN_TYPE": "varchar(64)",
+        "IS_NULLABLE": "YES",
+        "COLUMN_DEFAULT": null,
+        "COLUMN_KEY": ""
+      },
+      {
+        "TABLE_NAME": "devices",
+        "COLUMN_NAME": "last_sync",
+        "COLUMN_TYPE": "varchar(64)",
+        "IS_NULLABLE": "YES",
+        "COLUMN_DEFAULT": null,
+        "COLUMN_KEY": ""
+      },
+      {
+        "TABLE_NAME": "devices",
+        "COLUMN_NAME": "sort_order",
+        "COLUMN_TYPE": "int",
+        "IS_NULLABLE": "NO",
+        "COLUMN_DEFAULT": "0",
+        "COLUMN_KEY": ""
+      },
+      {
+        "TABLE_NAME": "exceptions",
+        "COLUMN_NAME": "id",
+        "COLUMN_TYPE": "varchar(64)",
+        "IS_NULLABLE": "NO",
+        "COLUMN_DEFAULT": null,
+        "COLUMN_KEY": "PRI"
+      },
+      {
+        "TABLE_NAME": "exceptions",
+        "COLUMN_NAME": "time",
+        "COLUMN_TYPE": "varchar(64)",
+        "IS_NULLABLE": "YES",
+        "COLUMN_DEFAULT": null,
+        "COLUMN_KEY": ""
+      },
+      {
+        "TABLE_NAME": "exceptions",
+        "COLUMN_NAME": "person",
+        "COLUMN_TYPE": "varchar(128)",
+        "IS_NULLABLE": "YES",
+        "COLUMN_DEFAULT": null,
+        "COLUMN_KEY": ""
+      },
+      {
+        "TABLE_NAME": "exceptions",
+        "COLUMN_NAME": "person_type",
+        "COLUMN_TYPE": "varchar(64)",
+        "IS_NULLABLE": "YES",
+        "COLUMN_DEFAULT": null,
+        "COLUMN_KEY": ""
+      },
+      {
+        "TABLE_NAME": "exceptions",
+        "COLUMN_NAME": "gate",
+        "COLUMN_TYPE": "varchar(128)",
+        "IS_NULLABLE": "YES",
+        "COLUMN_DEFAULT": null,
+        "COLUMN_KEY": ""
+      },
+      {
+        "TABLE_NAME": "exceptions",
+        "COLUMN_NAME": "method",
+        "COLUMN_TYPE": "varchar(128)",
+        "IS_NULLABLE": "YES",
+        "COLUMN_DEFAULT": null,
+        "COLUMN_KEY": ""
+      },
+      {
+        "TABLE_NAME": "exceptions",
+        "COLUMN_NAME": "type",
+        "COLUMN_TYPE": "varchar(128)",
+        "IS_NULLABLE": "YES",
+        "COLUMN_DEFAULT": null,
+        "COLUMN_KEY": ""
+      },
+      {
+        "TABLE_NAME": "exceptions",
+        "COLUMN_NAME": "reason",
+        "COLUMN_TYPE": "text",
+        "IS_NULLABLE": "YES",
+        "COLUMN_DEFAULT": null,
+        "COLUMN_KEY": ""
+      },
+      {
+        "TABLE_NAME": "exceptions",
+        "COLUMN_NAME": "risk",
+        "COLUMN_TYPE": "varchar(64)",
+        "IS_NULLABLE": "YES",
+        "COLUMN_DEFAULT": null,
+        "COLUMN_KEY": ""
+      },
+      {
+        "TABLE_NAME": "exceptions",
+        "COLUMN_NAME": "status",
+        "COLUMN_TYPE": "varchar(64)",
+        "IS_NULLABLE": "YES",
+        "COLUMN_DEFAULT": null,
+        "COLUMN_KEY": ""
+      },
+      {
+        "TABLE_NAME": "exceptions",
+        "COLUMN_NAME": "suggestion",
+        "COLUMN_TYPE": "text",
+        "IS_NULLABLE": "YES",
+        "COLUMN_DEFAULT": null,
+        "COLUMN_KEY": ""
+      },
+      {
+        "TABLE_NAME": "exceptions",
+        "COLUMN_NAME": "handler",
+        "COLUMN_TYPE": "varchar(128)",
+        "IS_NULLABLE": "YES",
+        "COLUMN_DEFAULT": null,
+        "COLUMN_KEY": ""
+      },
+      {
+        "TABLE_NAME": "exceptions",
+        "COLUMN_NAME": "handled_at",
+        "COLUMN_TYPE": "varchar(64)",
+        "IS_NULLABLE": "YES",
+        "COLUMN_DEFAULT": null,
+        "COLUMN_KEY": ""
+      },
+      {
+        "TABLE_NAME": "exceptions",
+        "COLUMN_NAME": "note",
+        "COLUMN_TYPE": "text",
+        "IS_NULLABLE": "YES",
+        "COLUMN_DEFAULT": null,
+        "COLUMN_KEY": ""
+      },
+      {
+        "TABLE_NAME": "exceptions",
+        "COLUMN_NAME": "actions",
+        "COLUMN_TYPE": "json",
+        "IS_NULLABLE": "YES",
+        "COLUMN_DEFAULT": null,
+        "COLUMN_KEY": ""
+      },
+      {
+        "TABLE_NAME": "exceptions",
+        "COLUMN_NAME": "sort_order",
+        "COLUMN_TYPE": "int",
+        "IS_NULLABLE": "NO",
+        "COLUMN_DEFAULT": "0",
+        "COLUMN_KEY": ""
+      },
+      {
+        "TABLE_NAME": "faces",
+        "COLUMN_NAME": "id",
+        "COLUMN_TYPE": "varchar(64)",
+        "IS_NULLABLE": "NO",
+        "COLUMN_DEFAULT": null,
+        "COLUMN_KEY": "PRI"
+      },
+      {
+        "TABLE_NAME": "faces",
+        "COLUMN_NAME": "person_id",
+        "COLUMN_TYPE": "varchar(64)",
+        "IS_NULLABLE": "YES",
+        "COLUMN_DEFAULT": null,
+        "COLUMN_KEY": "MUL"
+      },
+      {
+        "TABLE_NAME": "faces",
+        "COLUMN_NAME": "person_name",
+        "COLUMN_TYPE": "varchar(128)",
+        "IS_NULLABLE": "YES",
+        "COLUMN_DEFAULT": null,
+        "COLUMN_KEY": ""
+      },
+      {
+        "TABLE_NAME": "faces",
+        "COLUMN_NAME": "status",
+        "COLUMN_TYPE": "varchar(64)",
+        "IS_NULLABLE": "YES",
+        "COLUMN_DEFAULT": null,
+        "COLUMN_KEY": ""
+      },
+      {
+        "TABLE_NAME": "faces",
+        "COLUMN_NAME": "file_name",
+        "COLUMN_TYPE": "varchar(255)",
+        "IS_NULLABLE": "YES",
+        "COLUMN_DEFAULT": null,
+        "COLUMN_KEY": ""
+      },
+      {
+        "TABLE_NAME": "faces",
+        "COLUMN_NAME": "updated_at",
+        "COLUMN_TYPE": "varchar(64)",
+        "IS_NULLABLE": "YES",
+        "COLUMN_DEFAULT": null,
+        "COLUMN_KEY": ""
+      },
+      {
+        "TABLE_NAME": "faces",
+        "COLUMN_NAME": "sync_status",
+        "COLUMN_TYPE": "varchar(64)",
+        "IS_NULLABLE": "YES",
+        "COLUMN_DEFAULT": null,
+        "COLUMN_KEY": ""
+      },
+      {
+        "TABLE_NAME": "faces",
+        "COLUMN_NAME": "sort_order",
+        "COLUMN_TYPE": "int",
+        "IS_NULLABLE": "NO",
+        "COLUMN_DEFAULT": "0",
+        "COLUMN_KEY": ""
+      },
+      {
+        "TABLE_NAME": "faces",
+        "COLUMN_NAME": "image_url",
+        "COLUMN_TYPE": "longtext",
+        "IS_NULLABLE": "YES",
+        "COLUMN_DEFAULT": null,
+        "COLUMN_KEY": ""
+      },
+      {
+        "TABLE_NAME": "faces",
+        "COLUMN_NAME": "slot_key",
+        "COLUMN_TYPE": "varchar(32)",
+        "IS_NULLABLE": "YES",
+        "COLUMN_DEFAULT": null,
+        "COLUMN_KEY": ""
+      },
+      {
+        "TABLE_NAME": "faces",
+        "COLUMN_NAME": "label",
+        "COLUMN_TYPE": "varchar(128)",
+        "IS_NULLABLE": "YES",
+        "COLUMN_DEFAULT": null,
+        "COLUMN_KEY": ""
+      },
+      {
+        "TABLE_NAME": "gates",
+        "COLUMN_NAME": "id",
+        "COLUMN_TYPE": "varchar(64)",
+        "IS_NULLABLE": "NO",
+        "COLUMN_DEFAULT": null,
+        "COLUMN_KEY": "PRI"
+      },
+      {
+        "TABLE_NAME": "gates",
+        "COLUMN_NAME": "name",
+        "COLUMN_TYPE": "varchar(128)",
+        "IS_NULLABLE": "YES",
+        "COLUMN_DEFAULT": null,
+        "COLUMN_KEY": ""
+      },
+      {
+        "TABLE_NAME": "gates",
+        "COLUMN_NAME": "campus",
+        "COLUMN_TYPE": "varchar(128)",
+        "IS_NULLABLE": "YES",
+        "COLUMN_DEFAULT": null,
+        "COLUMN_KEY": ""
+      },
+      {
+        "TABLE_NAME": "gates",
+        "COLUMN_NAME": "location",
+        "COLUMN_TYPE": "varchar(255)",
+        "IS_NULLABLE": "YES",
+        "COLUMN_DEFAULT": null,
+        "COLUMN_KEY": ""
+      },
+      {
+        "TABLE_NAME": "gates",
+        "COLUMN_NAME": "open_time",
+        "COLUMN_TYPE": "varchar(64)",
+        "IS_NULLABLE": "YES",
+        "COLUMN_DEFAULT": null,
+        "COLUMN_KEY": ""
+      },
+      {
+        "TABLE_NAME": "gates",
+        "COLUMN_NAME": "status",
+        "COLUMN_TYPE": "varchar(64)",
+        "IS_NULLABLE": "YES",
+        "COLUMN_DEFAULT": null,
+        "COLUMN_KEY": ""
+      },
+      {
+        "TABLE_NAME": "gates",
+        "COLUMN_NAME": "sort_order",
+        "COLUMN_TYPE": "int",
+        "IS_NULLABLE": "NO",
+        "COLUMN_DEFAULT": "0",
+        "COLUMN_KEY": ""
+      },
+      {
+        "TABLE_NAME": "logs",
+        "COLUMN_NAME": "id",
+        "COLUMN_TYPE": "varchar(64)",
+        "IS_NULLABLE": "NO",
+        "COLUMN_DEFAULT": null,
+        "COLUMN_KEY": "PRI"
+      },
+      {
+        "TABLE_NAME": "logs",
+        "COLUMN_NAME": "time",
+        "COLUMN_TYPE": "varchar(64)",
+        "IS_NULLABLE": "YES",
+        "COLUMN_DEFAULT": null,
+        "COLUMN_KEY": ""
+      },
+      {
+        "TABLE_NAME": "logs",
+        "COLUMN_NAME": "actor",
+        "COLUMN_TYPE": "varchar(128)",
+        "IS_NULLABLE": "YES",
+        "COLUMN_DEFAULT": null,
+        "COLUMN_KEY": ""
+      },
+      {
+        "TABLE_NAME": "logs",
+        "COLUMN_NAME": "role",
+        "COLUMN_TYPE": "varchar(64)",
+        "IS_NULLABLE": "YES",
+        "COLUMN_DEFAULT": null,
+        "COLUMN_KEY": ""
+      },
+      {
+        "TABLE_NAME": "logs",
+        "COLUMN_NAME": "action",
+        "COLUMN_TYPE": "varchar(255)",
+        "IS_NULLABLE": "YES",
+        "COLUMN_DEFAULT": null,
+        "COLUMN_KEY": ""
+      },
+      {
+        "TABLE_NAME": "logs",
+        "COLUMN_NAME": "target",
+        "COLUMN_TYPE": "varchar(255)",
+        "IS_NULLABLE": "YES",
+        "COLUMN_DEFAULT": null,
+        "COLUMN_KEY": ""
+      },
+      {
+        "TABLE_NAME": "logs",
+        "COLUMN_NAME": "result",
+        "COLUMN_TYPE": "varchar(64)",
+        "IS_NULLABLE": "YES",
+        "COLUMN_DEFAULT": null,
+        "COLUMN_KEY": ""
+      },
+      {
+        "TABLE_NAME": "logs",
+        "COLUMN_NAME": "sort_order",
+        "COLUMN_TYPE": "int",
+        "IS_NULLABLE": "NO",
+        "COLUMN_DEFAULT": "0",
+        "COLUMN_KEY": ""
+      },
+      {
+        "TABLE_NAME": "messages",
+        "COLUMN_NAME": "id",
+        "COLUMN_TYPE": "varchar(64)",
+        "IS_NULLABLE": "NO",
+        "COLUMN_DEFAULT": null,
+        "COLUMN_KEY": "PRI"
+      },
+      {
+        "TABLE_NAME": "messages",
+        "COLUMN_NAME": "title",
+        "COLUMN_TYPE": "varchar(255)",
+        "IS_NULLABLE": "YES",
+        "COLUMN_DEFAULT": null,
+        "COLUMN_KEY": ""
+      },
+      {
+        "TABLE_NAME": "messages",
+        "COLUMN_NAME": "content",
+        "COLUMN_TYPE": "text",
+        "IS_NULLABLE": "YES",
+        "COLUMN_DEFAULT": null,
+        "COLUMN_KEY": ""
+      },
+      {
+        "TABLE_NAME": "messages",
+        "COLUMN_NAME": "target_role",
+        "COLUMN_TYPE": "varchar(255)",
+        "IS_NULLABLE": "YES",
+        "COLUMN_DEFAULT": null,
+        "COLUMN_KEY": ""
+      },
+      {
+        "TABLE_NAME": "messages",
+        "COLUMN_NAME": "read_flag",
+        "COLUMN_TYPE": "tinyint(1)",
+        "IS_NULLABLE": "YES",
+        "COLUMN_DEFAULT": null,
+        "COLUMN_KEY": ""
+      },
+      {
+        "TABLE_NAME": "messages",
+        "COLUMN_NAME": "created_at",
+        "COLUMN_TYPE": "varchar(64)",
+        "IS_NULLABLE": "YES",
+        "COLUMN_DEFAULT": null,
+        "COLUMN_KEY": ""
+      },
+      {
+        "TABLE_NAME": "messages",
+        "COLUMN_NAME": "sort_order",
+        "COLUMN_TYPE": "int",
+        "IS_NULLABLE": "NO",
+        "COLUMN_DEFAULT": "0",
+        "COLUMN_KEY": ""
+      },
+      {
+        "TABLE_NAME": "people",
+        "COLUMN_NAME": "id",
+        "COLUMN_TYPE": "varchar(64)",
+        "IS_NULLABLE": "NO",
+        "COLUMN_DEFAULT": null,
+        "COLUMN_KEY": "PRI"
+      },
+      {
+        "TABLE_NAME": "people",
+        "COLUMN_NAME": "name",
+        "COLUMN_TYPE": "varchar(128)",
+        "IS_NULLABLE": "NO",
+        "COLUMN_DEFAULT": null,
+        "COLUMN_KEY": ""
+      },
+      {
+        "TABLE_NAME": "people",
+        "COLUMN_NAME": "type",
+        "COLUMN_TYPE": "varchar(64)",
+        "IS_NULLABLE": "YES",
+        "COLUMN_DEFAULT": null,
+        "COLUMN_KEY": ""
+      },
+      {
+        "TABLE_NAME": "people",
+        "COLUMN_NAME": "code",
+        "COLUMN_TYPE": "varchar(128)",
+        "IS_NULLABLE": "YES",
+        "COLUMN_DEFAULT": null,
+        "COLUMN_KEY": ""
+      },
+      {
+        "TABLE_NAME": "people",
+        "COLUMN_NAME": "id_number",
+        "COLUMN_TYPE": "varchar(64)",
+        "IS_NULLABLE": "YES",
+        "COLUMN_DEFAULT": null,
+        "COLUMN_KEY": ""
+      },
+      {
+        "TABLE_NAME": "people",
+        "COLUMN_NAME": "role",
+        "COLUMN_TYPE": "varchar(32)",
+        "IS_NULLABLE": "YES",
+        "COLUMN_DEFAULT": null,
+        "COLUMN_KEY": ""
+      },
+      {
+        "TABLE_NAME": "people",
+        "COLUMN_NAME": "college",
+        "COLUMN_TYPE": "varchar(128)",
+        "IS_NULLABLE": "YES",
+        "COLUMN_DEFAULT": null,
+        "COLUMN_KEY": ""
+      },
+      {
+        "TABLE_NAME": "people",
+        "COLUMN_NAME": "class_name",
+        "COLUMN_TYPE": "varchar(128)",
+        "IS_NULLABLE": "YES",
+        "COLUMN_DEFAULT": null,
+        "COLUMN_KEY": ""
+      },
+      {
+        "TABLE_NAME": "people",
+        "COLUMN_NAME": "phone",
+        "COLUMN_TYPE": "varchar(32)",
+        "IS_NULLABLE": "YES",
+        "COLUMN_DEFAULT": null,
+        "COLUMN_KEY": ""
+      },
+      {
+        "TABLE_NAME": "people",
+        "COLUMN_NAME": "face_status",
+        "COLUMN_TYPE": "varchar(64)",
+        "IS_NULLABLE": "YES",
+        "COLUMN_DEFAULT": null,
+        "COLUMN_KEY": ""
+      },
+      {
+        "TABLE_NAME": "people",
+        "COLUMN_NAME": "status",
+        "COLUMN_TYPE": "varchar(64)",
+        "IS_NULLABLE": "YES",
+        "COLUMN_DEFAULT": null,
+        "COLUMN_KEY": ""
+      },
+      {
+        "TABLE_NAME": "people",
+        "COLUMN_NAME": "department",
+        "COLUMN_TYPE": "varchar(128)",
+        "IS_NULLABLE": "YES",
+        "COLUMN_DEFAULT": null,
+        "COLUMN_KEY": ""
+      },
+      {
+        "TABLE_NAME": "people",
+        "COLUMN_NAME": "position",
+        "COLUMN_TYPE": "varchar(128)",
+        "IS_NULLABLE": "YES",
+        "COLUMN_DEFAULT": null,
+        "COLUMN_KEY": ""
+      },
+      {
+        "TABLE_NAME": "people",
+        "COLUMN_NAME": "host",
+        "COLUMN_TYPE": "varchar(128)",
+        "IS_NULLABLE": "YES",
+        "COLUMN_DEFAULT": null,
+        "COLUMN_KEY": ""
+      },
+      {
+        "TABLE_NAME": "people",
+        "COLUMN_NAME": "company",
+        "COLUMN_TYPE": "varchar(255)",
+        "IS_NULLABLE": "YES",
+        "COLUMN_DEFAULT": null,
+        "COLUMN_KEY": ""
+      },
+      {
+        "TABLE_NAME": "people",
+        "COLUMN_NAME": "graduation_year",
+        "COLUMN_TYPE": "varchar(32)",
+        "IS_NULLABLE": "YES",
+        "COLUMN_DEFAULT": null,
+        "COLUMN_KEY": ""
+      },
+      {
+        "TABLE_NAME": "people",
+        "COLUMN_NAME": "major",
+        "COLUMN_TYPE": "varchar(255)",
+        "IS_NULLABLE": "YES",
+        "COLUMN_DEFAULT": null,
+        "COLUMN_KEY": ""
+      },
+      {
+        "TABLE_NAME": "people",
+        "COLUMN_NAME": "gate",
+        "COLUMN_TYPE": "varchar(128)",
+        "IS_NULLABLE": "YES",
+        "COLUMN_DEFAULT": null,
+        "COLUMN_KEY": ""
+      },
+      {
+        "TABLE_NAME": "people",
+        "COLUMN_NAME": "sort_order",
+        "COLUMN_TYPE": "int",
+        "IS_NULLABLE": "NO",
+        "COLUMN_DEFAULT": "0",
+        "COLUMN_KEY": ""
+      },
+      {
+        "TABLE_NAME": "qr_codes",
+        "COLUMN_NAME": "id",
+        "COLUMN_TYPE": "varchar(64)",
+        "IS_NULLABLE": "NO",
+        "COLUMN_DEFAULT": null,
+        "COLUMN_KEY": "PRI"
+      },
+      {
+        "TABLE_NAME": "qr_codes",
+        "COLUMN_NAME": "token",
+        "COLUMN_TYPE": "varchar(255)",
+        "IS_NULLABLE": "NO",
+        "COLUMN_DEFAULT": null,
+        "COLUMN_KEY": "UNI"
+      },
+      {
+        "TABLE_NAME": "qr_codes",
+        "COLUMN_NAME": "type",
+        "COLUMN_TYPE": "varchar(32)",
+        "IS_NULLABLE": "YES",
+        "COLUMN_DEFAULT": null,
+        "COLUMN_KEY": ""
+      },
+      {
+        "TABLE_NAME": "qr_codes",
+        "COLUMN_NAME": "owner_name",
+        "COLUMN_TYPE": "varchar(128)",
+        "IS_NULLABLE": "YES",
+        "COLUMN_DEFAULT": null,
+        "COLUMN_KEY": ""
+      },
+      {
+        "TABLE_NAME": "qr_codes",
+        "COLUMN_NAME": "owner_id",
+        "COLUMN_TYPE": "varchar(64)",
+        "IS_NULLABLE": "YES",
+        "COLUMN_DEFAULT": null,
+        "COLUMN_KEY": "MUL"
+      },
+      {
+        "TABLE_NAME": "qr_codes",
+        "COLUMN_NAME": "visitor_id",
+        "COLUMN_TYPE": "varchar(64)",
+        "IS_NULLABLE": "YES",
+        "COLUMN_DEFAULT": null,
+        "COLUMN_KEY": "MUL"
+      },
+      {
+        "TABLE_NAME": "qr_codes",
+        "COLUMN_NAME": "appointment_id",
+        "COLUMN_TYPE": "varchar(64)",
+        "IS_NULLABLE": "YES",
+        "COLUMN_DEFAULT": null,
+        "COLUMN_KEY": "MUL"
+      },
+      {
+        "TABLE_NAME": "qr_codes",
+        "COLUMN_NAME": "valid_from",
+        "COLUMN_TYPE": "varchar(64)",
+        "IS_NULLABLE": "YES",
+        "COLUMN_DEFAULT": null,
+        "COLUMN_KEY": ""
+      },
+      {
+        "TABLE_NAME": "qr_codes",
+        "COLUMN_NAME": "valid_to",
+        "COLUMN_TYPE": "varchar(64)",
+        "IS_NULLABLE": "YES",
+        "COLUMN_DEFAULT": null,
+        "COLUMN_KEY": ""
+      },
+      {
+        "TABLE_NAME": "qr_codes",
+        "COLUMN_NAME": "status",
+        "COLUMN_TYPE": "varchar(64)",
+        "IS_NULLABLE": "YES",
+        "COLUMN_DEFAULT": null,
+        "COLUMN_KEY": ""
+      },
+      {
+        "TABLE_NAME": "qr_codes",
+        "COLUMN_NAME": "max_uses",
+        "COLUMN_TYPE": "int",
+        "IS_NULLABLE": "NO",
+        "COLUMN_DEFAULT": "1",
+        "COLUMN_KEY": ""
+      },
+      {
+        "TABLE_NAME": "qr_codes",
+        "COLUMN_NAME": "used_count",
+        "COLUMN_TYPE": "int",
+        "IS_NULLABLE": "NO",
+        "COLUMN_DEFAULT": "0",
+        "COLUMN_KEY": ""
+      },
+      {
+        "TABLE_NAME": "qr_codes",
+        "COLUMN_NAME": "sort_order",
+        "COLUMN_TYPE": "int",
+        "IS_NULLABLE": "NO",
+        "COLUMN_DEFAULT": "0",
+        "COLUMN_KEY": ""
+      },
+      {
+        "TABLE_NAME": "role_profiles",
+        "COLUMN_NAME": "role_key",
+        "COLUMN_TYPE": "varchar(32)",
+        "IS_NULLABLE": "NO",
+        "COLUMN_DEFAULT": null,
+        "COLUMN_KEY": "PRI"
+      },
+      {
+        "TABLE_NAME": "role_profiles",
+        "COLUMN_NAME": "person_id",
+        "COLUMN_TYPE": "varchar(64)",
+        "IS_NULLABLE": "YES",
+        "COLUMN_DEFAULT": null,
+        "COLUMN_KEY": ""
+      },
+      {
+        "TABLE_NAME": "role_profiles",
+        "COLUMN_NAME": "name",
+        "COLUMN_TYPE": "varchar(128)",
+        "IS_NULLABLE": "YES",
+        "COLUMN_DEFAULT": null,
+        "COLUMN_KEY": ""
+      },
+      {
+        "TABLE_NAME": "role_profiles",
+        "COLUMN_NAME": "title",
+        "COLUMN_TYPE": "varchar(255)",
+        "IS_NULLABLE": "YES",
+        "COLUMN_DEFAULT": null,
+        "COLUMN_KEY": ""
+      },
+      {
+        "TABLE_NAME": "role_profiles",
+        "COLUMN_NAME": "role_value",
+        "COLUMN_TYPE": "varchar(32)",
+        "IS_NULLABLE": "YES",
+        "COLUMN_DEFAULT": null,
+        "COLUMN_KEY": ""
+      },
+      {
+        "TABLE_NAME": "role_profiles",
+        "COLUMN_NAME": "type",
+        "COLUMN_TYPE": "varchar(64)",
+        "IS_NULLABLE": "YES",
+        "COLUMN_DEFAULT": null,
+        "COLUMN_KEY": ""
+      },
+      {
+        "TABLE_NAME": "role_profiles",
+        "COLUMN_NAME": "avatar",
+        "COLUMN_TYPE": "varchar(512)",
+        "IS_NULLABLE": "YES",
+        "COLUMN_DEFAULT": null,
+        "COLUMN_KEY": ""
+      },
+      {
+        "TABLE_NAME": "role_profiles",
+        "COLUMN_NAME": "status",
+        "COLUMN_TYPE": "varchar(64)",
+        "IS_NULLABLE": "YES",
+        "COLUMN_DEFAULT": null,
+        "COLUMN_KEY": ""
+      },
+      {
+        "TABLE_NAME": "roles",
+        "COLUMN_NAME": "role_key",
+        "COLUMN_TYPE": "varchar(32)",
+        "IS_NULLABLE": "NO",
+        "COLUMN_DEFAULT": null,
+        "COLUMN_KEY": "PRI"
+      },
+      {
+        "TABLE_NAME": "roles",
+        "COLUMN_NAME": "label",
+        "COLUMN_TYPE": "varchar(64)",
+        "IS_NULLABLE": "NO",
+        "COLUMN_DEFAULT": null,
+        "COLUMN_KEY": ""
+      },
+      {
+        "TABLE_NAME": "sessions",
+        "COLUMN_NAME": "token",
+        "COLUMN_TYPE": "varchar(128)",
+        "IS_NULLABLE": "NO",
+        "COLUMN_DEFAULT": null,
+        "COLUMN_KEY": "PRI"
+      },
+      {
+        "TABLE_NAME": "sessions",
+        "COLUMN_NAME": "user_id",
+        "COLUMN_TYPE": "varchar(64)",
+        "IS_NULLABLE": "NO",
+        "COLUMN_DEFAULT": null,
+        "COLUMN_KEY": "MUL"
+      },
+      {
+        "TABLE_NAME": "sessions",
+        "COLUMN_NAME": "role",
+        "COLUMN_TYPE": "varchar(32)",
+        "IS_NULLABLE": "YES",
+        "COLUMN_DEFAULT": null,
+        "COLUMN_KEY": ""
+      },
+      {
+        "TABLE_NAME": "sessions",
+        "COLUMN_NAME": "created_at",
+        "COLUMN_TYPE": "varchar(64)",
+        "IS_NULLABLE": "YES",
+        "COLUMN_DEFAULT": null,
+        "COLUMN_KEY": ""
+      },
+      {
+        "TABLE_NAME": "sessions",
+        "COLUMN_NAME": "expires_at",
+        "COLUMN_TYPE": "varchar(64)",
+        "IS_NULLABLE": "YES",
+        "COLUMN_DEFAULT": null,
+        "COLUMN_KEY": ""
+      },
+      {
+        "TABLE_NAME": "settings",
+        "COLUMN_NAME": "id",
+        "COLUMN_TYPE": "varchar(32)",
+        "IS_NULLABLE": "NO",
+        "COLUMN_DEFAULT": null,
+        "COLUMN_KEY": "PRI"
+      },
+      {
+        "TABLE_NAME": "settings",
+        "COLUMN_NAME": "gate_open_time",
+        "COLUMN_TYPE": "varchar(32)",
+        "IS_NULLABLE": "YES",
+        "COLUMN_DEFAULT": null,
+        "COLUMN_KEY": ""
+      },
+      {
+        "TABLE_NAME": "settings",
+        "COLUMN_NAME": "gate_close_time",
+        "COLUMN_TYPE": "varchar(32)",
+        "IS_NULLABLE": "YES",
+        "COLUMN_DEFAULT": null,
+        "COLUMN_KEY": ""
+      },
+      {
+        "TABLE_NAME": "settings",
+        "COLUMN_NAME": "visitor_qr_minutes",
+        "COLUMN_TYPE": "int",
+        "IS_NULLABLE": "YES",
+        "COLUMN_DEFAULT": null,
+        "COLUMN_KEY": ""
+      },
+      {
+        "TABLE_NAME": "settings",
+        "COLUMN_NAME": "alumni_qr_minutes",
+        "COLUMN_TYPE": "int",
+        "IS_NULLABLE": "YES",
+        "COLUMN_DEFAULT": null,
+        "COLUMN_KEY": ""
+      },
+      {
+        "TABLE_NAME": "settings",
+        "COLUMN_NAME": "face_threshold",
+        "COLUMN_TYPE": "decimal(5,2)",
+        "IS_NULLABLE": "YES",
+        "COLUMN_DEFAULT": null,
+        "COLUMN_KEY": ""
+      },
+      {
+        "TABLE_NAME": "settings",
+        "COLUMN_NAME": "high_risk_auto_block",
+        "COLUMN_TYPE": "tinyint(1)",
+        "IS_NULLABLE": "YES",
+        "COLUMN_DEFAULT": null,
+        "COLUMN_KEY": ""
+      },
+      {
+        "TABLE_NAME": "users",
+        "COLUMN_NAME": "id",
+        "COLUMN_TYPE": "varchar(64)",
+        "IS_NULLABLE": "NO",
+        "COLUMN_DEFAULT": null,
+        "COLUMN_KEY": "PRI"
+      },
+      {
+        "TABLE_NAME": "users",
+        "COLUMN_NAME": "username",
+        "COLUMN_TYPE": "varchar(128)",
+        "IS_NULLABLE": "NO",
+        "COLUMN_DEFAULT": null,
+        "COLUMN_KEY": "UNI"
+      },
+      {
+        "TABLE_NAME": "users",
+        "COLUMN_NAME": "account_type",
+        "COLUMN_TYPE": "varchar(64)",
+        "IS_NULLABLE": "YES",
+        "COLUMN_DEFAULT": null,
+        "COLUMN_KEY": ""
+      },
+      {
+        "TABLE_NAME": "users",
+        "COLUMN_NAME": "password",
+        "COLUMN_TYPE": "varchar(255)",
+        "IS_NULLABLE": "NO",
+        "COLUMN_DEFAULT": null,
+        "COLUMN_KEY": ""
+      },
+      {
+        "TABLE_NAME": "users",
+        "COLUMN_NAME": "role",
+        "COLUMN_TYPE": "varchar(32)",
+        "IS_NULLABLE": "NO",
+        "COLUMN_DEFAULT": null,
+        "COLUMN_KEY": ""
+      },
+      {
+        "TABLE_NAME": "users",
+        "COLUMN_NAME": "person_id",
+        "COLUMN_TYPE": "varchar(64)",
+        "IS_NULLABLE": "YES",
+        "COLUMN_DEFAULT": null,
+        "COLUMN_KEY": "MUL"
+      },
+      {
+        "TABLE_NAME": "users",
+        "COLUMN_NAME": "status",
+        "COLUMN_TYPE": "varchar(64)",
+        "IS_NULLABLE": "YES",
+        "COLUMN_DEFAULT": null,
+        "COLUMN_KEY": ""
+      },
+      {
+        "TABLE_NAME": "users",
+        "COLUMN_NAME": "sort_order",
+        "COLUMN_TYPE": "int",
+        "IS_NULLABLE": "NO",
+        "COLUMN_DEFAULT": "0",
+        "COLUMN_KEY": ""
+      },
+      {
+        "TABLE_NAME": "vehicles",
+        "COLUMN_NAME": "id",
+        "COLUMN_TYPE": "varchar(64)",
+        "IS_NULLABLE": "NO",
+        "COLUMN_DEFAULT": null,
+        "COLUMN_KEY": "PRI"
+      },
+      {
+        "TABLE_NAME": "vehicles",
+        "COLUMN_NAME": "owner_id",
+        "COLUMN_TYPE": "varchar(64)",
+        "IS_NULLABLE": "YES",
+        "COLUMN_DEFAULT": null,
+        "COLUMN_KEY": "MUL"
+      },
+      {
+        "TABLE_NAME": "vehicles",
+        "COLUMN_NAME": "owner_name",
+        "COLUMN_TYPE": "varchar(128)",
+        "IS_NULLABLE": "YES",
+        "COLUMN_DEFAULT": null,
+        "COLUMN_KEY": ""
+      },
+      {
+        "TABLE_NAME": "vehicles",
+        "COLUMN_NAME": "plate_no",
+        "COLUMN_TYPE": "varchar(64)",
+        "IS_NULLABLE": "YES",
+        "COLUMN_DEFAULT": null,
+        "COLUMN_KEY": ""
+      },
+      {
+        "TABLE_NAME": "vehicles",
+        "COLUMN_NAME": "status",
+        "COLUMN_TYPE": "varchar(64)",
+        "IS_NULLABLE": "YES",
+        "COLUMN_DEFAULT": null,
+        "COLUMN_KEY": ""
+      },
+      {
+        "TABLE_NAME": "vehicles",
+        "COLUMN_NAME": "last_access",
+        "COLUMN_TYPE": "varchar(64)",
+        "IS_NULLABLE": "YES",
+        "COLUMN_DEFAULT": null,
+        "COLUMN_KEY": ""
+      },
+      {
+        "TABLE_NAME": "vehicles",
+        "COLUMN_NAME": "sort_order",
+        "COLUMN_TYPE": "int",
+        "IS_NULLABLE": "NO",
+        "COLUMN_DEFAULT": "0",
+        "COLUMN_KEY": ""
+      }
+    ],
+    "roles": [
+      {
+        "role": "student",
+        "count": 6
+      },
+      {
+        "role": "admin",
+        "count": 1
+      },
+      {
+        "role": "alumni",
+        "count": 3
+      },
+      {
+        "role": "guard",
+        "count": 3
+      },
+      {
+        "role": "teacher",
+        "count": 4
+      },
+      {
+        "role": "visitor",
+        "count": 7
+      }
+    ],
+    "backup": {
+      "path": "C:\\Users\\LAURAL~1\\AppData\\Local\\Temp\\campus-p0-private-KQD1SE\\database-snapshot.json",
+      "sha256": "2b292d20db9d13b6875517bc08a640e563167c76088ed8ebdfd87ff539ae4033",
+      "restoreTest": "not-run",
+      "containsSensitiveData": true,
+      "tracked": false
+    },
+    "foreignKeys": [
+      {
+        "table": "access_records",
+        "name": "fk_records_person"
+      },
+      {
+        "table": "appointments",
+        "name": "fk_appointments_host"
+      },
+      {
+        "table": "appointments",
+        "name": "fk_appointments_visitor"
+      },
+      {
+        "table": "faces",
+        "name": "fk_faces_person"
+      },
+      {
+        "table": "qr_codes",
+        "name": "fk_qr_appointment"
+      },
+      {
+        "table": "qr_codes",
+        "name": "fk_qr_owner"
+      },
+      {
+        "table": "qr_codes",
+        "name": "fk_qr_visitor"
+      },
+      {
+        "table": "sessions",
+        "name": "fk_sessions_user"
+      },
+      {
+        "table": "users",
+        "name": "fk_users_person"
+      },
+      {
+        "table": "vehicles",
+        "name": "fk_vehicles_owner"
+      }
+    ]
+  }
+}

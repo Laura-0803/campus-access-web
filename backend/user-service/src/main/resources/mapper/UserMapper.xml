@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"><mapper namespace="edu.hfut.campus.dao.UserMapper">
+<select id="account" resultType="edu.hfut.campus.entity.UserEntity">SELECT * FROM users WHERE BINARY username=BINARY #{name} LIMIT 1</select>
+<select id="user" resultType="edu.hfut.campus.entity.UserEntity">SELECT * FROM users WHERE id=#{id}</select>
+<select id="users" resultType="edu.hfut.campus.entity.UserEntity">SELECT * FROM users ORDER BY sort_order,id</select>
+<select id="person" resultType="edu.hfut.campus.entity.PersonEntity">SELECT * FROM people WHERE id=#{id}</select>
+<select id="people" resultType="edu.hfut.campus.entity.PersonEntity">SELECT * FROM people ORDER BY sort_order,id</select>
+<select id="roles" resultType="edu.hfut.campus.entity.RoleEntity">SELECT role_key AS roleKey,label FROM roles ORDER BY role_key</select>
+<select id="profiles" resultType="edu.hfut.campus.entity.RoleProfileEntity">SELECT role_key AS roleKey,person_id AS personId,name,title,role_value AS role,type,avatar,status FROM role_profiles ORDER BY role_key</select>
+<select id="session" resultType="edu.hfut.campus.entity.SessionEntity">SELECT token,user_id AS userId,role,created_at AS createdAt,expires_at AS expiresAt FROM sessions WHERE token=#{token}</select>
+<insert id="insertSession">INSERT INTO sessions(token,user_id,role,created_at,expires_at) VALUES(#{token},#{userId},#{role},#{createdAt},#{expiresAt})</insert>
+<delete id="deleteSession">DELETE FROM sessions WHERE token=#{token}</delete><delete id="deleteUserSessions">DELETE FROM sessions WHERE user_id=#{id}</delete>
+<update id="password">UPDATE users SET password=#{hash} WHERE id=#{id}</update>
+<insert id="insertUser">INSERT INTO users(id,username,account_type,password,role,person_id,status,sort_order) VALUES(#{id},#{username},#{accountType},#{password},#{role},#{personId},#{status},-CAST(UNIX_TIMESTAMP(CURRENT_TIMESTAMP(6))*1000000 AS SIGNED))</insert>
+<insert id="insertPerson">INSERT INTO people(id,name,type,code,id_number,role,phone,company,status,sort_order) VALUES(#{id},#{name},#{type},#{code},#{idNumber},#{role},#{phone},#{company},#{status},-CAST(UNIX_TIMESTAMP(CURRENT_TIMESTAMP(6))*1000000 AS SIGNED))</insert>
+<insert id="audit">INSERT INTO logs(id,time,actor,role,action,target,result,sort_order) VALUES(#{id},#{time},#{actor},#{role},#{action},#{target},'成功',-CAST(UNIX_TIMESTAMP(CURRENT_TIMESTAMP(6))*1000000 AS SIGNED))</insert>
+<select id="code" resultType="edu.hfut.campus.entity.VerificationCodeEntity">SELECT purpose,phone,user_id AS userId,digest,sent_at AS sentAt,expires_at AS expiresAt,attempts FROM verification_codes WHERE purpose=#{purpose} AND phone=#{phone} FOR UPDATE</select>
+<insert id="saveCode">INSERT INTO verification_codes(purpose,phone,user_id,digest,sent_at,expires_at,attempts) VALUES(#{purpose},#{phone},#{userId},#{digest},#{sentAt},#{expiresAt},0) ON DUPLICATE KEY UPDATE user_id=VALUES(user_id),digest=VALUES(digest),sent_at=VALUES(sent_at),expires_at=VALUES(expires_at),attempts=0</insert>
+<delete id="deleteCode">DELETE FROM verification_codes WHERE purpose=#{purpose} AND phone=#{phone}</delete>
+<update id="codeAttempt">UPDATE verification_codes SET attempts=attempts+1 WHERE purpose=#{purpose} AND phone=#{phone}</update>
+<select id="faces" resultType="map">SELECT id,person_id AS personId,person_name AS personName,status,file_name AS fileName,image_url AS imageUrl,slot_key AS slot,label,updated_at AS updatedAt FROM faces ORDER BY sort_order,id</select>
+<select id="vehicles" resultType="map">SELECT id,owner_id AS ownerId,owner_name AS ownerName,plate_no AS plateNo,status,last_access AS lastAccess FROM vehicles ORDER BY sort_order,id</select>
+<select id="messages" resultType="map">SELECT id,title,content,target_role AS targetRole,read_flag AS `read`,created_at AS createdAt FROM messages ORDER BY sort_order,id</select>
+<select id="logs" resultType="map">SELECT id,time,actor,role,action,target,result FROM logs ORDER BY sort_order,id</select>
+<update id="updateContact">UPDATE people SET phone=#{phone},company=#{company},status=#{status} WHERE id=#{id}</update>
+<select id="searchPeople" resultType="edu.hfut.campus.entity.PersonEntity">SELECT * FROM people <where><if test="type != null and type != ''">BINARY type=BINARY #{type}</if><if test="keyword != null and keyword != ''">AND (INSTR(BINARY name,BINARY #{keyword})>0 OR INSTR(BINARY code,BINARY #{keyword})>0 OR INSTR(BINARY phone,BINARY #{keyword})>0 OR INSTR(BINARY college,BINARY #{keyword})>0 OR INSTR(BINARY department,BINARY #{keyword})>0)</if></where> ORDER BY sort_order,id</select>
+<select id="lockUser" resultType="edu.hfut.campus.entity.UserEntity">SELECT * FROM users WHERE id=#{id} FOR UPDATE</select>
+<select id="lockPerson" resultType="edu.hfut.campus.entity.PersonEntity">SELECT * FROM people WHERE id=#{id} FOR UPDATE</select>
+</mapper>

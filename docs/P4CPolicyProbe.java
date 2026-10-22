@@ -1,0 +1,3 @@
+import edu.hfut.access.service.AccessPolicy;
+/** Read-only probe of the actual compiled P4 policy; no substitute implementation. */
+public class P4CPolicyProbe { public static void main(String[]a){String[]values={"garbage","25:99-99:99","prefix00:00-23:59suffix","00:00-23:59","23:00-01:00","全天","预约时段"};System.out.print("{\"actualCompiledPolicy\":true,\"samples\":[");for(int i=0;i<values.length;i++){if(i>0)System.out.print(",");System.out.print("{\"range\":\""+values[i]+"\",\"allowed\":"+AccessPolicy.time(values[i])+"}");}System.out.println("],\"restrictiveParseFailureSafetyPassed\":false,\"status\":\"awaiting approved contract change; no policy modification\"}");}}

@@ -1,0 +1,40 @@
+{
+  "users.username": {
+    "duplicateGroups": 0,
+    "extraRows": 0
+  },
+  "people.code": {
+    "duplicateGroups": 0,
+    "extraRows": 0
+  },
+  "vehicles.plate_no": {
+    "duplicateGroups": 0,
+    "extraRows": 0
+  },
+  "qr_codes.appointment_id": {
+    "duplicateGroups": 0,
+    "extraRows": 0
+  },
+  "orphanReferences": {
+    "users.person_id": 0,
+    "sessions.user_id": 0,
+    "faces.person_id": 0,
+    "vehicles.owner_id": 0,
+    "appointments.visitor_id": 0,
+    "appointments.host_id": 0,
+    "access_records.person_id": 0,
+    "qr_codes.owner_id": 0,
+    "qr_codes.visitor_id": 0,
+    "qr_codes.appointment_id": 0
+  },
+  "appointmentStatuses": {
+    "已通过": 16,
+    "未通过": 4,
+    "待被访人审核": 7
+  },
+  "passwordFormats": {
+    "pbkdf2": 24,
+    "other": 0
+  },
+  "scope": "Snapshot aggregates only; not business correctness, password strength or API tests."
+}

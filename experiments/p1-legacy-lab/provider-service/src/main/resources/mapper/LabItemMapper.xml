@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="edu.hfut.campus.lab.LabItemDao">
+ <resultMap id="item" type="edu.hfut.campus.lab.LabItem"><id property="id" column="id"/><result property="label" column="label"/></resultMap>
+ <insert id="insert" useGeneratedKeys="true" keyProperty="id">INSERT INTO lab_items(label) VALUES(#{label})</insert>
+ <select id="find" resultMap="item">SELECT id,label FROM lab_items WHERE id=#{id}</select>
+ <select id="list" resultMap="item">SELECT id,label FROM lab_items ORDER BY id</select>
+ <update id="update">UPDATE lab_items SET label=#{label} WHERE id=#{id}</update>
+ <delete id="delete">DELETE FROM lab_items WHERE id=#{id}</delete>
+</mapper>

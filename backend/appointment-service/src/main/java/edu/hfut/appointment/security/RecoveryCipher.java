@@ -1,0 +1,7 @@
+package edu.hfut.appointment.security;import org.springframework.stereotype.Component;import org.springframework.beans.factory.annotation.Value;import javax.crypto.*;import javax.crypto.spec.*;import java.util.*;import java.security.*;import java.nio.charset.StandardCharsets;
+@Component public class RecoveryCipher{
+ @Value("${P4_RECOVERY_KEY:}")String key;
+ private SecretKeySpec secret()throws Exception{if(key.length()<32)throw new IllegalStateException("Isolated recovery key required");return new SecretKeySpec(MessageDigest.getInstance("SHA-256").digest(key.getBytes(StandardCharsets.UTF_8)),"AES");}
+ public String encrypt(String s){try{byte[]iv=new byte[12];new SecureRandom().nextBytes(iv);Cipher c=Cipher.getInstance("AES/GCM/NoPadding");c.init(Cipher.ENCRYPT_MODE,secret(),new GCMParameterSpec(128,iv));byte[]v=c.doFinal(s.getBytes(StandardCharsets.UTF_8));byte[]all=new byte[iv.length+v.length];System.arraycopy(iv,0,all,0,iv.length);System.arraycopy(v,0,all,iv.length,v.length);return Base64.getEncoder().encodeToString(all);}catch(Exception e){throw new IllegalStateException("Recovery encryption unavailable");}}
+ public String decrypt(String s){try{byte[]all=Base64.getDecoder().decode(s);Cipher c=Cipher.getInstance("AES/GCM/NoPadding");c.init(Cipher.DECRYPT_MODE,secret(),new GCMParameterSpec(128,Arrays.copyOfRange(all,0,12)));return new String(c.doFinal(Arrays.copyOfRange(all,12,all.length)),StandardCharsets.UTF_8);}catch(Exception e){throw new IllegalStateException("Recovery decryption unavailable");}}
+}

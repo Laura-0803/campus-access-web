@@ -1,0 +1,359 @@
+{
+  "mysqlVersion": "8.0.40",
+  "restoreDatabase": "campus_p1_restore_20261019044813",
+  "labDatabase": "campus_p1_lab_20261019044813",
+  "restoredTables": [
+    {
+      "table": "access_records",
+      "expectedRows": 50,
+      "restoredRows": 50,
+      "fullFieldHashMatch": true
+    },
+    {
+      "table": "access_rules",
+      "expectedRows": 11,
+      "restoredRows": 11,
+      "fullFieldHashMatch": true
+    },
+    {
+      "table": "app_state",
+      "expectedRows": 1,
+      "restoredRows": 1,
+      "fullFieldHashMatch": true
+    },
+    {
+      "table": "appointments",
+      "expectedRows": 27,
+      "restoredRows": 27,
+      "fullFieldHashMatch": true
+    },
+    {
+      "table": "blacklist",
+      "expectedRows": 12,
+      "restoredRows": 12,
+      "fullFieldHashMatch": true
+    },
+    {
+      "table": "devices",
+      "expectedRows": 9,
+      "restoredRows": 9,
+      "fullFieldHashMatch": true
+    },
+    {
+      "table": "exceptions",
+      "expectedRows": 21,
+      "restoredRows": 21,
+      "fullFieldHashMatch": true
+    },
+    {
+      "table": "faces",
+      "expectedRows": 13,
+      "restoredRows": 13,
+      "fullFieldHashMatch": true
+    },
+    {
+      "table": "gates",
+      "expectedRows": 4,
+      "restoredRows": 4,
+      "fullFieldHashMatch": true
+    },
+    {
+      "table": "logs",
+      "expectedRows": 286,
+      "restoredRows": 286,
+      "fullFieldHashMatch": true
+    },
+    {
+      "table": "messages",
+      "expectedRows": 22,
+      "restoredRows": 22,
+      "fullFieldHashMatch": true
+    },
+    {
+      "table": "people",
+      "expectedRows": 25,
+      "restoredRows": 25,
+      "fullFieldHashMatch": true
+    },
+    {
+      "table": "qr_codes",
+      "expectedRows": 31,
+      "restoredRows": 31,
+      "fullFieldHashMatch": true
+    },
+    {
+      "table": "role_profiles",
+      "expectedRows": 6,
+      "restoredRows": 6,
+      "fullFieldHashMatch": true
+    },
+    {
+      "table": "roles",
+      "expectedRows": 6,
+      "restoredRows": 6,
+      "fullFieldHashMatch": true
+    },
+    {
+      "table": "sessions",
+      "expectedRows": 1,
+      "restoredRows": 1,
+      "fullFieldHashMatch": true
+    },
+    {
+      "table": "settings",
+      "expectedRows": 1,
+      "restoredRows": 1,
+      "fullFieldHashMatch": true
+    },
+    {
+      "table": "users",
+      "expectedRows": 24,
+      "restoredRows": 24,
+      "fullFieldHashMatch": true
+    },
+    {
+      "table": "vehicles",
+      "expectedRows": 12,
+      "restoredRows": 12,
+      "fullFieldHashMatch": true
+    }
+  ],
+  "restore": "pass",
+  "originalDatabaseBefore": [
+    {
+      "table": "access_records",
+      "count": 50,
+      "rowsHash": "4206e9eb3f0c4c1164e7477711e33e49aa8b7c010f7bc3ba6e42942458ae759f",
+      "ddlHash": "725409221103cfd5531d828d2f297522fd28cb1554ed133c638509408d30b61c"
+    },
+    {
+      "table": "access_rules",
+      "count": 11,
+      "rowsHash": "6850a81fe4361140a03c00626d5b4a95c0d3995d665fbb20fe80f089c0dc9ff2",
+      "ddlHash": "81b91e2b30695a10b7277b7ee1672d430a032c31bd8cdd8b91a9b733db02eecc"
+    },
+    {
+      "table": "app_state",
+      "count": 1,
+      "rowsHash": "983b383809ac8804e295cf855f6047c3f8d888f977f48d80fa4724e8a71cb42c",
+      "ddlHash": "a83d228a4da17f6328caf81a29588cbe3c3700838b380e59a46d585900cd0c5e"
+    },
+    {
+      "table": "appointments",
+      "count": 27,
+      "rowsHash": "ecc6cd32489b32ae2aacb3a10e5d1c5501a452e845903c387c63dc3025f9f53c",
+      "ddlHash": "450de446bf5bea15296b4f6f4973eef713ba07491a93534f8e5554b2abbce2d7"
+    },
+    {
+      "table": "blacklist",
+      "count": 12,
+      "rowsHash": "b206a7761b50b3d6f5118ff839a2ede27573c08da7978f8a1ebc7c074bb9016a",
+      "ddlHash": "b86e2db47059bca9242d2f12a8271fe61fd58c05134d4d9be1d12a75dac387cc"
+    },
+    {
+      "table": "devices",
+      "count": 9,
+      "rowsHash": "eae7b6d23fb238285152ec55c187d09e6bcd32f9e517fe00c0a6a43bc9b0bf92",
+      "ddlHash": "224757f4d02a20694b475d25544156514cb44fe4ef533511a73d52c60b96e363"
+    },
+    {
+      "table": "exceptions",
+      "count": 21,
+      "rowsHash": "b1dba79e834c1a5e14dc5bb4260e00d2892c33ffdbd9b07166adc928fe474461",
+      "ddlHash": "951c17579003a13394ec70279ced01aebd062423a404ab2dbbde8235b0cccbcd"
+    },
+    {
+      "table": "faces",
+      "count": 13,
+      "rowsHash": "ab7fe0cbb59a19eff61449880cd4d0968381c500a2251ac822d15fa2f74e0792",
+      "ddlHash": "b71261c14ac0835ed74a44ba1658d23b89ff4cd7781356473caeff38c2b28b2e"
+    },
+    {
+      "table": "gates",
+      "count": 4,
+      "rowsHash": "57763d61520a8a774015daf736f6e33a0d321bba2ea9fe1ff0547df39e71a313",
+      "ddlHash": "6dd83c6f864c1bb939885495d9f1af97869aef6476b845a548b92541c7654315"
+    },
+    {
+      "table": "logs",
+      "count": 286,
+      "rowsHash": "e0a5f0a77a896fd58c012257f4d0fc800834c32bf0a31e361949894988393929",
+      "ddlHash": "46a0d236adb4641d32a59d33a22f51c9c2d784e207cdca9ec7ce0615d5b935e7"
+    },
+    {
+      "table": "messages",
+      "count": 22,
+      "rowsHash": "3d5c3fe10311b34aa35dd6011a8e51dbb5635ce78d694042f16d8ed8d3ee4637",
+      "ddlHash": "02bbd8616daede130617317d85a0c12f2a53e52834a8c00cfc9c36a00c6c9d65"
+    },
+    {
+      "table": "people",
+      "count": 25,
+      "rowsHash": "b694ff085767bb97193fbd7ba94dc6a347bc6b5f17c4fc6e8e837af754e0304b",
+      "ddlHash": "47d577996f14b7fabb07aa5a015f10a50be8ede2f7a3efc3b8200c1242bac0e5"
+    },
+    {
+      "table": "qr_codes",
+      "count": 31,
+      "rowsHash": "cc50c9f1c9c7b1281b0a90bf0045d8dfce96337f3376456b3e81c6b106ec9548",
+      "ddlHash": "d2e78440beec305bb2a22428fe7671a6b895de53e4a3196e97dc2c3119c2a9cf"
+    },
+    {
+      "table": "role_profiles",
+      "count": 6,
+      "rowsHash": "73868064166f4422594d42325736883ca4586853d0d433f07dca06795d7207a5",
+      "ddlHash": "cbcafeec440a0b62727e9f0a7287a618b9f2cb26412284445d7f73d0e1243b12"
+    },
+    {
+      "table": "roles",
+      "count": 6,
+      "rowsHash": "061e492f6dfef32051d12bf02cfe14e0c5a6dd7cefc2542bc15ac0f70b35fac9",
+      "ddlHash": "878adf50440801f2c1827276fa66881cc29ec5018f670c2cd7bfef29c1959d2e"
+    },
+    {
+      "table": "sessions",
+      "count": 1,
+      "rowsHash": "91fe2e51ad44870b1fb685a2d2a12778ee4e4721fb0ea528da26619838a7fe2b",
+      "ddlHash": "28a30ff7e5bfd5e636f2d644ddf10f53ed56359c6e53e2149b5683b451a7e7a3"
+    },
+    {
+      "table": "settings",
+      "count": 1,
+      "rowsHash": "760cfce8e4ea502af5954a7731f077afac2fb6b2d1aa9f08ad69c2f41b524af5",
+      "ddlHash": "b34481a16857f13d2679e5837d81e221adcd63b4dbcf84dbbb59e7ba6a7b42d0"
+    },
+    {
+      "table": "users",
+      "count": 24,
+      "rowsHash": "abcae156f8a9a31fb5e80bdc8dbccbd3a42bda8b64b751e8623dffe14196f1e1",
+      "ddlHash": "fc2bc1826a0d88278781a0874e06750f24235897cc59b36057af95685983b7ce"
+    },
+    {
+      "table": "vehicles",
+      "count": 12,
+      "rowsHash": "ff95174e3ccfacc490c26bc60a2028c5e413d2cb0b03ca24e256e0c34fe1c6eb",
+      "ddlHash": "6bc42a4d5c1d96bd5dd90305cbc7303bc286c9829be858fe396c8fe8051bff34"
+    }
+  ],
+  "originalDatabaseAfter": [
+    {
+      "table": "access_records",
+      "count": 50,
+      "rowsHash": "4206e9eb3f0c4c1164e7477711e33e49aa8b7c010f7bc3ba6e42942458ae759f",
+      "ddlHash": "725409221103cfd5531d828d2f297522fd28cb1554ed133c638509408d30b61c"
+    },
+    {
+      "table": "access_rules",
+      "count": 11,
+      "rowsHash": "6850a81fe4361140a03c00626d5b4a95c0d3995d665fbb20fe80f089c0dc9ff2",
+      "ddlHash": "81b91e2b30695a10b7277b7ee1672d430a032c31bd8cdd8b91a9b733db02eecc"
+    },
+    {
+      "table": "app_state",
+      "count": 1,
+      "rowsHash": "983b383809ac8804e295cf855f6047c3f8d888f977f48d80fa4724e8a71cb42c",
+      "ddlHash": "a83d228a4da17f6328caf81a29588cbe3c3700838b380e59a46d585900cd0c5e"
+    },
+    {
+      "table": "appointments",
+      "count": 27,
+      "rowsHash": "ecc6cd32489b32ae2aacb3a10e5d1c5501a452e845903c387c63dc3025f9f53c",
+      "ddlHash": "450de446bf5bea15296b4f6f4973eef713ba07491a93534f8e5554b2abbce2d7"
+    },
+    {
+      "table": "blacklist",
+      "count": 12,
+      "rowsHash": "b206a7761b50b3d6f5118ff839a2ede27573c08da7978f8a1ebc7c074bb9016a",
+      "ddlHash": "b86e2db47059bca9242d2f12a8271fe61fd58c05134d4d9be1d12a75dac387cc"
+    },
+    {
+      "table": "devices",
+      "count": 9,
+      "rowsHash": "eae7b6d23fb238285152ec55c187d09e6bcd32f9e517fe00c0a6a43bc9b0bf92",
+      "ddlHash": "224757f4d02a20694b475d25544156514cb44fe4ef533511a73d52c60b96e363"
+    },
+    {
+      "table": "exceptions",
+      "count": 21,
+      "rowsHash": "b1dba79e834c1a5e14dc5bb4260e00d2892c33ffdbd9b07166adc928fe474461",
+      "ddlHash": "951c17579003a13394ec70279ced01aebd062423a404ab2dbbde8235b0cccbcd"
+    },
+    {
+      "table": "faces",
+      "count": 13,
+      "rowsHash": "ab7fe0cbb59a19eff61449880cd4d0968381c500a2251ac822d15fa2f74e0792",
+      "ddlHash": "b71261c14ac0835ed74a44ba1658d23b89ff4cd7781356473caeff38c2b28b2e"
+    },
+    {
+      "table": "gates",
+      "count": 4,
+      "rowsHash": "57763d61520a8a774015daf736f6e33a0d321bba2ea9fe1ff0547df39e71a313",
+      "ddlHash": "6dd83c6f864c1bb939885495d9f1af97869aef6476b845a548b92541c7654315"
+    },
+    {
+      "table": "logs",
+      "count": 286,
+      "rowsHash": "e0a5f0a77a896fd58c012257f4d0fc800834c32bf0a31e361949894988393929",
+      "ddlHash": "46a0d236adb4641d32a59d33a22f51c9c2d784e207cdca9ec7ce0615d5b935e7"
+    },
+    {
+      "table": "messages",
+      "count": 22,
+      "rowsHash": "3d5c3fe10311b34aa35dd6011a8e51dbb5635ce78d694042f16d8ed8d3ee4637",
+      "ddlHash": "02bbd8616daede130617317d85a0c12f2a53e52834a8c00cfc9c36a00c6c9d65"
+    },
+    {
+      "table": "people",
+      "count": 25,
+      "rowsHash": "b694ff085767bb97193fbd7ba94dc6a347bc6b5f17c4fc6e8e837af754e0304b",
+      "ddlHash": "47d577996f14b7fabb07aa5a015f10a50be8ede2f7a3efc3b8200c1242bac0e5"
+    },
+    {
+      "table": "qr_codes",
+      "count": 31,
+      "rowsHash": "cc50c9f1c9c7b1281b0a90bf0045d8dfce96337f3376456b3e81c6b106ec9548",
+      "ddlHash": "d2e78440beec305bb2a22428fe7671a6b895de53e4a3196e97dc2c3119c2a9cf"
+    },
+    {
+      "table": "role_profiles",
+      "count": 6,
+      "rowsHash": "73868064166f4422594d42325736883ca4586853d0d433f07dca06795d7207a5",
+      "ddlHash": "cbcafeec440a0b62727e9f0a7287a618b9f2cb26412284445d7f73d0e1243b12"
+    },
+    {
+      "table": "roles",
+      "count": 6,
+      "rowsHash": "061e492f6dfef32051d12bf02cfe14e0c5a6dd7cefc2542bc15ac0f70b35fac9",
+      "ddlHash": "878adf50440801f2c1827276fa66881cc29ec5018f670c2cd7bfef29c1959d2e"
+    },
+    {
+      "table": "sessions",
+      "count": 1,
+      "rowsHash": "91fe2e51ad44870b1fb685a2d2a12778ee4e4721fb0ea528da26619838a7fe2b",
+      "ddlHash": "28a30ff7e5bfd5e636f2d644ddf10f53ed56359c6e53e2149b5683b451a7e7a3"
+    },
+    {
+      "table": "settings",
+      "count": 1,
+      "rowsHash": "760cfce8e4ea502af5954a7731f077afac2fb6b2d1aa9f08ad69c2f41b524af5",
+      "ddlHash": "b34481a16857f13d2679e5837d81e221adcd63b4dbcf84dbbb59e7ba6a7b42d0"
+    },
+    {
+      "table": "users",
+      "count": 24,
+      "rowsHash": "abcae156f8a9a31fb5e80bdc8dbccbd3a42bda8b64b751e8623dffe14196f1e1",
+      "ddlHash": "fc2bc1826a0d88278781a0874e06750f24235897cc59b36057af95685983b7ce"
+    },
+    {
+      "table": "vehicles",
+      "count": 12,
+      "rowsHash": "ff95174e3ccfacc490c26bc60a2028c5e413d2cb0b03ca24e256e0c34fe1c6eb",
+      "ddlHash": "6bc42a4d5c1d96bd5dd90305cbc7303bc286c9829be858fe396c8fe8051bff34"
+    }
+  ],
+  "originalDatabaseUnchanged": true,
+  "labUserCannotReadOriginal": true,
+  "productionWritesByScript": 0,
+  "labTable": "lab_items",
+  "sensitiveRowsInReport": false
+}

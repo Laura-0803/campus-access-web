@@ -2,8 +2,28 @@
 **/.env
 **/.env.*
 !**/.env.example
+# The original example matches the private environment file; retain it locally only.
+campus-access-web/.env.example
 .private-backups/
 .p1-local/
+.p2-local/
+.p3-local/
+.private-backups*.zip
+.p1-local*.zip
+.p2-local*.zip
+.p3-local*.zip
+# Database exports and local credential material
+**/*.sql.gz
+**/*.sql.zip
+**/*.dump
+**/database-snapshot*.json
+**/*database-backup*.json
+**/*database-backup*.sql
+**/backups/
+**/backup/
+**/application-local.yml
+**/application-local.yaml
+**/application-local.properties
 **/server/data/db.json
 **/server/data/seed.js
 **/src/data/mock.js
@@ -19,3 +39,17 @@ docs.zip
 **/.idea/
 .agents/
 .codex/
+.p4-local/
+.p4-local*.zip
+
+.p4c-local/
+
+.p5-local/
+.p6-local/
+
+# Publishing: archives and raw local test evidence stay on this workstation.
+**/*.zip
+docs/*evidence*/
+docs/**/evidence/
+**/*.pyc
+**/*.pyo

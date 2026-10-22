@@ -1,0 +1,3 @@
+package edu.hfut.aggregate.client;
+import java.util.*;import org.springframework.cloud.openfeign.FeignClient;import org.springframework.web.bind.annotation.*;
+@FeignClient(name="user-service") public interface UserClient{@GetMapping("/internal/context") Map<String,Object> context(@RequestHeader("X-Campus-Internal")String key,@RequestHeader("Authorization")String token); @GetMapping("/internal/projection") Map<String,Object> projection(@RequestHeader("X-Campus-Internal")String key);}

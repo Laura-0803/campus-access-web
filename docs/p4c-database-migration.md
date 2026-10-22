@@ -1,0 +1,13 @@
+# P4-C数据库迁移与隔离
+
+新建campus_p4c_exception_时间戳独立schema。V001__exception_schema.sql实际执行两次，CREATE IF NOT EXISTS/INSERT IGNORE可重复；运行账号只本库SELECT/INSERT/UPDATE/DELETE，无DDL。保留原exceptions及blacklist字段/中文状态/ID/actions/移出历史，sort_order为BIGINT。版本SQL位于模块resources/db/migration。
+
+仅通过受控准备脚本从P2旧合成库复制已有94条异常、4条黑名单；没有读取真实人员/凭证或原生产数据。旧合成记录未删；最终逐ID核对均保留。业务服务不访问旧库或其他微服务表。运行过程中所有新增记录使用合成数据。
+
+incident_inbox主键event_id与SHA256摘要、exception_id、received_at；incident_outbox主键event_id、payload、PENDING/DELIVERED、attempts/next_retry_at；incident_requests保存主体/路径/幂等键摘要及原成功响应；incident_locks稳定行锁串行化黑名单变更与事件插入，避免并发MIN前插覆盖；incident_faults仅隔离回执丢失注入，默认关闭、最终剩余0。
+
+处置锁单事件，状态/动作JSON前插/去重/审计同事务，READ_COMMITTED避免旧快照授权状态。事件插入与inbox同事务；真实SQL触发器故障验证回滚。接收回执仅事务提交后返回；发送端/接收端各自事务，不是分布式原子提交或恰好一次网络传输。
+
+SHA与跨库权限拒绝、DDL类型、行数、待投递清零见最终data报告。旧生产19表DDL和数据保持一致。旧黑名单任意状态字符串及移出后再启用的原行为保留，不擅自新增历史DELETE或状态枚举；生产化唯一活动凭证策略需要另行审查。
+
+本轮仅隔离合成环境。原React、Express、生产数据库和历史备份不变；不进入人员删除、无绑定预约改造或后续阶段。

@@ -1,0 +1,44 @@
+/* 依次注入 Tailwind 的基础重置样式、组件层样式和原子工具类。 */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* 明确页面采用浅色配色方案，使浏览器原生表单控件与系统主题保持一致。 */
+:root {
+  color-scheme: light;
+}
+
+/* 统一使用更直观的 border-box 盒模型：声明的宽高包含内边距和边框。 */
+* {
+  box-sizing: border-box;
+}
+
+/* 保证文档、页面主体和 React 根节点至少占满整个视口高度，便于后台布局撑满屏幕。 */
+html,
+body,
+#root {
+  min-height: 100%;
+}
+
+/* 清除浏览器默认外边距，并设置全站的浅灰背景色和深色正文颜色。 */
+body {
+  margin: 0;
+  background: #eef1f6;
+  color: #172033;
+}
+
+/* 让交互控件继承页面字体，避免按钮、输入框使用浏览器默认字体造成视觉割裂。 */
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+/* 可复用的毛玻璃面板：半透明背景叠加模糊、浅色描边和柔和阴影。 */
+.glass-panel {
+  background: rgba(255, 255, 255, 0.74);
+  backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.75);
+  box-shadow: 0 18px 44px rgba(15, 23, 42, 0.065);
+}

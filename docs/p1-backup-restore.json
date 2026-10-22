@@ -1,0 +1,22 @@
+{
+  "copiedTo": "D:\\1 信息系统软件架构\\campus-access-web\\.private-backups\\p0-preserved-20261019T041300Z",
+  "sourceRestoredTo": "C:\\Users\\Laura Lin\\AppData\\Local\\Temp\\campus-p1-source-restore-lx8t2qsx",
+  "originalP0BackupsNotOverwritten": true,
+  "files": [
+    {
+      "name": "original-project.zip",
+      "sha256": "76417f24549d522bd2ffd8ab473ed8497eab467c683eca305977f51a21f278b0",
+      "originalUnchanged": true
+    },
+    {
+      "name": "database-snapshot.json",
+      "sha256": "2b292d20db9d13b6875517bc08a640e563167c76088ed8ebdfd87ff539ae4033",
+      "originalUnchanged": true
+    }
+  ],
+  "restoredApplicationFilesVerified": 68,
+  "currentApplicationFilesMatchP0": 68,
+  "sourceRestore": "pass",
+  "databaseRestore": "pending",
+  "sensitivePayloadsOutsideGit": true
+}

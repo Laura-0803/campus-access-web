@@ -1,0 +1,6 @@
+package edu.hfut.appointment.controller;
+import java.util.*;import org.springframework.web.bind.annotation.*;import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;import edu.hfut.appointment.dao.AppointmentMapper;import edu.hfut.appointment.entity.Appointment;
+@RestController @ConditionalOnProperty(name="p4.internal.enabled",havingValue="true")public class AccessAppointmentController{
+ private final AppointmentMapper dao;private final edu.hfut.appointment.dao.IssuanceMapper operations;private final edu.hfut.appointment.service.impl.FinalApprovalService approvals;public AccessAppointmentController(AppointmentMapper d,edu.hfut.appointment.dao.IssuanceMapper operations,edu.hfut.appointment.service.impl.FinalApprovalService approvals){dao=d;this.operations=operations;this.approvals=approvals;}
+ @GetMapping("/internal/access-appointment/{id}")public Object one(@PathVariable String id){Appointment a=dao.one(id);Map<String,Object>r=new LinkedHashMap<>();r.put("found",a!=null);r.put("appointment",a);boolean allowed=a!=null&&"已通过".equals(a.status);Map<String,Object>op=operations.one(id);if(op!=null)allowed=allowed&&Boolean.TRUE.equals(((Map<?,?>)approvals.decision(String.valueOf(op.get("operation_id")))).get("allowed"));r.put("accessAllowed",allowed);return r;}
+}

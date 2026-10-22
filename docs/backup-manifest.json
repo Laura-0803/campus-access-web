@@ -1,0 +1,16 @@
+{
+  "sourceArchive": "C:\\Users\\LAURAL~1\\AppData\\Local\\Temp\\campus-p0-private-KQD1SE\\original-project.zip",
+  "sha256": "76417f24549d522bd2ffd8ab473ed8497eab467c683eca305977f51a21f278b0",
+  "applicationFiles": 68,
+  "zipIntegrity": "pass",
+  "containsSensitiveData": true,
+  "restoreTest": "not-run",
+  "databaseBackup": {
+    "path": "C:\\Users\\LAURAL~1\\AppData\\Local\\Temp\\campus-p0-private-KQD1SE\\database-snapshot.json",
+    "sha256": "2b292d20db9d13b6875517bc08a640e563167c76088ed8ebdfd87ff539ae4033",
+    "restoreTest": "not-run",
+    "containsSensitiveData": true,
+    "tracked": false
+  },
+  "warning": "Local temporary directory only; preserve elsewhere before migration. Never commit these backups."
+}
