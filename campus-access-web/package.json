@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite --host 0.0.0.0",
     "dev:full": "node scripts/dev-full.js",
+    "dev:java": "node scripts/java-full.js",
     "api": "node server/index.js",
     "db:init": "node scripts/init-db.js",
     "build": "vite build",

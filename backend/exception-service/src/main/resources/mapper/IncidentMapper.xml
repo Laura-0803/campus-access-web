@@ -1,25 +1,25 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="edu.hfut.incidents.dao.IncidentMapper">
-<sql id="incident">id,time,person,person_type,gate,method,type,reason,risk,status,suggestion,handler,handled_at,note,actions</sql>
-<sql id="black">id,name,type,credential_no,reason,status,created_at,removed_at,removed_reason,removed_by</sql>
-<select id="exceptions" resultType="map">SELECT <include refid="incident"/> FROM exceptions ORDER BY sort_order,id</select>
+<sql id="incident">id,DATE_FORMAT(occurred_at,'%Y-%m-%d %H:%i:%s') time,person_name_snapshot person,person_type_snapshot person_type,gate_id gate,method,exception_type type,reason,risk,status,suggestion,handler_name_snapshot handler,DATE_FORMAT(handled_at,'%Y-%m-%d %H:%i:%s') handled_at,note,CASE WHEN last_action IS NULL THEN JSON_ARRAY() ELSE JSON_ARRAY(JSON_OBJECT('action',last_action,'handler',handler_name_snapshot,'note',COALESCE(last_action_note,''),'createdAt',DATE_FORMAT(last_action_at,'%Y-%m-%d %H:%i:%s'))) END actions</sql>
+<sql id="black">id,person_name_snapshot name,credential_type type,credential_no,reason,status,DATE_FORMAT(created_at,'%Y-%m-%d %H:%i:%s') created_at,DATE_FORMAT(removed_at,'%Y-%m-%d %H:%i:%s') removed_at,removed_reason,removed_by_id removed_by</sql>
+<select id="exceptions" resultType="map">SELECT <include refid="incident"/> FROM exceptions ORDER BY occurred_at DESC,id</select>
 <select id="incident" resultType="map">SELECT <include refid="incident"/> FROM exceptions WHERE id=#{id}</select>
 <select id="lockIncident" resultType="map">SELECT <include refid="incident"/> FROM exceptions WHERE id=#{id} FOR UPDATE</select>
-<select id="blacklist" resultType="map">SELECT <include refid="black"/> FROM blacklist ORDER BY sort_order,id</select>
+<select id="blacklist" resultType="map">SELECT <include refid="black"/> FROM blacklist ORDER BY created_at DESC,id</select>
 <select id="black" resultType="map">SELECT <include refid="black"/> FROM blacklist WHERE id=#{id}</select>
-<select id="lockBlacklist" resultType="string">SELECT id FROM incident_locks WHERE id='blacklist' FOR UPDATE</select>
-<insert id="insertBlack">INSERT INTO blacklist(id,name,type,credential_no,reason,status,created_at,sort_order) SELECT #{id},#{name},#{type},#{credentialNo},#{reason},#{status},#{createdAt},COALESCE(MIN(sort_order),0)-1 FROM blacklist</insert>
-<update id="updateBlack">UPDATE blacklist SET status=#{status},reason=#{reason},removed_at=#{removedAt},removed_reason=#{removedReason},removed_by=#{removedBy} WHERE id=#{id}</update>
-<update id="updateIncident">UPDATE exceptions SET status=#{status},handler=#{handler},handled_at=#{handledAt},note=#{note},actions=#{actions} WHERE id=#{id}</update>
-<insert id="insertIncident">INSERT INTO exceptions(id,time,person,person_type,gate,method,type,reason,risk,status,suggestion,actions,sort_order) SELECT #{id},#{time},#{person},#{personType},#{gate},#{method},#{type},#{reason},#{risk},#{status},#{suggestion},#{actions},COALESCE(MIN(sort_order),0)-1 FROM exceptions</insert>
-<select id="inbox" resultType="map">SELECT event_id,payload_digest,exception_id FROM incident_inbox WHERE event_id=#{id}</select>
-<insert id="insertInbox">INSERT INTO incident_inbox(event_id,payload_digest,exception_id,received_at) VALUES(#{id},#{digest},#{exceptionId},#{time})</insert>
-<insert id="outbox">INSERT INTO incident_outbox(event_id,payload) VALUES(#{id},#{payload})</insert>
-<select id="due" resultType="map">SELECT event_id,payload FROM incident_outbox WHERE state='PENDING' AND next_retry_at&lt;UNIX_TIMESTAMP(CURRENT_TIMESTAMP(3))*1000 LIMIT 20</select>
-<update id="claim">UPDATE incident_outbox SET next_retry_at=UNIX_TIMESTAMP(CURRENT_TIMESTAMP(3))*1000+5000 WHERE event_id=#{id} AND state='PENDING' AND next_retry_at&lt;UNIX_TIMESTAMP(CURRENT_TIMESTAMP(3))*1000</update>
-<update id="delivered">UPDATE incident_outbox SET state='DELIVERED' WHERE event_id=#{id}</update>
-<update id="failed">UPDATE incident_outbox SET attempts=attempts+1,next_retry_at=UNIX_TIMESTAMP(CURRENT_TIMESTAMP(3))*1000+1000 WHERE event_id=#{id}</update>
-<select id="request" resultType="map">SELECT payload_digest,response FROM incident_requests WHERE request_id=#{id}</select>
-<insert id="insertRequest">INSERT INTO incident_requests(request_id,payload_digest,response) VALUES(#{id},#{digest},#{response})</insert>
-<update id="fault">UPDATE incident_faults SET remaining=remaining-1 WHERE name=#{name} AND remaining&gt;0</update>
+<select id="lockBlacklist" resultType="string">SELECT GET_LOCK('campus-blacklist',5)</select>
+<insert id="insertBlack">INSERT INTO blacklist(id,person_name_snapshot,credential_type,credential_no,reason,status,created_at) VALUES(#{id},#{name},#{type},#{credentialNo},#{reason},#{status},STR_TO_DATE(#{createdAt},'%Y-%m-%d %H:%i:%s'))</insert>
+<update id="updateBlack">UPDATE blacklist SET status=#{status},reason=#{reason},removed_at=STR_TO_DATE(NULLIF(#{removedAt},''),'%Y-%m-%d %H:%i:%s'),removed_reason=#{removedReason},removed_by_id=#{removedBy} WHERE id=#{id}</update>
+<update id="updateIncident">UPDATE exceptions SET status=#{status},handler_name_snapshot=#{handler},handled_at=STR_TO_DATE(NULLIF(#{handledAt},''),'%Y-%m-%d %H:%i:%s'),note=#{note},last_action=JSON_UNQUOTE(JSON_EXTRACT(#{actions},'$[0].action')),last_action_note=JSON_UNQUOTE(JSON_EXTRACT(#{actions},'$[0].note')),last_action_at=STR_TO_DATE(JSON_UNQUOTE(JSON_EXTRACT(#{actions},'$[0].createdAt')),'%Y-%m-%d %H:%i:%s'),version=version+1 WHERE id=#{id}</update>
+<insert id="insertIncident">INSERT INTO exceptions(id,source_event_id,occurred_at,person_id,person_name_snapshot,person_type_snapshot,gate_id,method,exception_type,reason,risk,status,suggestion) VALUES(#{id},#{id},STR_TO_DATE(#{time},'%Y-%m-%d %H:%i:%s'),#{personId},#{person},#{personType},#{gate},#{method},#{type},#{reason},#{risk},#{status},#{suggestion})</insert>
+<select id="inbox" resultType="map">SELECT source_digest payload_digest,id exception_id FROM exceptions WHERE source_event_id=#{id}</select>
+<update id="insertInbox">UPDATE exceptions SET source_digest=#{digest} WHERE source_event_id=#{id} AND (source_digest IS NULL OR source_digest=#{digest})</update>
+<update id="outbox">UPDATE exceptions SET audit_event_id=#{id},audit_payload=#{payload},audit_state='PENDING',audit_attempts=0,audit_next_retry_at=NOW(3) WHERE id=SUBSTRING(#{id},5)</update>
+<select id="due" resultType="map">SELECT audit_event_id event_id,audit_payload payload FROM exceptions WHERE audit_state='PENDING' AND (audit_next_retry_at IS NULL OR audit_next_retry_at&lt;=NOW(3)) LIMIT 20</select>
+<update id="claim">UPDATE exceptions SET audit_attempts=audit_attempts+1,audit_next_retry_at=DATE_ADD(NOW(3),INTERVAL 5 SECOND) WHERE audit_event_id=#{id} AND audit_state='PENDING' AND (audit_next_retry_at IS NULL OR audit_next_retry_at&lt;=NOW(3))</update>
+<update id="delivered">UPDATE exceptions SET audit_state='DELIVERED' WHERE audit_event_id=#{id}</update>
+<update id="failed">UPDATE exceptions SET audit_next_retry_at=DATE_ADD(NOW(3),INTERVAL 1 SECOND) WHERE audit_event_id=#{id} AND audit_state='PENDING'</update>
+<select id="request" resultType="map">SELECT last_request_digest payload_digest,last_response response FROM exceptions WHERE last_request_id=#{id}</select>
+<update id="insertRequest">UPDATE exceptions SET last_request_id=#{id},last_request_digest=#{digest},last_response=#{response} WHERE id=JSON_UNQUOTE(JSON_EXTRACT(#{response},'$.id')) AND (last_request_id IS NULL OR last_request_id=#{id})</update>
 </mapper>

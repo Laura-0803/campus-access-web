@@ -37,6 +37,8 @@ docs.zip
 # Local IDE / assistant state
 .idea/
 **/.idea/
+.vscode/
+**/.vscode/
 .agents/
 .codex/
 .p4-local/

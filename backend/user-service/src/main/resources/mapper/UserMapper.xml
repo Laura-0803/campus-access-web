@@ -1,28 +1,33 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"><mapper namespace="edu.hfut.campus.dao.UserMapper">
-<select id="account" resultType="edu.hfut.campus.entity.UserEntity">SELECT * FROM users WHERE BINARY username=BINARY #{name} LIMIT 1</select>
-<select id="user" resultType="edu.hfut.campus.entity.UserEntity">SELECT * FROM users WHERE id=#{id}</select>
-<select id="users" resultType="edu.hfut.campus.entity.UserEntity">SELECT * FROM users ORDER BY sort_order,id</select>
-<select id="person" resultType="edu.hfut.campus.entity.PersonEntity">SELECT * FROM people WHERE id=#{id}</select>
-<select id="people" resultType="edu.hfut.campus.entity.PersonEntity">SELECT * FROM people ORDER BY sort_order,id</select>
-<select id="roles" resultType="edu.hfut.campus.entity.RoleEntity">SELECT role_key AS roleKey,label FROM roles ORDER BY role_key</select>
-<select id="profiles" resultType="edu.hfut.campus.entity.RoleProfileEntity">SELECT role_key AS roleKey,person_id AS personId,name,title,role_value AS role,type,avatar,status FROM role_profiles ORDER BY role_key</select>
-<select id="session" resultType="edu.hfut.campus.entity.SessionEntity">SELECT token,user_id AS userId,role,created_at AS createdAt,expires_at AS expiresAt FROM sessions WHERE token=#{token}</select>
-<insert id="insertSession">INSERT INTO sessions(token,user_id,role,created_at,expires_at) VALUES(#{token},#{userId},#{role},#{createdAt},#{expiresAt})</insert>
-<delete id="deleteSession">DELETE FROM sessions WHERE token=#{token}</delete><delete id="deleteUserSessions">DELETE FROM sessions WHERE user_id=#{id}</delete>
-<update id="password">UPDATE users SET password=#{hash} WHERE id=#{id}</update>
-<insert id="insertUser">INSERT INTO users(id,username,account_type,password,role,person_id,status,sort_order) VALUES(#{id},#{username},#{accountType},#{password},#{role},#{personId},#{status},-CAST(UNIX_TIMESTAMP(CURRENT_TIMESTAMP(6))*1000000 AS SIGNED))</insert>
-<insert id="insertPerson">INSERT INTO people(id,name,type,code,id_number,role,phone,company,status,sort_order) VALUES(#{id},#{name},#{type},#{code},#{idNumber},#{role},#{phone},#{company},#{status},-CAST(UNIX_TIMESTAMP(CURRENT_TIMESTAMP(6))*1000000 AS SIGNED))</insert>
-<insert id="audit">INSERT INTO logs(id,time,actor,role,action,target,result,sort_order) VALUES(#{id},#{time},#{actor},#{role},#{action},#{target},'成功',-CAST(UNIX_TIMESTAMP(CURRENT_TIMESTAMP(6))*1000000 AS SIGNED))</insert>
-<select id="code" resultType="edu.hfut.campus.entity.VerificationCodeEntity">SELECT purpose,phone,user_id AS userId,digest,sent_at AS sentAt,expires_at AS expiresAt,attempts FROM verification_codes WHERE purpose=#{purpose} AND phone=#{phone} FOR UPDATE</select>
-<insert id="saveCode">INSERT INTO verification_codes(purpose,phone,user_id,digest,sent_at,expires_at,attempts) VALUES(#{purpose},#{phone},#{userId},#{digest},#{sentAt},#{expiresAt},0) ON DUPLICATE KEY UPDATE user_id=VALUES(user_id),digest=VALUES(digest),sent_at=VALUES(sent_at),expires_at=VALUES(expires_at),attempts=0</insert>
-<delete id="deleteCode">DELETE FROM verification_codes WHERE purpose=#{purpose} AND phone=#{phone}</delete>
-<update id="codeAttempt">UPDATE verification_codes SET attempts=attempts+1 WHERE purpose=#{purpose} AND phone=#{phone}</update>
-<select id="faces" resultType="map">SELECT id,person_id AS personId,person_name AS personName,status,file_name AS fileName,image_url AS imageUrl,slot_key AS slot,label,updated_at AS updatedAt FROM faces ORDER BY sort_order,id</select>
-<select id="vehicles" resultType="map">SELECT id,owner_id AS ownerId,owner_name AS ownerName,plate_no AS plateNo,status,last_access AS lastAccess FROM vehicles ORDER BY sort_order,id</select>
-<select id="messages" resultType="map">SELECT id,title,content,target_role AS targetRole,read_flag AS `read`,created_at AS createdAt FROM messages ORDER BY sort_order,id</select>
-<select id="logs" resultType="map">SELECT id,time,actor,role,action,target,result FROM logs ORDER BY sort_order,id</select>
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="edu.hfut.campus.dao.UserMapper">
+<sql id="u">id,username,NULL account_type,password_hash password,role_key role,person_id,status</sql>
+<sql id="p">id,name,person_type type,person_code code,id_number,(SELECT role_key FROM users WHERE users.person_id=people.id LIMIT 1) role,college,class_name,phone,NULL face_status,status,department,position,NULL host,company,CAST(graduation_year AS CHAR) graduation_year,major,NULL gate</sql>
+<select id="account" resultType="edu.hfut.campus.entity.UserEntity">SELECT <include refid="u"/> FROM users WHERE BINARY username=BINARY #{name} LIMIT 1</select>
+<select id="user" resultType="edu.hfut.campus.entity.UserEntity">SELECT <include refid="u"/> FROM users WHERE id=#{id}</select>
+<select id="users" resultType="edu.hfut.campus.entity.UserEntity">SELECT <include refid="u"/> FROM users ORDER BY created_at,id</select>
+<select id="person" resultType="edu.hfut.campus.entity.PersonEntity">SELECT <include refid="p"/> FROM people WHERE id=#{id}</select>
+<select id="people" resultType="edu.hfut.campus.entity.PersonEntity">SELECT <include refid="p"/> FROM people ORDER BY created_at,id</select>
+<select id="roles" resultType="edu.hfut.campus.entity.RoleEntity">SELECT role_key roleKey,label FROM roles ORDER BY role_key</select>
+<select id="profiles" resultType="edu.hfut.campus.entity.RoleProfileEntity">SELECT r.role_key roleKey,MIN(p.id) personId,COALESCE(MIN(p.name),r.label) name,r.title,r.role_key role,MIN(p.person_type) type,r.avatar_url avatar,MIN(p.status) status FROM roles r LEFT JOIN users u ON u.role_key=r.role_key AND u.status='正常' LEFT JOIN people p ON p.id=u.person_id GROUP BY r.role_key,r.label,r.title,r.avatar_url ORDER BY r.role_key</select>
+<select id="session" resultType="edu.hfut.campus.entity.SessionEntity">SELECT id token,user_id userId,(SELECT role_key FROM users WHERE users.id=auth_tokens.user_id) role,DATE_FORMAT(issued_at,'%Y-%m-%dT%H:%i:%s.000Z') createdAt,DATE_FORMAT(expires_at,'%Y-%m-%dT%H:%i:%s.000Z') expiresAt FROM auth_tokens WHERE token_type='SESSION' AND token_digest=#{token} AND consumed_at IS NULL</select>
+<insert id="insertSession">INSERT INTO auth_tokens(id,token_type,token_digest,user_id,subject,purpose,issued_at,expires_at) VALUES(#{token},'SESSION',#{token},#{userId},#{userId},NULL,CAST(REPLACE(SUBSTRING_INDEX(#{createdAt},'Z',1),'T',' ') AS DATETIME(3)),CAST(REPLACE(SUBSTRING_INDEX(#{expiresAt},'Z',1),'T',' ') AS DATETIME(3)))</insert>
+<delete id="deleteSession">DELETE FROM auth_tokens WHERE token_type='SESSION' AND token_digest=#{token}</delete>
+<delete id="deleteUserSessions">DELETE FROM auth_tokens WHERE token_type='SESSION' AND user_id=#{id}</delete>
+<update id="password">UPDATE users SET password_hash=#{hash} WHERE id=#{id}</update>
+<insert id="insertUser">INSERT INTO users(id,username,password_hash,role_key,person_id,status) VALUES(#{id},#{username},#{password},#{role},#{personId},#{status})</insert>
+<insert id="insertPerson">INSERT INTO people(id,name,person_type,person_code,id_number,phone,company,status) VALUES(#{id},#{name},#{type},#{code},#{idNumber},#{phone},#{company},#{status})</insert>
+<insert id="audit">INSERT INTO audit_logs(id,occurred_at,actor_name_snapshot,actor_role_snapshot,action,target,result) VALUES(#{id},STR_TO_DATE(#{time},'%Y-%m-%d %H:%i:%s'),#{actor},#{role},#{action},#{target},'成功')</insert>
+<select id="code" resultType="edu.hfut.campus.entity.VerificationCodeEntity">SELECT purpose,subject phone,user_id userId,token_digest digest,CAST(UNIX_TIMESTAMP(issued_at)*1000 AS SIGNED) sentAt,CAST(UNIX_TIMESTAMP(expires_at)*1000 AS SIGNED) expiresAt,attempts FROM auth_tokens WHERE token_type='VERIFY_CODE' AND purpose=#{purpose} AND subject=#{phone} FOR UPDATE</select>
+<insert id="saveCode">INSERT INTO auth_tokens(id,token_type,token_digest,user_id,subject,purpose,issued_at,expires_at,attempts) VALUES(SHA2(CONCAT('VERIFY_CODE:',#{purpose},':',#{phone}),256),'VERIFY_CODE',#{digest},#{userId},#{phone},#{purpose},FROM_UNIXTIME(#{sentAt}/1000),FROM_UNIXTIME(#{expiresAt}/1000),0) ON DUPLICATE KEY UPDATE user_id=VALUES(user_id),token_digest=VALUES(token_digest),issued_at=VALUES(issued_at),expires_at=VALUES(expires_at),attempts=0,consumed_at=NULL</insert>
+<delete id="deleteCode">DELETE FROM auth_tokens WHERE token_type='VERIFY_CODE' AND purpose=#{purpose} AND subject=#{phone}</delete>
+<update id="codeAttempt">UPDATE auth_tokens SET attempts=attempts+1 WHERE token_type='VERIFY_CODE' AND purpose=#{purpose} AND subject=#{phone}</update>
+<select id="faces" resultType="map">SELECT f.id,f.person_id personId,p.name personName,f.status,f.file_name fileName,f.image_url imageUrl,f.slot_key slot,f.label,DATE_FORMAT(f.updated_at,'%Y-%m-%d %H:%i:%s') updatedAt FROM faces f JOIN people p ON p.id=f.person_id ORDER BY f.updated_at DESC,f.id</select>
+<select id="vehicles" resultType="map">SELECT v.id,v.owner_id ownerId,p.name ownerName,v.plate_no plateNo,v.status,DATE_FORMAT(v.last_access_at,'%Y-%m-%d %H:%i:%s') lastAccess FROM vehicles v JOIN people p ON p.id=v.owner_id ORDER BY v.id</select>
+<select id="messages" resultType="map">SELECT id,title,content,target_role targetRole,read_flag `read`,DATE_FORMAT(created_at,'%Y-%m-%d %H:%i:%s') createdAt FROM messages ORDER BY created_at DESC,id</select>
+<select id="logs" resultType="map">SELECT id,DATE_FORMAT(occurred_at,'%Y-%m-%d %H:%i:%s') time,actor_name_snapshot actor,actor_role_snapshot role,action,target,result FROM audit_logs ORDER BY occurred_at DESC,id</select>
 <update id="updateContact">UPDATE people SET phone=#{phone},company=#{company},status=#{status} WHERE id=#{id}</update>
-<select id="searchPeople" resultType="edu.hfut.campus.entity.PersonEntity">SELECT * FROM people <where><if test="type != null and type != ''">BINARY type=BINARY #{type}</if><if test="keyword != null and keyword != ''">AND (INSTR(BINARY name,BINARY #{keyword})>0 OR INSTR(BINARY code,BINARY #{keyword})>0 OR INSTR(BINARY phone,BINARY #{keyword})>0 OR INSTR(BINARY college,BINARY #{keyword})>0 OR INSTR(BINARY department,BINARY #{keyword})>0)</if></where> ORDER BY sort_order,id</select>
-<select id="lockUser" resultType="edu.hfut.campus.entity.UserEntity">SELECT * FROM users WHERE id=#{id} FOR UPDATE</select>
-<select id="lockPerson" resultType="edu.hfut.campus.entity.PersonEntity">SELECT * FROM people WHERE id=#{id} FOR UPDATE</select>
+<select id="searchPeople" resultType="edu.hfut.campus.entity.PersonEntity">SELECT <include refid="p"/> FROM people <where><if test="type != null and type != ''">BINARY person_type=BINARY #{type}</if><if test="keyword != null and keyword != ''">AND (INSTR(BINARY name,BINARY #{keyword})>0 OR INSTR(BINARY person_code,BINARY #{keyword})>0 OR INSTR(BINARY phone,BINARY #{keyword})>0 OR INSTR(BINARY college,BINARY #{keyword})>0 OR INSTR(BINARY department,BINARY #{keyword})>0)</if></where> ORDER BY created_at,id</select>
+<select id="lockUser" resultType="edu.hfut.campus.entity.UserEntity">SELECT <include refid="u"/> FROM users WHERE id=#{id} FOR UPDATE</select>
+<select id="lockPerson" resultType="edu.hfut.campus.entity.PersonEntity">SELECT <include refid="p"/> FROM people WHERE id=#{id} FOR UPDATE</select>
 </mapper>

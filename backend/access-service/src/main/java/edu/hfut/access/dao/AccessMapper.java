@@ -5,6 +5,7 @@ public interface AccessMapper{
  int update(@Param("table")String table,@Param("row")Map<String,Object> row);
  int delete(@Param("table")String table,@Param("row")Map<String,Object> row);
  Map<String,Object>lock(String id);
+ int consumeQr(String id);
  Map<String,Object>request(String id);
  int reserveRequest(@Param("id")String id,@Param("digest")String digest);
  int completeRequest(@Param("id")String id,@Param("response")String response);
