@@ -17,4 +17,4 @@ Eureka peer A :19761 ⇄ Eureka peer B :19762
 
 服务边界采用独立数据库。跨服务 ID 是逻辑引用，禁止增加跨库外键；域内 `users/people/sessions/faces/vehicles` 已使用外键。Gateway 的阶段开关保持原样，以免改变正式 API 行为。
 
-旧 Express 位于 `campus-access-web/server/`，只保留为历史兼容与回归参考，P7 Java 演示不启动。`experiments/p1-legacy-lab/` 是 Eureka/Ribbon/Hystrix 兼容性实验，不属于正式 Maven reactor。
+旧 Express 位于 `campus-access-web/server/`，只保留为历史兼容与回归参考，正式 Java 演示不启动。`experiments/p1-legacy-lab/` 是 Eureka/Ribbon/Hystrix 兼容性实验，不属于正式 Maven reactor。

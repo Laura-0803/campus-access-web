@@ -1,6 +1,6 @@
 # 核心接口
 
-所有浏览器接口经 Gateway 的 `/api` 前缀访问，响应保持现有 envelope。完整契约见 [api-contract.md](api-contract.md)，历史 68 接口核对表归档在 [archive/legacy/p5-final-api-inventory.md](archive/legacy/p5-final-api-inventory.md)。
+所有浏览器接口经 Gateway 的 `/api` 前缀访问，响应保持现有 envelope。完整契约见 [api-contract.md](api-contract.md)，接口清单见 [api-inventory.csv](api-inventory.csv)。
 
 |领域|核心路径|服务|
 |---|---|---|

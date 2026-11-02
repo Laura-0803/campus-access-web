@@ -2,7 +2,7 @@
 
 Synthetic endpoints only. No legacy routes, identities or production data are migrated.
 
-Candidate: JDK11, Boot2.3.12.RELEASE, CloudHoxton.SR12, MyBatis starter2.1.4; historical acceptance is archived under `docs/archive/legacy/`.
+Candidate: JDK11, Boot2.3.12.RELEASE, CloudHoxton.SR12, MyBatis starter2.1.4; historical acceptance is summarized in `docs/archive/COURSE_HISTORY.md`.
 
 Modules: eureka-server (two processes 18761/18762), provider-service (18811/18812), consumer-service (18821), gateway-service (18800).
 
