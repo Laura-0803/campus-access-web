@@ -8,7 +8,7 @@ const pageTitles = {
   guard: "门岗工作台", admin: "管理驾驶舱", profile: "个人信息", face: "人脸照片",
   vehicle: "车牌管理", vehicles: "车辆信息管理", review: "预约审核", appointments: "预约监管",
   "appointment-status": "预约状态", "visitor-qr": "访客二维码", "alumni-qr": "校友二维码",
-  monitor: "实时通行监控", "identity-check": "现场通行处理", "scan-simulator": "扫码模拟",
+  monitor: "实时通行监控", "identity-check": "现场通行处理",
   "account-status": "账号状态管理", records: "出入记录", exceptions: "异常事件",
   devices: "设备管理", reports: "统计报表", people: "人员信息管理", rules: "通行规则",
   blacklist: "黑名单管理", announcements: "公告管理", logs: "操作日志"

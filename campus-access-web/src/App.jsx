@@ -30,7 +30,6 @@ import {
   QRPage,
   ReportsPage,
   RulesPage,
-  ScanSimulatorPage,
   AccountStatusPage,
   VehiclePage
 } from "./pages/FeaturePages.jsx";
@@ -185,7 +184,6 @@ export default function App() {
         {/* 门岗监控、现场处理和管理员后台功能。部分记录页由后端按当前用户身份过滤数据。 */}
         <Route path="/monitor" element={<RoleGate session={session} roles={["guard", "admin"]}><MonitorPage session={session} /></RoleGate>} />
         <Route path="/identity-check" element={<RoleGate session={session} roles={["guard"]}><IdentityCheckPage session={session} /></RoleGate>} />
-        <Route path="/scan-simulator" element={<RoleGate session={session} roles={["guard", "admin"]}><ScanSimulatorPage session={session} /></RoleGate>} />
         <Route path="/account-status" element={<RoleGate session={session} roles={["admin"]}><AccountStatusPage session={session} /></RoleGate>} />
         <Route path="/records" element={<MonitorPage session={session} />} />
         <Route path="/exceptions" element={<RoleGate session={session} roles={["student", "teacher", "visitor", "alumni", "admin"]}><ExceptionCenterPage session={session} /></RoleGate>} />

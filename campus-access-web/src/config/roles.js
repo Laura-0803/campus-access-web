@@ -15,8 +15,7 @@ import {
   BadgeCheck,
   Ban,
   KeyRound,
-  Megaphone,
-  ScanLine
+  Megaphone
 } from "lucide-react";
 
 // 后端使用英文角色键进行鉴权，界面通过该映射显示对应的中文角色名称。
@@ -116,13 +115,11 @@ export const roleMenus = {
     { label: "门岗工作台", path: "/guard", icon: LayoutDashboard },
     { label: "实时通行监控", path: "/monitor", icon: Activity },
     { label: "现场通行处理", path: "/identity-check", icon: DoorOpen },
-    { label: "扫码模拟", path: "/scan-simulator", icon: ScanLine },
     { label: "设备状态", path: "/devices", icon: MonitorCog }
   ],
   // 管理员拥有基础资料、规则、安全、统计和运维等完整后台权限入口。
   admin: [
     { label: "管理员驾驶舱", path: "/admin", icon: LayoutDashboard },
-    { label: "扫码模拟", path: "/scan-simulator", icon: ScanLine },
     { label: "账号状态管理", path: "/account-status", icon: UserRound },
     { label: "人员信息管理", path: "/people", icon: UserRound },
     { label: "预约监管", path: "/appointments", icon: CalendarCheck },
@@ -165,7 +162,6 @@ export const roleMenuGroups = {
       title: "核验与登记管理",
       items: [
         { label: "通行规则设置", path: "/rules", icon: KeyRound },
-        { label: "扫码模拟", path: "/scan-simulator", icon: ScanLine },
         { label: "出入记录查询", path: "/records", icon: ClipboardList }
       ]
     },
@@ -197,7 +193,6 @@ export const roleMenuGroups = {
         { label: "门岗工作台", path: "/guard", icon: LayoutDashboard },
         { label: "实时通行监控", path: "/monitor", icon: Activity },
         { label: "现场通行处理", path: "/identity-check", icon: DoorOpen },
-        { label: "扫码模拟", path: "/scan-simulator", icon: ScanLine }
       ]
     },
     {
