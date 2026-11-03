@@ -37,6 +37,7 @@ import {
 // api 提供注销请求；homePathByRole 维护不同角色的默认首页。
 import { api } from "./api/client.js";
 import { homePathByRole } from "./config/roles.js";
+import { hydrateSessionAvatar } from "./utils/avatar.js";
 
 /**
  * 从 localStorage 恢复上一次登录会话。
@@ -46,7 +47,7 @@ function loadSession() {
   try {
     // 没有缓存时返回 null；存在时把 JSON 字符串还原成包含 token、user 等字段的会话对象。
     const raw = localStorage.getItem("campus_session");
-    return raw ? JSON.parse(raw) : null;
+    return raw ? hydrateSessionAvatar(JSON.parse(raw)) : null;
   } catch {
     // 缓存损坏不应阻止应用启动，按未登录状态进入登录页即可。
     return null;
@@ -92,6 +93,10 @@ export default function App() {
   const [session, setSession] = useState(loadSession);
   const [apiError, setApiError] = useState("");
 
+  function updateSession(nextSession) {
+    setSession(nextSession ? hydrateSessionAvatar(nextSession) : null);
+  }
+
   // 首次挂载时订阅 API 层广播的认证过期和普通请求错误事件。
   useEffect(() => {
     // 令牌过期时只需清空 React 会话；后续持久化副作用会同步清理本地缓存。
@@ -120,7 +125,11 @@ export default function App() {
   useEffect(() => {
     if (session) {
       // 保存完整会话和角色键，供 API 客户端及其他兼容逻辑读取。
-      localStorage.setItem("campus_session", JSON.stringify(session));
+      const persistedSession = {
+        ...session,
+        profile: { ...(session.profile || {}), avatar: "" }
+      };
+      localStorage.setItem("campus_session", JSON.stringify(persistedSession));
       localStorage.setItem("campus_role", session.user.role);
     } else {
       // 退出或过期时一次性清除所有历史版本使用过的认证缓存键。
@@ -147,7 +156,7 @@ export default function App() {
       {/* 登录页：已有会话时不允许重复登录，直接进入当前角色首页。 */}
       <Route
         path="/login"
-        element={session ? <HomeRedirect session={session} /> : <LoginPage onLogin={setSession} />}
+        element={session ? <HomeRedirect session={session} /> : <LoginPage onLogin={updateSession} />}
       />
 
       {/* 以下路由共享登录保护和 AppShell；未登录访问任何子路由都会先跳转登录页。 */}
@@ -164,7 +173,7 @@ export default function App() {
         <Route path="/admin" element={<RoleGate session={session} roles={["admin"]}><AdminDashboard session={session} /></RoleGate>} />
 
         {/* 个人资料、身份凭证和访客预约相关页面。资料页对所有已登录角色开放，其余按业务角色限制。 */}
-        <Route path="/profile" element={<ProfilePage session={session} onSessionChange={setSession} />} />
+        <Route path="/profile" element={<ProfilePage session={session} onSessionChange={updateSession} />} />
         <Route path="/face" element={<RoleGate session={session} roles={["student", "teacher"]}><FaceUploadPage session={session} /></RoleGate>} />
         <Route path="/vehicle" element={<RoleGate session={session} roles={["teacher"]}><VehiclePage session={session} /></RoleGate>} />
         <Route path="/review" element={<RoleGate session={session} roles={["student", "teacher"]}><AppointmentReviewPage session={session} mode="review" /></RoleGate>} />

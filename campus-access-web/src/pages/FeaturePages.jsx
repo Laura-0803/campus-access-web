@@ -9,6 +9,7 @@ import DataTable from "../components/ui/DataTable.jsx";
 import Badge from "../components/ui/Badge.jsx";
 import QRCodeMock from "../components/ui/QRCodeMock.jsx";
 import StatCard from "../components/ui/StatCard.jsx";
+import AvatarEditor from "../components/ui/AvatarEditor.jsx";
 import AccessTrendChart from "../components/charts/AccessTrendChart.jsx";
 import RiskDonutChart from "../components/charts/RiskDonutChart.jsx";
 import { api } from "../api/client.js";
@@ -340,7 +341,10 @@ export function ProfilePage({ session, onSessionChange }) {
 
   return (
     // 左侧只读身份主数据，右侧提供允许用户维护的账号字段。
-    <div className="grid gap-6 xl:grid-cols-[1fr_.9fr]">
+    <div className="grid gap-6 xl:grid-cols-[.72fr_1fr_1fr]">
+      <Panel title="头像设置" subtitle="选择本地像素头像配色，或上传自己的图片">
+        <AvatarEditor session={session} onSessionChange={onSessionChange} />
+      </Panel>
       <Panel title="个人中心" subtitle="核心身份信息只读，可维护联系电话并修改登录密码">
         <InfoGrid person={person} user={data.user || session.user} />
       </Panel>
