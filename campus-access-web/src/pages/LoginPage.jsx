@@ -329,8 +329,8 @@ export default function LoginPage({ onLogin }) {
 
   return (
     // 页面以浅灰背景承托居中的双栏认证卡片；小屏自动改为上下布局。
-    <div className="min-h-screen bg-[#e8eef4] p-3 text-textMain md:p-6">
-      <main className="mx-auto grid min-h-[calc(100vh-24px)] max-w-[1360px] overflow-hidden rounded-[32px] bg-white shadow-soft ring-1 ring-white/80 lg:min-h-[calc(100vh-48px)] lg:grid-cols-[1.08fr_.92fr]">
+    <div className="min-h-screen bg-slate-100 p-0 text-textMain sm:p-4 lg:p-6">
+      <main className="mx-auto grid min-h-screen max-w-[1480px] overflow-hidden bg-white shadow-soft ring-1 ring-slate-200 sm:min-h-[calc(100vh-32px)] sm:rounded-2xl lg:min-h-[calc(100vh-48px)] lg:grid-cols-[1.08fr_.92fr]">
         {/* 左侧品牌展示区：校园实景图、遮罩、系统标题和三项能力说明。 */}
         <section className="relative min-h-[430px] overflow-hidden bg-slate-950 p-5 text-white md:p-8 lg:min-h-full">
           <img
@@ -389,7 +389,7 @@ export default function LoginPage({ onLogin }) {
         </section>
 
         {/* 右侧认证交互区在可用空间中水平、垂直居中。 */}
-        <section className="flex items-center justify-center bg-[#f8fafc] px-4 py-6 md:px-8">
+        <section className="flex items-center justify-center bg-slate-50 px-4 py-8 md:px-10">
           <div className="w-full max-w-[500px]">
             {/* 标题和图标根据当前 mode 在“系统登录/访客注册/找回密码”之间切换。 */}
             <div className="mb-5 flex items-center justify-between gap-4">
@@ -403,7 +403,7 @@ export default function LoginPage({ onLogin }) {
             </div>
 
             {/* 白色认证卡片包含模式切换、对应表单和反馈信息。 */}
-            <div className="rounded-[28px] bg-white p-5 shadow-card ring-1 ring-slate-100 md:p-6">
+            <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-card md:p-6">
               {mode === "forgot" ? (
                 <div className="mb-6 rounded-2xl bg-slate-100/70 p-1 text-sm">
                   <button
@@ -470,7 +470,7 @@ export default function LoginPage({ onLogin }) {
                   {/* 提交期间禁用按钮并替换文案，防止重复登录。 */}
                   <button
                     disabled={submitting}
-                    className="flex h-12 w-full items-center justify-center gap-2 rounded-2xl bg-primary text-white shadow-glow transition hover:bg-primary2 disabled:opacity-60"
+                    className="flex h-11 w-full items-center justify-center gap-2 rounded-xl bg-primary px-4 font-medium text-white shadow-glow transition hover:bg-primary2 disabled:opacity-60"
                   >
                     {submitting ? "正在登录..." : "进入系统"}
                     {!submitting && <ArrowRight size={18} />}
@@ -615,7 +615,7 @@ function AuthInput({ label, value, onChange, icon: Icon, type = "text", placehol
   return (
     <label className="block">
       <span className="mb-2 block text-sm font-medium text-slate-500">{label}</span>
-      <span className="flex h-12 items-center gap-3 rounded-2xl border border-slate-100 bg-slate-50 px-4 transition focus-within:border-primary/40 focus-within:bg-white focus-within:shadow-card">
+      <span className="flex h-11 items-center gap-3 rounded-xl border border-slate-200 bg-white px-3.5 transition focus-within:border-primary focus-within:shadow-[0_0_0_3px_rgba(37,99,235,.12)]">
         <Icon size={18} className="shrink-0 text-slate-400" />
         <input
           // 组件只回传纯字符串，不把浏览器事件对象泄漏到页面状态层。
@@ -641,7 +641,7 @@ function Field({ label, value, onChange, type = "text", inputMode, maxLength }) 
         type={type}
         inputMode={inputMode}
         maxLength={maxLength}
-        className="h-12 w-full rounded-2xl border border-slate-100 bg-slate-50 px-4 outline-none transition focus:border-primary/40 focus:bg-white focus:shadow-card"
+        className="h-11 w-full rounded-xl border border-slate-200 bg-white px-3.5 outline-none transition focus:border-primary focus:shadow-[0_0_0_3px_rgba(37,99,235,.12)]"
         placeholder={`请输入${label}`}
       />
     </label>

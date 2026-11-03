@@ -1,6 +1,6 @@
 // 路由 Hook 提供当前路径和激活链接；React Hook 管理分组展开与派生菜单；API Hook 加载异常数量。
 import { NavLink, useLocation } from "react-router-dom";
-import { ChevronDown, X } from "lucide-react";
+import { ChevronDown, PanelLeftClose, PanelLeftOpen, X } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import { api } from "../../api/client.js";
 import { useApiData } from "../../api/useApiData.js";
@@ -10,7 +10,7 @@ import { roleLabels, roleMenuGroups, roleMenus, roleProfiles } from "../../confi
  * 角色化侧栏导航。
  * 桌面端常驻显示，移动端根据 open 以抽屉形式出现；菜单、档案和异常角标均随会话角色变化。
  */
-export default function SideBar({ session, open = false, onClose }) {
+export default function SideBar({ session, open = false, collapsed = false, onToggle, onClose }) {
   // 当前路径用于高亮菜单并自动展开其所属分组。
   const location = useLocation();
   // 会话未就绪时使用 student 作为安全默认键，确保后续配置读取有结果。
@@ -64,13 +64,14 @@ export default function SideBar({ session, open = false, onClose }) {
       <NavLink
         to={path}
         onClick={onClose}
+        title={collapsed ? label : undefined}
         // 根据激活状态与嵌套层级组合类名，最后 join 成 Tailwind className 字符串。
         className={({ isActive }) =>
           [
-            "flex items-center justify-between rounded-2xl text-sm transition",
-            nested ? "px-3 py-2.5" : "px-3 py-2.5",
+            "flex min-h-10 items-center rounded-xl text-sm transition",
+            collapsed ? "justify-center px-2 py-2.5" : "justify-between px-3 py-2.5",
             isActive
-              ? "bg-primarySoft text-primary shadow-card"
+              ? "bg-primary text-white shadow-sm"
               : nested
                 ? "text-slate-500 hover:bg-white/80 hover:text-slate-700"
                 : "text-slate-600 hover:bg-white/80"
@@ -79,11 +80,11 @@ export default function SideBar({ session, open = false, onClose }) {
       >
         <span className="flex items-center gap-2.5 whitespace-nowrap">
           <Icon size={nested ? 16 : 17} />
-          {label}
+          <span className={collapsed ? "lg:hidden" : ""}>{label}</span>
         </span>
         {/* 仅名称包含“异常”的入口显示红色角标，数量为零时不占空间。 */}
         {label.includes("异常") && exceptionCount > 0 && (
-          <span className="rounded-full bg-danger/10 px-2 py-0.5 text-xs text-danger">{exceptionCount}</span>
+          <span className={`rounded-full bg-danger/10 px-2 py-0.5 text-xs text-danger ${collapsed ? "lg:hidden" : ""}`}>{exceptionCount}</span>
         )}
       </NavLink>
     );
@@ -93,39 +94,39 @@ export default function SideBar({ session, open = false, onClose }) {
   const content = (
     <>
       {/* 用户摘要区：头像、姓名、说明和在线状态；关闭按钮仅在移动端出现。 */}
-      <div className="mb-4 flex items-center gap-2.5">
-        <img src={profile.avatar} className="h-10 w-10 rounded-2xl bg-white shadow-card" />
-        <div className="min-w-0 flex-1">
+      <div className={`mb-5 flex items-center ${collapsed ? "justify-center" : "gap-2.5"}`}>
+        <img src={profile.avatar} alt="" className="h-10 w-10 rounded-xl bg-white object-cover ring-1 ring-slate-200" />
+        <div className={`min-w-0 flex-1 ${collapsed ? "lg:hidden" : ""}`}>
           <div className="truncate text-sm font-semibold">{profile.name}</div>
           <div className="text-xs text-slate-400">{profile.title}</div>
           <div className="mt-0.5 text-xs text-success">● {profile.status}</div>
         </div>
-        <button onClick={onClose} className="grid h-9 w-9 place-items-center rounded-xl bg-white/80 text-slate-400 lg:hidden">
+        <button aria-label="关闭导航菜单" onClick={onClose} className="grid h-9 w-9 place-items-center rounded-xl bg-white text-slate-400 hover:bg-slate-50 lg:hidden">
           <X size={17} />
         </button>
       </div>
 
       {/* 当前身份卡片同时展示中文角色名称、账号类型和登录账号。 */}
-      <div className="mb-4 rounded-2xl bg-white/80 px-3 py-3 text-sm shadow-innerSoft">
+      <div className={`mb-5 rounded-xl border border-slate-200 bg-slate-50 px-3 py-3 text-sm ${collapsed ? "lg:hidden" : ""}`}>
         <div className="text-xs text-slate-400">当前身份</div>
         <div className="mt-1 font-medium text-primary">{roleLabels[role]}</div>
         <div className="mt-1 text-xs text-slate-400">{session?.user?.accountType}：{session?.user?.username}</div>
       </div>
 
       {/* 菜单按分组渲染：单项组直接显示链接，多项组显示可折叠标题。 */}
-      <div className="space-y-1.5">
-        {menuGroups.map((group) => {
+      <nav aria-label="主导航" className="space-y-1.5">
+        {collapsed ? menus.map((item) => <MenuLink key={item.label} item={item} />) : menuGroups.map((group) => {
           // 只有一个入口的分组无需额外点击展开，减少一层交互。
           if (group.items.length === 1) {
             return <MenuLink key={group.title} item={group.items[0]} />;
           }
 
           return (
-            <div key={group.title} className="rounded-2xl">
+            <div key={group.title} className="rounded-xl">
               <button
                 type="button"
                 onClick={() => toggleGroup(group.title)}
-                className="flex w-full items-center justify-between rounded-2xl px-3 py-2.5 text-left text-sm font-medium text-slate-600 transition hover:bg-white/80"
+                className="flex w-full items-center justify-between rounded-xl px-3 py-2.5 text-left text-xs font-semibold uppercase tracking-wide text-slate-500 transition hover:bg-slate-50"
               >
                 <span className="whitespace-nowrap">{group.title}</span>
                 <ChevronDown
@@ -148,7 +149,7 @@ export default function SideBar({ session, open = false, onClose }) {
             </div>
           );
         })}
-      </div>
+      </nav>
 
     </>
   );
@@ -158,12 +159,24 @@ export default function SideBar({ session, open = false, onClose }) {
       {/* 移动端抽屉打开时显示全屏半透明遮罩，点击遮罩即可关闭。 */}
       {open && <div onClick={onClose} className="fixed inset-0 z-30 bg-slate-900/30 lg:hidden" />}
       {/* 大屏常驻侧栏：自身可滚动，长菜单不会推高整体应用。 */}
-      <aside className="hidden max-h-full w-[220px] shrink-0 self-start overflow-y-auto border-r border-white/70 bg-white/50 px-3 py-5 backdrop-blur-xl lg:block">
+      <aside className={`${collapsed ? "w-[76px]" : "w-[248px]"} hidden max-h-full shrink-0 self-start overflow-y-auto border-r border-slate-200 bg-white px-3 py-5 transition-[width] duration-200 lg:block`}>
+        <div className="mb-5 flex items-center justify-between px-1">
+          {!collapsed && <div><div className="text-xs font-medium text-slate-400">HFUT CAMPUS</div><div className="text-sm font-semibold text-slate-900">出入管理平台</div></div>}
+          <button
+            type="button"
+            aria-label={collapsed ? "展开侧边栏" : "折叠侧边栏"}
+            title={collapsed ? "展开侧边栏" : "折叠侧边栏"}
+            onClick={onToggle}
+            className="grid h-9 w-9 shrink-0 place-items-center rounded-lg text-slate-400 hover:bg-slate-100 hover:text-slate-700"
+          >
+            {collapsed ? <PanelLeftOpen size={18} /> : <PanelLeftClose size={18} />}
+          </button>
+        </div>
         {content}
       </aside>
       {/* 小屏抽屉通过 translate-x 在屏幕内外切换，并保留过渡动画。 */}
       <aside className={[
-        "fixed left-4 top-4 z-40 h-[calc(100vh-32px)] w-[248px] overflow-y-auto rounded-[28px] border border-white/70 bg-white/90 px-3 py-5 shadow-soft backdrop-blur-xl transition-transform lg:hidden",
+        "fixed left-3 top-3 z-40 h-[calc(100vh-24px)] w-[280px] overflow-y-auto rounded-2xl border border-slate-200 bg-white px-4 py-5 shadow-soft transition-transform lg:hidden",
         // open 为真时归位，否则向左移出视口。
         open ? "translate-x-0" : "-translate-x-[284px]"
       ].join(" ")}>

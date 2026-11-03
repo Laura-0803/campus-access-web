@@ -6,6 +6,16 @@
 /* 明确页面采用浅色配色方案，使浏览器原生表单控件与系统主题保持一致。 */
 :root {
   color-scheme: light;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  --color-border: #e4e7ec;
+  --color-border-strong: #d0d5dd;
+  --color-muted: #667085;
+  --color-subtle: #98a2b3;
+  --color-primary: #2563eb;
+  --color-primary-hover: #1d4ed8;
+  --focus-ring: 0 0 0 3px rgba(37, 99, 235, 0.14);
+  --control-height: 42px;
 }
 
 /* 统一使用更直观的 border-box 盒模型：声明的宽高包含内边距和边框。 */
@@ -23,8 +33,13 @@ body,
 /* 清除浏览器默认外边距，并设置全站的浅灰背景色和深色正文颜色。 */
 body {
   margin: 0;
-  background: #eef1f6;
+  background: #f4f6f9;
   color: #172033;
+  font-family: Inter, "PingFang SC", "Microsoft YaHei", "Noto Sans SC", system-ui, sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 /* 让交互控件继承页面字体，避免按钮、输入框使用浏览器默认字体造成视觉割裂。 */
@@ -35,10 +50,94 @@ textarea {
   font: inherit;
 }
 
+button,
+a,
+input,
+select,
+textarea {
+  transition: border-color 160ms ease, background-color 160ms ease, color 160ms ease,
+    box-shadow 160ms ease, transform 160ms ease;
+}
+
+button:not(:disabled),
+select:not(:disabled),
+input[type="checkbox"]:not(:disabled),
+input[type="radio"]:not(:disabled) {
+  cursor: pointer;
+}
+
+button:disabled,
+input:disabled,
+select:disabled,
+textarea:disabled {
+  cursor: not-allowed;
+}
+
+:where(button, a, input, select, textarea):focus-visible {
+  outline: 2px solid rgba(37, 99, 235, 0.65);
+  outline-offset: 2px;
+}
+
+:where(input:not([type="checkbox"]):not([type="radio"]), select, textarea) {
+  border-color: var(--color-border);
+  color: #344054;
+}
+
+:where(input:not([type="checkbox"]):not([type="radio"]), select, textarea):hover:not(:disabled) {
+  border-color: var(--color-border-strong);
+}
+
+:where(input:not([type="checkbox"]):not([type="radio"]), select, textarea):focus {
+  border-color: var(--color-primary);
+  box-shadow: var(--focus-ring);
+}
+
+::placeholder {
+  color: var(--color-subtle);
+  opacity: 1;
+}
+
+::selection {
+  background: #dbeafe;
+  color: #1e3a8a;
+}
+
+* {
+  scrollbar-color: #cbd5e1 transparent;
+  scrollbar-width: thin;
+}
+
+*::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border: 2px solid transparent;
+  border-radius: 999px;
+  background-clip: padding-box;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background-color: #94a3b8;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
+
 /* 可复用的毛玻璃面板：半透明背景叠加模糊、浅色描边和柔和阴影。 */
 .glass-panel {
-  background: rgba(255, 255, 255, 0.74);
-  backdrop-filter: blur(24px);
-  border: 1px solid rgba(255, 255, 255, 0.75);
-  box-shadow: 0 18px 44px rgba(15, 23, 42, 0.065);
+  background: rgba(255, 255, 255, 0.96);
+  backdrop-filter: blur(16px);
+  border: 1px solid var(--color-border);
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.05);
 }

@@ -1,9 +1,9 @@
 // 统计卡片语义色映射：同一 type 同时控制徽标文字色与浅色背景。
 const colorMap = {
-  primary: "text-primary bg-primarySoft",
-  success: "text-success bg-green-50",
-  warning: "text-warning bg-orange-50",
-  danger: "text-danger bg-red-50"
+  primary: "text-primary border-blue-100 bg-primarySoft",
+  success: "text-success border-green-100 bg-green-50",
+  warning: "text-warning border-orange-100 bg-orange-50",
+  danger: "text-danger border-red-100 bg-red-50"
 };
 
 /**
@@ -14,15 +14,15 @@ const colorMap = {
 export default function StatCard({ title, value, desc, type = "primary", badge = "实时" }) {
   return (
     // 外层保持与 Panel 相同的卡片视觉体系，使驾驶舱多种信息块风格统一。
-    <div className="rounded-card bg-white/80 p-5 shadow-card ring-1 ring-white/80">
+    <div className="rounded-card border border-slate-200 bg-white p-4 shadow-card sm:p-5">
       <div className="mb-4 flex items-center justify-between">
-        <span className="text-sm text-slate-500">{title}</span>
+        <span className="text-sm font-medium text-slate-600">{title}</span>
         {/* badge 为真时才显示；颜色由 type 在 colorMap 中查得。 */}
-        {badge && <span className={`rounded-full px-2 py-1 text-xs ${colorMap[type]}`}>{badge}</span>}
+        {badge && <span className={`rounded-lg border px-2 py-1 text-xs font-medium ${colorMap[type]}`}>{badge}</span>}
       </div>
       {/* 主值使用大号粗体突出，描述文字使用弱化颜色补充上下文。 */}
-      <div className="text-3xl font-bold tracking-tight">{value}</div>
-      <div className="mt-2 text-sm text-slate-400">{desc}</div>
+      <div className="text-2xl font-semibold tracking-tight text-slate-950 sm:text-3xl">{value}</div>
+      <div className="mt-2 text-sm leading-5 text-slate-500">{desc}</div>
     </div>
   );
 }

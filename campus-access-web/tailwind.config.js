@@ -14,31 +14,31 @@ export default {
         ]
       },
       colors: {
-        page: "#EEF1F6",
-        panel: "rgba(255,255,255,0.74)",
+        page: "#F4F6F9",
+        panel: "#FFFFFF",
         textMain: "#172033",
-        textSoft: "#64748B",
-        primary: "#7C3AED",
-        primary2: "#4F46E5",
-        primarySoft: "#F3E8FF",
+        textSoft: "#667085",
+        primary: "#2563EB",
+        primary2: "#1D4ED8",
+        primarySoft: "#EFF6FF",
         cyanSoft: "#ECFEFF",
-        success: "#16A34A",
-        warning: "#F59E0B",
-        danger: "#EF4444"
+        success: "#15803D",
+        warning: "#D97706",
+        danger: "#DC2626"
       },
       borderRadius: {
-        soft: "22px",
-        card: "28px"
+        soft: "14px",
+        card: "16px"
       },
       boxShadow: {
-        soft: "0 24px 80px rgba(15, 23, 42, 0.08)",
-        card: "0 18px 44px rgba(15, 23, 42, 0.065)",
-        glow: "0 14px 36px rgba(124, 58, 237, 0.22)",
-        innerSoft: "inset 0 1px 0 rgba(255,255,255,0.9)"
+        soft: "0 16px 40px rgba(15, 23, 42, 0.08)",
+        card: "0 1px 3px rgba(15, 23, 42, 0.06), 0 8px 24px rgba(15, 23, 42, 0.04)",
+        glow: "0 8px 20px rgba(37, 99, 235, 0.18)",
+        innerSoft: "inset 0 1px 0 rgba(255,255,255,0.75)"
       },
       backgroundImage: {
         aurora:
-          "radial-gradient(circle at 10% 10%, rgba(124,58,237,.15), transparent 28%), radial-gradient(circle at 85% 15%, rgba(14,165,233,.14), transparent 24%), radial-gradient(circle at 50% 100%, rgba(34,197,94,.10), transparent 28%)"
+          "linear-gradient(180deg, #F8FAFC 0%, #F4F6F9 100%)"
       }
     }
   },
