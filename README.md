@@ -26,7 +26,7 @@ React前端与Java微服务课程设计工程。当前隔离演示后端由Eurek
 
 Java构建需要独立JDK11及Maven，可在设置正确Java环境后执行`mvn -f backend/pom.xml clean verify`。前端在`campus-access-web/`中执行`npm ci`、`npm run build`。
 
-本机统一启动入口是 `cd campus-access-web && npm run dev:java`。该入口启动双 Eureka、Gateway、四个业务服务、聚合服务和 React，并确保两个 Eureka 节点使用不同主机标识。详细环境变量与停止方式见 [RUNBOOK](docs/RUNBOOK.md)。
+本机统一启动入口是在仓库根目录执行 `./start-all.sh`；也可以进入 `campus-access-web/` 后执行 `npm run start-all`。该入口启动双 Eureka、Gateway、四个业务服务、聚合服务和 React，并确保两个 Eureka 节点使用不同主机标识。详细环境变量与停止方式见 [RUNBOOK](docs/RUNBOOK.md)。
 
 仓库不包含密码、真实业务数据库备份、`.env`、`.p*-local`私密配置、原始测试证据目录、依赖目录或构建产物。原始运行日志和截图保留在受控本地，因此部分阶段报告中的原始证据链接只适用于完整本地工作区。不要将本地私密配置或真实人员数据补传到仓库。
 

@@ -6,11 +6,10 @@
 
 ```bash
 mvn -f backend/pom.xml clean package
-cd campus-access-web
-npm run dev:java
+./start-all.sh
 ```
 
-`dev:java` 会给两个 Eureka 节点设置不同的主机标识：19761 使用 `localhost`，19762 使用 `127.0.0.1`。两节点不能使用相同 `REGISTRY_HOST`，否则 peer 识别会退化为单向复制，远端租约最终过期。
+也可以进入 `campus-access-web/` 执行 `npm run start-all`。`start-all` 会给两个 Eureka 节点设置不同的主机标识：19761 使用 `localhost`，19762 使用 `127.0.0.1`。两节点不能使用相同 `REGISTRY_HOST`，否则 peer 识别会退化为单向复制，远端租约最终过期。
 
 启动成功标准：两个 Eureka 节点都能看到全部 UP 实例；Gateway、四业务服务和聚合服务健康；`/api/roles` 可通过 Gateway 访问；旧 Express 端口 3001 不监听。按 Ctrl-C 后确认 19761、19762、19800、19811、19821、19841、19851、19861 均已关闭。
 
