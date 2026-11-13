@@ -5,13 +5,9 @@
 # The original example matches the private environment file; retain it locally only.
 campus-access-web/.env.example
 .private-backups/
-.p1-local/
-.p2-local/
-.p3-local/
-.private-backups*.zip
-.p1-local*.zip
-.p2-local*.zip
-.p3-local*.zip
+# Migration bridge runtime data and generated adapters
+.migration-runtime/
+.migration-runtime*.zip
 # Database exports and local credential material
 **/*.sql.gz
 **/*.sql.zip
@@ -41,13 +37,6 @@ docs.zip
 **/.vscode/
 .agents/
 .codex/
-.p4-local/
-.p4-local*.zip
-
-.p4c-local/
-
-.p5-local/
-.p6-local/
 
 # Publishing: archives and raw local test evidence stay on this workstation.
 **/*.zip

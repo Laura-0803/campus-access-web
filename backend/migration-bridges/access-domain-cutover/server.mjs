@@ -1,7 +1,7 @@
-// Isolated transition only. Original Express and approved P2/P3 adapters stay unchanged.
+// 通行域迁移桥接器：通行服务接管二维码、设备和通行记录后，仅保留尚未迁移的异常相关接口。
 import fs from'node:fs';import path from'node:path';import{pathToFileURL}from'node:url';
-const root=process.cwd();let code=fs.readFileSync('backend/legacy-adapter/server.mjs','utf8');function replace(a,b){if(!code.includes(a))throw Error('Reviewed template changed');code=code.replace(a,b);}
-code=code.replaceAll('.p2-local','.p4-local');replace("from './store.mjs'",'from '+JSON.stringify(pathToFileURL(path.join(root,'backend/legacy-adapter/store.mjs')).href));
+const root=process.cwd();let code=fs.readFileSync('backend/migration-bridges/user-domain-cutover/server.mjs','utf8');function replace(a,b){if(!code.includes(a))throw Error('用户域桥接模板已变更，请先复核迁移规则');code=code.replace(a,b);}
+code=code.replaceAll('.migration-runtime/user-domain','.migration-runtime/access-domain');replace("from './store.mjs'",'from '+JSON.stringify(pathToFileURL(path.join(root,'backend/migration-bridges/user-domain-cutover/store.mjs')).href));
 replace("!g.includes(' ON `'+config.legacy+'`.*')","!['exceptions','blacklist','user_domain_outbox'].some(t=>g.includes(' ON `'+config.legacy+'`.`'+t+'`'))");
 replace("const tableMap={accessRecords:'access_records',appointments:'appointments',exceptions:'exceptions',devices:'devices',qrCodes:'qr_codes',settings:'settings',gates:'gates',accessRules:'access_rules',blacklist:'blacklist'};","const tableMap={exceptions:'exceptions',blacklist:'blacklist'};");
 replace("const own=['users'","const own=['appointments','accessRecords','qrCodes','devices','settings','gates','accessRules','users'");
@@ -21,4 +21,4 @@ app.post('/internal/access-result',async(req,res)=>{
 });
 `;
 replace('let requestLane=Promise.resolve();',endpoints+'\nlet requestLane=Promise.resolve();');
-const target=path.join(root,'.p4-local/adapter-runtime.mjs');fs.writeFileSync(target,code);await import(pathToFileURL(target).href);
+const target=path.join(root,'.migration-runtime/access-domain/adapter-runtime.mjs');fs.mkdirSync(path.dirname(target),{recursive:true});fs.writeFileSync(target,code);await import(pathToFileURL(target).href);

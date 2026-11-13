@@ -8,7 +8,8 @@
 - 删除 196 个不被 Maven、npm 或正式演示引用的旧阶段生成器、一次性探针和重复测试脚本。
 - 原 101 份阶段验收 Markdown/JSON/CSV 已提炼为一份 [课程研发历程总结](archive/COURSE_HISTORY.md)，逐份旧文件不再保留在当前工程树中；原文仍可从 Git 基线提交恢复。
 - Express 后端仍被 `npm run api/start` 和旧兼容入口引用，因此保留；正式课程演示不启动它。
-- `experiments/p1-legacy-lab` 是课程技术验证源码，移出正式 reactor 但不删除。
+- `experiments/spring-cloud-compatibility-lab` 是课程技术兼容性验证源码，移出正式 reactor 但不删除。
+- `backend/migration-bridges` 按用户、预约、通行、异常业务域归档迁移桥接器，仅用于历史回归与切换验证。
 
 ## 工程入口
 

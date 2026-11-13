@@ -1,11 +1,11 @@
-// Isolated aggregate bridge only. Authoritative exceptions and blacklist are Java-owned.
+// 异常域迁移桥接器：异常和黑名单由 Java 服务接管后，仅聚合各业务域投影供旧页面回归。
 import fs from'node:fs';import path from'node:path';import{pathToFileURL}from'node:url';
-const root=process.cwd();let code=fs.readFileSync('backend/legacy-adapter/server.mjs','utf8');function replace(a,b){if(!code.includes(a))throw Error('Reviewed adapter template changed');code=code.replace(a,b);}
-code=code.replaceAll('.p2-local','.p4c-local');replace("from './store.mjs'",'from '+JSON.stringify(pathToFileURL(path.join(root,'backend/legacy-adapter/store.mjs')).href));
+const root=process.cwd();let code=fs.readFileSync('backend/migration-bridges/user-domain-cutover/server.mjs','utf8');function replace(a,b){if(!code.includes(a))throw Error('用户域桥接模板已变更，请先复核迁移规则');code=code.replace(a,b);}
+code=code.replaceAll('.migration-runtime/user-domain','.migration-runtime/exception-domain');replace("from './store.mjs'",'from '+JSON.stringify(pathToFileURL(path.join(root,'backend/migration-bridges/user-domain-cutover/store.mjs')).href));
 replace("!g.includes(' ON `'+config.legacy+'`.*')","!g.includes(' ON `'+config.legacy+'`.`user_domain_outbox`')");
 replace("const tableMap={accessRecords:'access_records',appointments:'appointments',exceptions:'exceptions',devices:'devices',qrCodes:'qr_codes',settings:'settings',gates:'gates',accessRules:'access_rules',blacklist:'blacklist'};","const tableMap={};");
 replace("const own=['users'","const own=['appointments','accessRecords','qrCodes','devices','settings','gates','accessRules','exceptions','blacklist','users'");
 replace("['dashboard','appointments','accessRecords','exceptions','devices','credentials','reports','settings']","['dashboard','reports']");
 replace('legacy=await load();const data=',`legacy=await load();for(const [url,kind]of [['http://127.0.0.1:19821/internal/appointments','appointments'],['http://127.0.0.1:19841/internal/projection','access'],['http://127.0.0.1:19851/internal/projection','exceptions']]){const response=await fetch(url,{headers:{'X-Campus-Internal':config.internalKey},signal:AbortSignal.timeout(1800)});if(!response.ok)throw Error('Domain projection unavailable');const view=await response.json();if(kind==='appointments')legacy.appointments=view;else Object.assign(legacy,view);}const data=`);
 replace('const data=await load();res.json({available:true,blocked:!!findActiveBlacklistByCredential(data,req.body.credential)});',`const r=await fetch('http://127.0.0.1:19851/internal/blacklist-check',{method:'POST',headers:{'Content-Type':'application/json','X-Campus-Internal':config.internalKey},body:JSON.stringify(req.body),signal:AbortSignal.timeout(1800)});if(!r.ok)throw Error();res.json(await r.json());`);
-const target=path.join(root,'.p4c-local/adapter-runtime.mjs');fs.writeFileSync(target,code);await import(pathToFileURL(target).href);
+const target=path.join(root,'.migration-runtime/exception-domain/adapter-runtime.mjs');fs.mkdirSync(path.dirname(target),{recursive:true});fs.writeFileSync(target,code);await import(pathToFileURL(target).href);

@@ -10,6 +10,15 @@
 - `exception-service`：19851 异常与黑名单。
 - `aggregation-service`：19861 Dashboard/Report 聚合。
 
+迁移辅助代码统一放在 `migration-bridges/`：
+
+- `user-domain-cutover`：用户域接管期间复用旧 Express 路由的基础桥接模板。
+- `appointment-domain-cutover`：预约域接管后的旧接口兼容桥接。
+- `access-domain-cutover`：通行域接管后的旧接口兼容桥接。
+- `exception-domain-cutover`：异常域接管后的投影聚合桥接。
+
+这些桥接器只用于隔离迁移和历史回归，不属于正式 Maven reactor，正式 Java 演示不会启动它们。
+
 构建：`mvn -f backend/pom.xml clean verify`。
 
 目标 18 表 Schema 位于 `database/refactor/*/V100__target_schema.sql`，只允许在隔离数据库执行。完整启动、停止和双 Eureka 主机标识要求见 `docs/RUNBOOK.md`。正式 Java 演示不启动旧 Express。

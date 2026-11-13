@@ -1,16 +1,17 @@
+// 用户域迁移桥接器：仅在隔离环境中复用旧 Express 路由，正式 Java 演示不启动该进程。
 import fs from 'node:fs';import path from 'node:path';import crypto from 'node:crypto';import {createRequire} from 'node:module';import {pathToFileURL} from 'node:url';import {scope} from './store.mjs';
-const root=path.resolve(import.meta.dirname||path.dirname(new URL(import.meta.url).pathname),'../..');
-// Root is passed by the launcher to avoid Windows URL/path ambiguity.
-const workspace=process.env.P2_WORKSPACE;if(!workspace)throw Error('Workspace required');
-const config=JSON.parse(fs.readFileSync(path.join(workspace,'.p2-local/runtime.json'),'utf8'));
+const root=path.resolve(import.meta.dirname||path.dirname(new URL(import.meta.url).pathname),'../../..');
+// 启动器显式传入仓库根目录，避免不同操作系统对 URL 与文件路径的解析差异。
+const workspace=process.env.MIGRATION_WORKSPACE||process.env.P2_WORKSPACE;if(!workspace)throw Error('Migration workspace required');
+const config=JSON.parse(fs.readFileSync(path.join(workspace,'.migration-runtime/user-domain/runtime.json'),'utf8'));
 if(!/^campus_p2_legacy_\d{14}$/.test(config.legacy)||config.host!=='127.0.0.1')throw Error('Isolated target required');
 const require=createRequire(path.join(workspace,'campus-access-web/package.json')),express=require('express'),mysql=require('mysql2/promise');
 const pool=mysql.createPool({host:config.host,port:config.port,user:config.legacyUser,password:config.legacyPassword,database:config.legacy,charset:'utf8mb4'});
 for(const row of (await pool.query('SHOW GRANTS'))[0]){const g=Object.values(row)[0];if(!g.startsWith('GRANT USAGE')&&!g.includes(' ON `'+config.legacy+'`.*'))throw Error('Legacy account is not isolated');}
-const original=path.join(workspace,'campus-access-web/server'),copy=path.join(workspace,'.p2-local/legacy-copy');fs.mkdirSync(copy,{recursive:true});fs.writeFileSync(path.join(copy,'package.json'),'{"type":"module"}');
+const original=path.join(workspace,'campus-access-web/server'),copy=path.join(workspace,'.migration-runtime/user-domain/legacy-copy');fs.mkdirSync(copy,{recursive:true});fs.writeFileSync(path.join(copy,'package.json'),'{"type":"module"}');
 for(const dir of ['lib','routes','middleware']){fs.mkdirSync(path.join(copy,dir),{recursive:true});for(const file of fs.readdirSync(path.join(original,dir))){if(!file.endsWith('.js')||['store.js','env.js'].includes(file))continue;let source=fs.readFileSync(path.join(original,dir,file),'utf8').replaceAll('from "express"','from '+JSON.stringify(pathToFileURL(require.resolve('express')).href));fs.writeFileSync(path.join(copy,dir,file),source);}}
 fs.mkdirSync(path.join(copy,'agents'),{recursive:true});fs.copyFileSync(path.join(original,'agents/exception-agent.model.json'),path.join(copy,'agents/exception-agent.model.json'));
-fs.writeFileSync(path.join(copy,'lib/store.js'),'export {getData,updateData} from '+JSON.stringify(pathToFileURL(path.join(workspace,'backend/legacy-adapter/store.mjs')).href)+';');
+fs.writeFileSync(path.join(copy,'lib/store.js'),'export {getData,updateData} from '+JSON.stringify(pathToFileURL(path.join(workspace,'backend/migration-bridges/user-domain-cutover/store.mjs')).href)+';');
 const {authorize}=await import(pathToFileURL(path.join(copy,'middleware/auth.js'))),{findActiveBlacklistByCredential}=await import(pathToFileURL(path.join(copy,'lib/blacklist.js')));
 const tableMap={accessRecords:'access_records',appointments:'appointments',exceptions:'exceptions',devices:'devices',qrCodes:'qr_codes',settings:'settings',gates:'gates',accessRules:'access_rules',blacklist:'blacklist'};
 const own=['users','people','sessions','roles','roleProfiles','faces','messages'];

@@ -1,4 +1,4 @@
-// Local Vite middleware only. Never bundled into the browser or enabled in normal mode.
+// 仅供本机 Vite 隔离演示使用，正常模式不会启用，也不会打包到浏览器。
 import fs from "node:fs";
 import path from "node:path";
 import mysql from "mysql2/promise";
@@ -14,10 +14,11 @@ const choices = [
 export default function syntheticDemoLogin() {
   const configure = (server) => {
     let config;
-    // The reviewed launcher supplies these flags only for the isolated synthetic environment.
-    if (process.env.P2_DEMO !== "true" || process.env.SPRING_PROFILES_ACTIVE !== "synthetic-demo" || !process.env.P2_WORKSPACE) return;
+    // 只有隔离演示启动器显式提供这些开关时，才允许注册快捷登录中间件。
+    const workspace = process.env.MIGRATION_WORKSPACE || process.env.P2_WORKSPACE;
+    if (process.env.P2_DEMO !== "true" || process.env.SPRING_PROFILES_ACTIVE !== "synthetic-demo" || !workspace) return;
     try {
-      config = JSON.parse(fs.readFileSync(path.join(process.env.P2_WORKSPACE, ".p5-local/runtime.json"), "utf8"));
+      config = JSON.parse(fs.readFileSync(path.join(workspace, ".migration-runtime/system-demo/runtime.json"), "utf8"));
       if (config.host !== "127.0.0.1" || !/^campus_p2_user_\d{14}$/.test(config.database) || !config.demoPassword) return;
     } catch { return; }
     server.middlewares.use(async (request, response, next) => {
@@ -53,7 +54,7 @@ export default function syntheticDemoLogin() {
         const selected = accounts.find((x) => x.account === body.account);
         if (!selected) return fail(403, "不允许使用该演示账号");
         if (!selected.enabled) return fail(403, "账号已被停用");
-        // Authenticate normally through Gateway/Java. No forged session, role or bypass.
+        // 始终通过 Gateway 和 Java 认证链路登录，禁止伪造会话、角色或绕过鉴权。
         const result = await fetch("http://127.0.0.1:19800/api/auth/login", {
           method: "POST", headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ account: selected.account, password: config.demoPassword }),
