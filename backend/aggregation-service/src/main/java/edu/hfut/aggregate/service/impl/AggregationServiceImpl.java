@@ -3,7 +3,7 @@ import java.util.*;import java.time.*;import java.util.concurrent.*;import org.s
 import edu.hfut.aggregate.client.*;import edu.hfut.aggregate.service.AggregationService;import edu.hfut.aggregate.exception.ApiException;import static edu.hfut.aggregate.dto.Views.*;
 @Service public class AggregationServiceImpl implements AggregationService{
  private final UserClient user;private final AppointmentClient appointment;private final AccessClient access;private final ExceptionClient exception;private final GatewayClient gateway;
- @Value("${P2_INTERNAL_KEY}")String key;
+ @Value("${CAMPUS_INTERNAL_KEY}")String key;
  private final ExecutorService probes=Executors.newFixedThreadPool(5,r->{Thread t=new Thread(r,"bounded-health");t.setDaemon(true);return t;});
  private final java.util.concurrent.Semaphore healthSlots=new java.util.concurrent.Semaphore(1);
  public AggregationServiceImpl(UserClient u,AppointmentClient p,AccessClient a,ExceptionClient e,GatewayClient g){user=u;appointment=p;access=a;exception=e;gateway=g;}

@@ -2,8 +2,6 @@
 **/.env
 **/.env.*
 !**/.env.example
-# The original example matches the private environment file; retain it locally only.
-campus-access-web/.env.example
 .private-backups/
 # Migration bridge runtime data and generated adapters
 .migration-runtime/

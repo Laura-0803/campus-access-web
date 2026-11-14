@@ -9,8 +9,8 @@ import edu.hfut.campus.dao.UserMapper;
 import edu.hfut.campus.entity.*;
 import edu.hfut.campus.exception.ApiException;
 import static edu.hfut.campus.dto.Responses.map;
-/** Additive P3-only protected query; all 32 P2 public methods remain unchanged. */
-@RestController @ConditionalOnProperty(name="p3.internal.enabled",havingValue="true")
+/** 预约域内部受保护查询；保留现有公开接口契约。 */
+@RestController @ConditionalOnProperty(name="appointment.internal-api.enabled",havingValue="true")
 public class AppointmentDirectoryController {
  private final SessionAuthority auth;private final UserMapper dao;
  @Value("${server.port}")int port;

@@ -17,7 +17,7 @@ import static edu.hfut.campus.dto.Responses.*;
   private final DomainMapper m;
   private final Passwords passwords;
   private final LegacyClient legacy;
-  @Value("${P2_INTERNAL_KEY}")String key;
+  @Value("${CAMPUS_INTERNAL_KEY}")String key;
   static final Set<String> ROLES=new HashSet<>(Arrays.asList("student","teacher","visitor","alumni","guard","admin")),TYPES=new HashSet<>(Arrays.asList("账号","学号","工号","手机号","校友编号"));
   public AdminServiceImpl(UserMapper d,DomainMapper m,Passwords p,LegacyClient l)  {
     this.d=d;

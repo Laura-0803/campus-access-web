@@ -20,12 +20,12 @@ import static edu.hfut.campus.dto.Responses.*;
   private final Passwords passwords;
   private final LegacyClient legacy;
   private final SecureRandom random=new SecureRandom();
-  @Value("${P2_INTERNAL_KEY}")String key;
-  @Value("${P2_DEMO:false}")boolean demo;
+  @Value("${CAMPUS_INTERNAL_KEY}")String key;
+  @Value("${USER_DEMO_ENABLED:false}")boolean demo;
   @Value("${spring.profiles.active:}")String profile;
-  @Value("${P2_DEMO_PHONES:}")String phones;
-  @Value("${P2_SMS_URL:}")String smsUrl;
-  @Value("${P2_SMS_KEY:}")String smsKey;
+  @Value("${USER_DEMO_PHONES:}")String phones;
+  @Value("${USER_SMS_URL:}")String smsUrl;
+  @Value("${USER_SMS_KEY:}")String smsKey;
   public AuthServiceImpl(UserMapper d,Passwords p,LegacyClient l)  {
     this.d=d;
     passwords=p;

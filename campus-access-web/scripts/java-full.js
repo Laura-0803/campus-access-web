@@ -29,26 +29,35 @@ function loadLocalEnv() {
 }
 
 const requiredEnv = [
-  "P2_DB_URL", "P2_DB_USER", "P2_DB_PASSWORD", "P2_INTERNAL_KEY",
-  "P3_DB_URL", "P3_DB_USER", "P3_DB_PASSWORD", "P3_INTERNAL_KEY",
-  "P4_DB_URL", "P4_DB_USER", "P4_DB_PASSWORD", "P4_INTERNAL_KEY",
-  "P4C_DB_URL", "P4C_DB_USER", "P4C_DB_PASSWORD"
+  "IDENTITY_DB_URL", "IDENTITY_DB_USERNAME", "IDENTITY_DB_PASSWORD",
+  "APPOINTMENT_DB_URL", "APPOINTMENT_DB_USERNAME", "APPOINTMENT_DB_PASSWORD",
+  "PASSAGE_DB_URL", "PASSAGE_DB_USERNAME", "PASSAGE_DB_PASSWORD",
+  "INCIDENT_DB_URL", "INCIDENT_DB_USERNAME", "INCIDENT_DB_PASSWORD",
+  "CAMPUS_INTERNAL_KEY", "CREDENTIAL_RECOVERY_KEY"
 ];
 const servicePorts = [19761, 19762, 19800, 19811, 19821, 19841, 19851, 19861, 5173];
 
 function validateEnvironment() {
+  const envFile = path.join(webRoot, ".env");
+  if (!existsSync(envFile)) {
+    throw new Error("缺少 campus-access-web/.env。请先执行：cp campus-access-web/.env.example campus-access-web/.env");
+  }
   const missing = requiredEnv.filter((name) => !process.env[name]);
   if (missing.length) {
-    throw new Error(`缺少启动环境变量：\n  ${missing.join("\n  ")}\n请先加载本机私密数据库配置，再重新执行 start-all。`);
+    throw new Error(`缺少启动环境变量：\n  ${missing.join("\n  ")}\n请参考 docs/ENVIRONMENT.md 完成本机配置。`);
+  }
+  const placeholders = requiredEnv.filter((name) => process.env[name].startsWith("CHANGE_ME_"));
+  if (placeholders.length) {
+    throw new Error(`以下配置仍是模板占位值：\n  ${placeholders.join("\n  ")}\n请在 campus-access-web/.env 中填写本机密码或随机密钥。`);
   }
 
-  for (const name of ["P2_DB_URL", "P3_DB_URL", "P4_DB_URL", "P4C_DB_URL"]) {
+  for (const name of ["IDENTITY_DB_URL", "APPOINTMENT_DB_URL", "PASSAGE_DB_URL", "INCIDENT_DB_URL"]) {
     if (!process.env[name].startsWith("jdbc:mysql://127.0.0.1:")) {
       throw new Error(`${name} 必须是以 jdbc:mysql://127.0.0.1: 开头的隔离数据库地址。`);
     }
   }
 
-  for (const name of ["P2_INTERNAL_KEY", "P3_INTERNAL_KEY", "P4_INTERNAL_KEY"]) {
+  for (const name of ["CAMPUS_INTERNAL_KEY", "CREDENTIAL_RECOVERY_KEY"]) {
     if (process.env[name].length < 32) {
       throw new Error(`${name} 长度不能少于 32 个字符。`);
     }

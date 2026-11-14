@@ -15,8 +15,8 @@ export default function syntheticDemoLogin() {
   const configure = (server) => {
     let config;
     // 只有隔离演示启动器显式提供这些开关时，才允许注册快捷登录中间件。
-    const workspace = process.env.MIGRATION_WORKSPACE || process.env.P2_WORKSPACE;
-    if (process.env.P2_DEMO !== "true" || process.env.SPRING_PROFILES_ACTIVE !== "synthetic-demo" || !workspace) return;
+    const workspace = process.env.MIGRATION_WORKSPACE;
+    if (process.env.USER_DEMO_ENABLED !== "true" || process.env.SPRING_PROFILES_ACTIVE !== "synthetic-demo" || !workspace) return;
     try {
       config = JSON.parse(fs.readFileSync(path.join(workspace, ".migration-runtime/system-demo/runtime.json"), "utf8"));
       if (config.host !== "127.0.0.1" || !/^campus_p2_user_\d{14}$/.test(config.database) || !config.demoPassword) return;

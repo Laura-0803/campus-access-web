@@ -15,7 +15,7 @@ import edu.hfut.appointment.service.AppointmentCommands;
 import edu.hfut.appointment.exception.ApiException;
 @Service public class AppointmentCommandsImpl implements AppointmentCommands {
  private final UserDirectory users;private final BlacklistClient blacklist;private final AppointmentMapper dao;private final ObjectMapper json;
- @Value("${P3_INTERNAL_KEY}")String key;private final AtomicInteger sequence=new AtomicInteger();
+ @Value("${CAMPUS_INTERNAL_KEY}")String key;private final AtomicInteger sequence=new AtomicInteger();
  public AppointmentCommandsImpl(UserDirectory users,BlacklistClient blacklist,AppointmentMapper dao,ObjectMapper json){this.users=users;this.blacklist=blacklist;this.dao=dao;this.json=json;}
  private String str(Map<String,Object>b,String k){Object v=b.get(k);return v==null?"":String.valueOf(v);}
  private String now(){return LocalDateTime.now(ZoneId.of("Asia/Shanghai")).format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));}
@@ -25,7 +25,7 @@ import edu.hfut.appointment.exception.ApiException;
  private void blacklist(String credential,boolean review){BlacklistClient.Result result=blacklist.check(key,Collections.singletonMap("credential",credential));if(result==null||!result.available||result.blocked==null)throw new ApiException(503,"黑名单服务不可用");if(result.blocked)throw new ApiException(403,review?"该访客身份证号已在黑名单中，禁止通过预约":"该身份证号已在黑名单中，禁止提交访客预约");}
  private void host(WriteContext c){if(c.host==null)throw new ApiException(404,"被访人必须填写系统内学生、教职工或保卫处管理员的学号/工号/编号，不能填写姓名");if(!"正常".equals(c.host.status))throw new ApiException(403,"被访人当前状态不可预约");}
  private void record(Appointment a,String before,String action,DirectoryContext.Actor actor){
-  String eventId="P3-AUDIT-"+UUID.randomUUID();Map<String,Object> event=new LinkedHashMap<>();event.put("eventId",eventId);event.put("appointmentId",a.id);event.put("actorId",actor.id);event.put("actor",actor.personName==null||actor.personName.isEmpty()?actor.username:actor.personName);event.put("role",actor.role);event.put("action",action);event.put("occurredAt",now());
+  String eventId="APPOINTMENT-AUDIT-"+UUID.randomUUID();Map<String,Object> event=new LinkedHashMap<>();event.put("eventId",eventId);event.put("appointmentId",a.id);event.put("actorId",actor.id);event.put("actor",actor.personName==null||actor.personName.isEmpty()?actor.username:actor.personName);event.put("role",actor.role);event.put("action",action);event.put("occurredAt",now());
   Map<String,Object> history=new HashMap<>(event);history.put("beforeStatus",before);history.put("afterStatus",a.status);history.put("version",a.version);history.put("comment",a.reviewComment);dao.insertHistory(history);
   try{dao.insertOutbox(eventId,a.id,json.writeValueAsString(event));}catch(com.fasterxml.jackson.core.JsonProcessingException e){throw new IllegalStateException("Audit event serialization failed");}
  }

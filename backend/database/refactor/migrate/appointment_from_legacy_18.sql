@@ -1,0 +1,28 @@
+-- 预约域旧 18 表结构迁移到规范 Schema。
+-- 将 __SOURCE_APPOINTMENT_SCHEMA__ 替换为真实源 Schema，并先执行 appointment/V100__target_schema.sql。
+
+START TRANSACTION;
+
+INSERT INTO cam_appointment_dev.visit_appointment(
+ id,visitor_id,visitor_name_snapshot,visitor_phone_snapshot,visitor_identity_number_snapshot,
+ host_id,host_name_snapshot,visit_start,visit_end,reason,status,created_at,reviewed_at,reviewer_id,
+ reviewer_name_snapshot,review_comment,version,issuance_operation_id,issuance_phase,qr_id,
+ issuance_attempt_count,lease_owner,lease_until,last_error_code,hold_reason,issuance_actor_id,
+ issuance_actor_token,issuance_payload,issuance_expected_version)
+SELECT id,visitor_id,visitor_name_snapshot,visitor_phone_snapshot,visitor_id_no_snapshot,
+ host_id,host_name_snapshot,visit_start,visit_end,reason,status,created_at,reviewed_at,reviewer_id,
+ reviewer_name_snapshot,review_comment,version,issuance_operation_id,issuance_phase,qr_id,
+ issuance_attempts,lease_owner,lease_until,last_error_code,hold_reason,issuance_actor_id,
+ issuance_actor_token,issuance_payload,issuance_expected_version
+FROM __SOURCE_APPOINTMENT_SCHEMA__.appointments;
+
+INSERT INTO cam_appointment_dev.appointment_review(
+ id,appointment_id,decision_version,action,before_status,after_status,actor_id,actor_name_snapshot,
+ actor_role_snapshot,comment,occurred_at,audit_payload,audit_state,audit_attempt_count,
+ audit_next_retry_at,audit_last_error_code)
+SELECT id,appointment_id,decision_version,action,before_status,after_status,actor_id,actor_name_snapshot,
+ actor_role_snapshot,comment,occurred_at,audit_payload,audit_state,audit_attempts,
+ audit_next_retry_at,audit_last_error_code
+FROM __SOURCE_APPOINTMENT_SCHEMA__.appointment_reviews;
+
+COMMIT;

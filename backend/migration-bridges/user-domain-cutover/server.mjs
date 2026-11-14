@@ -2,7 +2,7 @@
 import fs from 'node:fs';import path from 'node:path';import crypto from 'node:crypto';import {createRequire} from 'node:module';import {pathToFileURL} from 'node:url';import {scope} from './store.mjs';
 const root=path.resolve(import.meta.dirname||path.dirname(new URL(import.meta.url).pathname),'../../..');
 // 启动器显式传入仓库根目录，避免不同操作系统对 URL 与文件路径的解析差异。
-const workspace=process.env.MIGRATION_WORKSPACE||process.env.P2_WORKSPACE;if(!workspace)throw Error('Migration workspace required');
+const workspace=process.env.MIGRATION_WORKSPACE||process.env.MIGRATION_WORKSPACE;if(!workspace)throw Error('Migration workspace required');
 const config=JSON.parse(fs.readFileSync(path.join(workspace,'.migration-runtime/user-domain/runtime.json'),'utf8'));
 if(!/^campus_p2_legacy_\d{14}$/.test(config.legacy)||config.host!=='127.0.0.1')throw Error('Isolated target required');
 const require=createRequire(path.join(workspace,'campus-access-web/package.json')),express=require('express'),mysql=require('mysql2/promise');

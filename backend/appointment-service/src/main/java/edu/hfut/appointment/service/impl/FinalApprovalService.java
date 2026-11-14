@@ -3,7 +3,7 @@ import java.util.*;import org.springframework.stereotype.Service;import org.spri
 @Service @EnableScheduling public class FinalApprovalService{
  public static final String UNKNOWN="签发结果尚未确认，请勿重复生成凭证，请联系管理员核实";
  private final AppointmentMapper appointments;private final IssuanceMapper operations;private final UserDirectory users;private final BlacklistClient blacklist;private final IssuanceClient access;private final RecoveryCipher cipher;private final ObjectMapper json;private final TransactionTemplate tx;
- @Value("${P3_INTERNAL_KEY}")String key;@Value("${p4.final.enabled:false}")boolean enabled;@Value("${p4.internal.enabled:false}")boolean internal;
+ @Value("${CAMPUS_INTERNAL_KEY}")String key;@Value("${access.final-approval.enabled:false}")boolean enabled;@Value("${access.internal-api.enabled:false}")boolean internal;
  public FinalApprovalService(AppointmentMapper a,IssuanceMapper o,UserDirectory u,BlacklistClient b,IssuanceClient c,RecoveryCipher cipher,ObjectMapper j,PlatformTransactionManager manager){appointments=a;operations=o;users=u;blacklist=b;access=c;this.cipher=cipher;json=j;tx=new TransactionTemplate(manager);tx.setIsolationLevel(org.springframework.transaction.TransactionDefinition.ISOLATION_READ_COMMITTED);}
  private String text(Map<String,Object>m,String k){return m==null||m.get(k)==null?"":String.valueOf(m.get(k));}
  private Map<String,Object>map(Object...p){Map<String,Object>m=new LinkedHashMap<>();for(int i=0;i<p.length;i+=2)m.put(String.valueOf(p[i]),p[i+1]);return m;}

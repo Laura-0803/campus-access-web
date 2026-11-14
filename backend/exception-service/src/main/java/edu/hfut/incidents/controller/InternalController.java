@@ -1,6 +1,6 @@
 package edu.hfut.incidents.controller;import java.util.*;import org.springframework.web.bind.annotation.*;import org.springframework.beans.factory.annotation.Value;import org.springframework.cloud.client.loadbalancer.LoadBalancerClient;import org.springframework.cloud.netflix.ribbon.SpringClientFactory;import com.netflix.loadbalancer.*;import com.netflix.hystrix.*;import edu.hfut.incidents.service.IncidentService;import edu.hfut.incidents.dao.IncidentMapper;import static edu.hfut.incidents.service.impl.IncidentServiceImpl.map;
 @RestController @RequestMapping("/internal")public class InternalController{
- private final IncidentService s;private final IncidentMapper d;private final SpringClientFactory f;private final LoadBalancerClient lb;@Value("${server.port}")int port;@Value("${P4C_FAULT_INJECTION:false}")boolean faults;
+ private final IncidentService s;private final IncidentMapper d;private final SpringClientFactory f;private final LoadBalancerClient lb;@Value("${server.port}")int port;@Value("${EXCEPTION_FAULT_INJECTION_ENABLED:false}")boolean faults;
  public InternalController(IncidentService s,IncidentMapper d,SpringClientFactory f,LoadBalancerClient lb){this.s=s;this.d=d;this.f=f;this.lb=lb;}
  @PostMapping("/blacklist-check")public Object check(@RequestBody Map<String,Object>b){return s.check(b,false);}
  @PostMapping("/access-blacklist")public Object access(@RequestBody Map<String,Object>b){return s.check(b,true);}

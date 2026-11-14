@@ -1,6 +1,6 @@
 package edu.hfut.campus.controller;
 import java.util.*;import javax.servlet.http.HttpServletRequest;import org.springframework.web.bind.annotation.*;import org.springframework.beans.factory.annotation.Value;import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;import edu.hfut.campus.dao.*;import edu.hfut.campus.entity.*;import edu.hfut.campus.security.*;import edu.hfut.campus.exception.ApiException;import static edu.hfut.campus.dto.Responses.map;
-@RestController @ConditionalOnProperty(name="p4.internal.enabled",havingValue="true")public class AccessDirectoryController{
+@RestController @ConditionalOnProperty(name="access.internal-api.enabled",havingValue="true")public class AccessDirectoryController{
  private final SessionAuthority auth;private final UserMapper dao;private final DomainMapper domain;@Value("${server.port}")int port;
  public AccessDirectoryController(SessionAuthority a,UserMapper d,DomainMapper domain){auth=a;dao=d;this.domain=domain;}
  private String text(Map<String,Object>b,String k){return b.get(k)==null?"":String.valueOf(b.get(k));}

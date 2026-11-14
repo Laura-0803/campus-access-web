@@ -12,7 +12,7 @@ import edu.hfut.appointment.exception.ApiException;
 import edu.hfut.appointment.service.AppointmentQueries;
 @Service public class AppointmentQueriesImpl implements AppointmentQueries {
  private final AppointmentMapper dao;private final UserDirectory users;
- @Value("${P3_INTERNAL_KEY}")private String key;
+ @Value("${CAMPUS_INTERNAL_KEY}")private String key;
  private final ConcurrentMap<Integer,LongAdder> handled=new ConcurrentHashMap<>();
  public AppointmentQueriesImpl(AppointmentMapper dao,UserDirectory users){this.dao=dao;this.users=users;}
  private DirectoryContext identity(String token,String visitorId){

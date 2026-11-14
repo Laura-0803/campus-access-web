@@ -2,7 +2,7 @@
 
 该实验工程用于验证课程要求的 Eureka、Ribbon、OpenFeign、Hystrix、Gateway 与 MyBatis 组合，仅提供合成接口，不迁移旧系统路由、用户身份或生产数据。
 
-验证基线：JDK 11、Spring Boot 2.3.12.RELEASE、Spring Cloud Hoxton.SR12、MyBatis Starter 2.1.4；历史验收结论见 `docs/archive/COURSE_HISTORY.md`。
+验证基线：JDK 11、Spring Boot 2.3.12.RELEASE、Spring Cloud Hoxton.SR12、MyBatis Starter 2.1.4。
 
 模块说明：`eureka-server`（双进程 18761/18762）、`provider-service`（18811/18812）、`consumer-service`（18821）、`gateway-service`（18800）。
 

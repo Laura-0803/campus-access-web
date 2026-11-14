@@ -1,7 +1,7 @@
 package edu.hfut.access.service.impl;
 import java.util.*;import java.security.*;import java.nio.charset.StandardCharsets;import org.springframework.stereotype.Service;import org.springframework.transaction.annotation.Transactional;import org.springframework.beans.factory.annotation.Value;import com.fasterxml.jackson.databind.ObjectMapper;import edu.hfut.access.dao.AccessMapper;import edu.hfut.access.dao.IssuanceMapper;import edu.hfut.access.client.*;import edu.hfut.access.dto.Context;import edu.hfut.access.exception.ApiException;import static edu.hfut.access.security.Identity.*;
 @Service public class IssuanceService{
- private final AccessMapper dao;private final IssuanceMapper operations;private final AppointmentClient appointments;private final DirectoryClient users;private final ObjectMapper json;@Value("${P4_INTERNAL_KEY}")String key;
+ private final AccessMapper dao;private final IssuanceMapper operations;private final AppointmentClient appointments;private final DirectoryClient users;private final ObjectMapper json;@Value("${CAMPUS_INTERNAL_KEY}")String key;
  public IssuanceService(AccessMapper d,IssuanceMapper o,AppointmentClient a,DirectoryClient u,ObjectMapper j){dao=d;operations=o;appointments=a;users=u;json=j;}
  private Map<String,Object>map(Object...p){Map<String,Object>m=new LinkedHashMap<>();for(int i=0;i<p.length;i+=2)m.put(String.valueOf(p[i]),p[i+1]);return m;}
  private String digest(Map<String,Object>b){try{return Base64.getEncoder().encodeToString(MessageDigest.getInstance("SHA-256").digest(json.writeValueAsBytes(new TreeMap<>(b))));}catch(Exception e){throw new IllegalStateException();}}

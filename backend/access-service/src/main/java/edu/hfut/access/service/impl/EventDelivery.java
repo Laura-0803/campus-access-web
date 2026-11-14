@@ -1,7 +1,7 @@
 package edu.hfut.access.service.impl;
 import java.util.*;import org.springframework.stereotype.Component;import org.springframework.scheduling.annotation.*;import org.springframework.beans.factory.annotation.Value;import com.fasterxml.jackson.databind.ObjectMapper;import edu.hfut.access.dao.EventMapper;import edu.hfut.access.client.*;import static edu.hfut.access.security.Identity.text;
 @Component @EnableScheduling public class EventDelivery{
- private final EventMapper dao;private final EventClient users;private final ExceptionEventClient exceptions;private final ObjectMapper json;@Value("${P4_INTERNAL_KEY}")String key;
+ private final EventMapper dao;private final EventClient users;private final ExceptionEventClient exceptions;private final ObjectMapper json;@Value("${CAMPUS_INTERNAL_KEY}")String key;
  public EventDelivery(EventMapper d,EventClient u,ExceptionEventClient e,ObjectMapper j){dao=d;users=u;exceptions=e;json=j;}
  private Map<String,Object>map(Object...p){Map<String,Object>r=new LinkedHashMap<>();for(int i=0;i<p.length;i+=2)r.put(String.valueOf(p[i]),p[i+1]);return r;}
  @Scheduled(fixedDelay=500)public void deliver(){for(Map<String,Object>row:dao.due()){String id=String.valueOf(row.get("event_id"));if(dao.claim(id)!=1)continue;try{

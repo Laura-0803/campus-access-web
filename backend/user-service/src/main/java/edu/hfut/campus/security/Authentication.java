@@ -8,7 +8,7 @@ import java.security.*;
 import java.nio.charset.StandardCharsets;
 @Component public class Authentication implements HandlerInterceptor  {
   private final SessionAuthority auth;
-  @Value("${P2_INTERNAL_KEY}")String key;
+  @Value("${CAMPUS_INTERNAL_KEY}")String key;
   public Authentication(SessionAuthority a)  {
     auth=a;
   }
