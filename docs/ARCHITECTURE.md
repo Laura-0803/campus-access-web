@@ -1,20 +1,14 @@
-# 微服务架构与调用链
+﻿# 系统架构
 
-正式演示链路为 React → Spring Cloud Gateway → Java 业务服务 → MySQL。两个 Eureka 节点互为 peer；Gateway 使用 `lb://` 路由，服务间使用 OpenFeign，Ribbon 负责客户端负载均衡，Hystrix 提供超时、熔断与降级。
+浏览器 → Vite :5173 → campus-gateway :19800 → 业务服务。
+注册中心：Eureka :19761、:19762 双节点。
 
-```text
-React :5173 → Gateway :19800
-  ├─ user-service :19811 ─────── identity Schema
-  ├─ appointment-service :19821 ─ appointment Schema
-  ├─ access-service :19841 ───── passage Schema
-  ├─ exception-service :19851 ── incident Schema
-  └─ aggregation-service :19861 → Feign/Ribbon 调用四业务服务
+- user-service :19811：身份、账号、人员、会话、车辆、人脸、通知和审计。
+- appointment-service :19821：预约、审核、签发协调。
+- access-service :19841：设备、校门、规则、凭证、通行。
+- exception-service :19851：事件、黑名单、处置。
+- aggregation-service :19861：通过 Feign 汇总以上服务，无数据库连接。
 
-Eureka peer A :19761 ⇄ Eureka peer B :19762
-```
+四个业务服务使用同一个 MySQL 数据库 campus_access_dev，保留独立账号和连接池。表按业务归属维护，服务间仍通过 Eureka/Feign 调用，保留 Ribbon、Hystrix、Gateway 和原事务/幂等边界。没有将服务合并，也没有改成跨服务直接写表。
 
-核心闭环：用户/人员由 user-service 管理；访客预约进入 appointment-service；最终审批通过后经 Feign 调用 access-service 签发二维码；扫码生成通行记录；拒绝或高风险事件进入 exception-service，门岗完成处置；aggregation-service 汇总首页与报表。
-
-服务边界采用独立 Schema。跨服务 ID 是逻辑引用，禁止增加跨库外键；域内角色、人员、账号、校门和设备等关系使用外键。Gateway 的业务开关保持兼容，避免改变正式 API 行为。
-
-旧 Express 位于 `campus-access-web/server/`，只保留为历史兼容与回归参考，正式 Java 演示不启动。迁移期间使用的临时桥接器按业务域归档在 `backend/migration-bridges/`，不属于正式 Maven reactor；`experiments/spring-cloud-compatibility-lab/` 用于验证 Eureka、Ribbon、OpenFeign、Hystrix 和 Gateway 的版本兼容性。
+统一库 18 张业务表及 3NF 分解见 DATABASE.md。启动配置见 ENVIRONMENT.md。历史 migration-bridges 和实验工程保留，不参与正式启动。

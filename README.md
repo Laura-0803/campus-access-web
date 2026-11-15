@@ -28,4 +28,7 @@ Java构建需要独立JDK11及Maven，可在设置正确Java环境后执行`mvn 
 
 仓库不包含密码、真实业务数据库备份、`.env`、`.migration-runtime` 私密配置、依赖目录或构建产物；仅提交不含秘密的 `.env.example`。不要将本地私密配置或真实人员数据补传到仓库。
 
-数据库采用同一 MySQL 实例内的四个逻辑 Schema：`cam_identity_{env}`、`cam_appointment_{env}`、`cam_passage_{env}`、`cam_incident_{env}`。新建库、旧 18 表迁移和命名规范见 [DATABASE](docs/DATABASE.md) 与 [ENVIRONMENT](docs/ENVIRONMENT.md)。
+数据库采用同一 MySQL 实例内的一个统一数据库：`campus_access_{env}`。新建库、旧 18 表迁移和命名规范见 [DATABASE](docs/DATABASE.md) 与 [ENVIRONMENT](docs/ENVIRONMENT.md)。
+
+
+Current database: `campus_access_dev`; all four services share this database and retain their HTTP service boundaries. See DATABASE.md for migration and 3NF details.

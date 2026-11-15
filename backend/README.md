@@ -21,4 +21,7 @@
 
 构建：`mvn -f backend/pom.xml clean verify`。
 
-目标 18 表 Schema 位于 `database/refactor/{identity,appointment,passage,incident}/V100__target_schema.sql`，只允许在隔离数据库执行。完整启动、停止和双 Eureka 主机标识要求见 `docs/RUNBOOK.md`。正式 Java 演示不启动旧 Express。
+目标 18 表 Schema 位于 `database/unified/V001__unified_schema.sql`，只允许在隔离数据库执行。完整启动、停止和双 Eureka 主机标识要求见 `docs/RUNBOOK.md`。正式 Java 演示不启动旧 Express。
+
+
+Current database: `campus_access_dev`; all four services share this database and retain their HTTP service boundaries. See DATABASE.md for migration and 3NF details.

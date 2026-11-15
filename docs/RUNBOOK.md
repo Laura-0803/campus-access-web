@@ -1,18 +1,15 @@
-# 运行手册
+﻿# 运行手册
 
-需要 JDK 11、Maven、Node.js/npm、MySQL，以及四个隔离数据库和本机私密环境配置。首次在新电脑运行时，先按照 [ENVIRONMENT](ENVIRONMENT.md) 从 `.env.example` 创建 `.env` 并生成随机密钥。不要提交 `.env`、数据库备份、真实人员数据或密码。
+JDK 11、Maven、Node.js、MySQL 8。先配置私有 campus-access-web/.env，四个业务数据源统一指向 campus_access_dev。初始建库、迁移与回滚见 DATABASE.md，环境设置见 ENVIRONMENT.md。
 
-正式课程演示使用 Java 微服务入口，不启动旧 Express：
+构建：mvn -f backend/pom.xml clean verify。
+启动：campus-access-web 目录执行 npm.cmd run start-all，或支持 Bash 的环境执行仓库根目录 ./start-all.sh。必须先停旧进程，避免端口占用和 Windows JAR 文件锁。
 
-```bash
-mvn -f backend/pom.xml clean package
-./start-all.sh
-```
+启动顺序：MySQL → 双 Eureka → user → appointment → access → exception → aggregation → gateway → 前端。业务运行时存在相互调用依赖，最后应验证聚合健康。
 
-也可以进入 `campus-access-web/` 执行 `npm run start-all`。`start-all` 会给两个 Eureka 节点设置不同的主机标识：19761 使用 `localhost`，19762 使用 `127.0.0.1`。两节点不能使用相同 `REGISTRY_HOST`，否则 peer 识别会退化为单向复制，远端租约最终过期。
+访问：http://127.0.0.1:5173/。
+验证：19761、19762 的 /eureka/apps 全部 UP；19800/api/roles 和 /api/health 为 200；5173/api/roles 正常；旧 Express 3001 不监听。
 
-启动成功标准：两个 Eureka 节点都能看到全部 UP 实例；Gateway、四业务服务和聚合服务健康；`/api/roles` 可通过 Gateway 访问；旧 Express 端口 3001 不监听。按 Ctrl-C 后确认 19761、19762、19800、19811、19821、19841、19851、19861 均已关闭。
+启动失败应查看各进程完整日志，重点检查统一库名称、DML 账号权限、CAMPUS_INTERNAL_KEY、恢复密钥、MySQL 连接和注册中心互联。禁止为绕过检查使用 root 作为业务数据源。
 
-常见故障：数据源错误时检查 `IDENTITY_DB_*`、`APPOINTMENT_DB_*`、`PASSAGE_DB_*`、`INCIDENT_DB_*`；注册表不一致时检查两个注册中心是否使用了不同 `REGISTRY_HOST`；Feign 503 时检查实例、Ribbon server list 和 Hystrix 指标。必须使用 JDK 11，不升级 Spring Boot 2.3.12 或 Hoxton.SR12。
-
-数据库迁移只对隔离库执行。目标 18 表使用 `backend/database/refactor/{identity,appointment,passage,incident}/V100__target_schema.sql`，旧 18 表数据复制与核对使用 `backend/database/refactor/migrate/`，测试库清理使用 `backend/database/refactor/R100__drop_target_schema.sql`。
+Ctrl+C 停止标准启动器；后台逐服务启动时按 .migration-runtime/pids.json 精确停止本项目进程。不要终止其他 Java 项目。

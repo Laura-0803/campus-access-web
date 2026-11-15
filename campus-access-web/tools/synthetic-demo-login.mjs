@@ -2,24 +2,26 @@
 import fs from "node:fs";
 import path from "node:path";
 import mysql from "mysql2/promise";
+import { loadEnv } from "vite";
 
 const choices = [
-  ["学生", "student", "SYN-STUDENT"],
-  ["教职工", "teacher", "SYN-TEACHER"],
-  ["校友", "alumni", "SYN-ALUMNI"],
-  ["门岗", "guard", "SYN-GUARD"],
-  ["管理员", "admin", "SYN-ADMIN"]
+  ["访客", "visitor", "DEMO-VISITOR"],
+  ["学生", "student", "DEMO-STUDENT"],
+  ["教职工", "teacher", "DEMO-TEACHER"],
+  ["校友", "alumni", "DEMO-ALUMNI"],
+  ["门岗", "guard", "DEMO-GUARD"],
+  ["管理员", "admin", "DEMO-ADMIN"]
 ];
 
 export default function syntheticDemoLogin() {
   const configure = (server) => {
     let config;
     // 只有隔离演示启动器显式提供这些开关时，才允许注册快捷登录中间件。
-    const workspace = process.env.MIGRATION_WORKSPACE;
-    if (process.env.USER_DEMO_ENABLED !== "true" || process.env.SPRING_PROFILES_ACTIVE !== "synthetic-demo" || !workspace) return;
+    const env = { ...loadEnv(server.config.mode, server.config.root, ""), ...process.env };
+    if (env.LOCAL_DEMO_LOGIN_ENABLED !== "true") return;
     try {
-      config = JSON.parse(fs.readFileSync(path.join(workspace, ".migration-runtime/system-demo/runtime.json"), "utf8"));
-      if (config.host !== "127.0.0.1" || !/^campus_p2_user_\d{14}$/.test(config.database) || !config.demoPassword) return;
+      config = JSON.parse(fs.readFileSync(path.resolve(server.config.root, "../.migration-runtime/demo-login.json"), "utf8"));
+      if (config.host !== "127.0.0.1" || config.database !== "campus_access_dev" || !config.demoPassword) return;
     } catch { return; }
     server.middlewares.use(async (request, response, next) => {
       const endpoint = request.url?.split("?")[0];
@@ -33,21 +35,21 @@ export default function syntheticDemoLogin() {
       };
       const fail = (status, message) => send(status, { success: false, error: { message } });
       const address = request.socket.localAddress;
-      if (!["127.0.0.1", "::1", "::ffff:127.0.0.1"].includes(address) || request.headers.host !== "127.0.0.1:15173") return fail(403, "演示快捷登录仅限本机隔离环境");
-      if (request.headers.origin && request.headers.origin !== "http://127.0.0.1:15173") return fail(403, "不允许跨站演示登录");
+      if (!["127.0.0.1", "::1", "::ffff:127.0.0.1"].includes(address) || !["127.0.0.1:5173", "localhost:5173"].includes(request.headers.host)) return fail(403, "演示快捷登录仅限本机隔离环境");
+      if (request.headers.origin && request.headers.origin !== `http://${request.headers.host}`) return fail(403, "不允许跨站演示登录");
       if (request.headers["sec-fetch-site"] && request.headers["sec-fetch-site"] !== "same-origin") return fail(403, "不允许跨站演示登录");
       let db;
       try {
         if (endpoint !== "/__synthetic-demo/accounts" && endpoint !== "/__synthetic-demo/login") return fail(404, "演示接口不存在");
         if ((endpoint.endsWith("/accounts") && request.method !== "GET") || (endpoint.endsWith("/login") && request.method !== "POST")) return fail(405, "请求方法不允许");
         db = await mysql.createConnection({ host: config.host, port: config.port, user: config.username, password: config.password, database: config.database, connectTimeout: 3000 });
-        const [rows] = await db.execute("SELECT username, role, status FROM users WHERE username IN (?,?,?,?,?)", choices.map((x) => x[2]));
+        const [rows] = await db.execute("SELECT username, role_code role, status FROM user_account WHERE username IN (?,?,?,?,?,?)", choices.map((x) => x[2]));
         const accounts = choices.flatMap(([label, role, account]) => {
           const row = rows.find((x) => x.username === account && x.role === role);
           return row ? [{ label, role, account, enabled: row.status === "启用" }] : [];
         });
         if (endpoint.endsWith("/accounts")) return send(200, { success: true, data: accounts });
-        if (request.headers.origin !== "http://127.0.0.1:15173" || !request.headers["content-type"]?.startsWith("application/json")) return fail(403, "演示登录必须由本站页面发起");
+        if (request.headers.origin !== `http://${request.headers.host}` || !request.headers["content-type"]?.startsWith("application/json")) return fail(403, "演示登录必须由本站页面发起");
         let text = "";
         for await (const chunk of request) { text += chunk; if (Buffer.byteLength(text) > 2048) return fail(413, "请求内容过大"); }
         let body; try { body = JSON.parse(text); } catch { return fail(400, "请求格式错误"); }
